@@ -1,0 +1,25 @@
+        window.addEventListener('load', () => {
+            // Check for authentication
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+            
+            // If no auth token, redirect to login
+            if (!authToken || !userDataStr) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Parse user data
+            try {
+                const userData = JSON.parse(userDataStr);
+                const email = userData.email || userData.username || 'User';
+                
+                document.getElementById('userEmail').textContent = email;
+                const initial = email.charAt(0).toUpperCase();
+                document.getElementById('userAvatar').textContent = initial;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                window.location.href = 'index.html';
+            }
+        });
+

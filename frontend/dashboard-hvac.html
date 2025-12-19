@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Fitness Resource Hub - HVAC Support</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Planet Fitness Colors */
+            --pf-dark-purple: #290241;
+            --pf-bright-purple: #9600FA;
+            --pf-light-purple: #FAEEFF;
+            --pf-yellow: #FFDC00;
+            --pf-white: #FFFFFF;
+            
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #F9FAFB;
+            min-height: 100vh;
+            padding-bottom: 120px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo-section img {
+            height: 100px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: #E5E7EB;
+        }
+
+        .tagline {
+            color: #6B7280;
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 2px solid var(--pf-light-purple);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+        }
+
+        .nav-link {
+            padding: 16px 8px;
+            color: #6B7280;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        .nav-link.active {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 24px;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            color: var(--pf-dark-purple);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            line-height: 1.2;
+        }
+
+        .answer-box {
+            background: var(--pf-light-purple);
+            border-left: 4px solid var(--pf-bright-purple);
+            padding: 24px 28px;
+            border-radius: 8px;
+            color: #374151;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .answer-box strong {
+            color: var(--pf-dark-purple);
+            font-weight: 600;
+        }
+
+        .answer-box ol, .answer-box ul {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+
+        .answer-box li {
+            margin-bottom: 8px;
+        }
+
+        .alert-box {
+            background: #FEF2F2;
+            border-left: 4px solid #DC2626;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #991B1B;
+            font-weight: 500;
+        }
+
+        .success-box {
+            background: #F0FDF4;
+            border-left: 4px solid #16A34A;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #166534;
+        }
+
+        /* Quick Action Buttons */
+        .action-buttons {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .action-btn {
+            padding: 16px 24px;
+            background: var(--pf-bright-purple);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-size: 15px;
+        }
+
+        .action-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(41, 2, 65, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: var(--pf-bright-purple);
+            border: 2px solid var(--pf-bright-purple);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--pf-light-purple);
+        }
+
+        /* Contact Cards */
+        .contact-cards {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .contact-title {
+            color: var(--pf-dark-purple);
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            color: var(--pf-bright-purple);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .contact-hours {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        /* Search Bar (Bottom Fixed) */
+        .search-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #E5E7EB;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            z-index: 50;
+        }
+
+        .search-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: var(--font-sans);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--pf-bright-purple);
+            box-shadow: 0 0 0 4px rgba(150, 0, 250, 0.1);
+        }
+
+        .search-btn {
+            padding: 14px 32px;
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(41, 2, 65, 0.3);
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--pf-bright-purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo-section {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo-divider {
+                display: none;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .question-card {
+                padding: 32px 24px;
+            }
+
+            .search-content {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div>
+                    <img src="images/Logo-Primary.svg" alt="Planet Fitness" style="height: 100px;">
+                </div>
+                <div class="logo-divider"></div>
+                <div>
+                    <img src="images/ses-logo.png" alt="Save Energy Systems">
+                    <p class="tagline">AI-driven energy and facility management systems</p>
+                </div>
+            </div>
+
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar"></div>
+                <span id="userEmail"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            <a href="#" class="nav-link">Order Parts</a>
+            <a href="#" class="nav-link">FAQ</a>
+            <a href="#" class="nav-link">Franchise Info</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Question Card -->
+        <div class="question-card">
+            <h1>My HVAC isn't working - What should I do?</h1>
+            
+            <div class="alert-box">
+                <i class="bi bi-exclamation-triangle-fill"></i> <strong>Emergency?</strong> If your HVAC is completely out during extreme weather, call 24/7 Emergency Support: <strong>1-800-555-HVAC (4822)</strong>
+            </div>
+
+            <div class="answer-box">
+                <strong>Follow these troubleshooting steps:</strong>
+                
+                <ol style="margin-top: 16px;">
+                    <li><strong>Check the Thermostat:</strong>
+                        <ul style="margin-top: 8px;">
+                            <li>Is it set to the correct mode (Heat/Cool)?</li>
+                            <li>Is the temperature set correctly?</li>
+                            <li>Are the batteries working? (if applicable)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Check the Circuit Breaker:</strong>
+                        <ul style="margin-top: 8px;">
+                            <li>Go to your electrical panel</li>
+                            <li>Look for tripped breakers labeled "HVAC" or "AC"</li>
+                            <li>Flip it off, then back on</li>
+                        </ul>
+                    </li>
+                    <li><strong>Check the Air Filter:</strong>
+                        <ul style="margin-top: 8px;">
+                            <li>A clogged filter can cause the system to shut down</li>
+                            <li>Replace if dirty (order new filters under "Order Parts")</li>
+                        </ul>
+                    </li>
+                    <li><strong>Check the Outdoor Unit:</strong>
+                        <ul style="margin-top: 8px;">
+                            <li>Is it clear of debris, leaves, or snow?</li>
+                            <li>Is the fan spinning?</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="success-box">
+                    <i class="bi bi-check-circle-fill"></i> <strong>Still not working?</strong> Submit a work order below or call SES Support for immediate assistance.
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="alert('Work order form will open here')">
+                    Submit Work Order
+                </button>
+                <button class="action-btn secondary" onclick="alert('Calling SES Support...')">
+                    Call Support Now
+                </button>
+            </div>
+
+            <!-- Emergency Contacts -->
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-telephone" style="color: var(--pf-bright-purple);"></i></div>
+                    <div class="contact-title">SES Support</div>
+                    <div class="contact-info">1-800-555-0100</div>
+                    <div class="contact-hours">Mon-Fri: 7am-7pm EST</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-shield-fill-exclamation" style="color: #DC2626;"></i></div>
+                    <div class="contact-title">24/7 Emergency</div>
+                    <div class="contact-info">1-800-555-HVAC</div>
+                    <div class="contact-hours">Available 24/7</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-envelope" style="color: var(--pf-bright-purple);"></i></div>
+                    <div class="contact-title">Email Support</div>
+                    <div class="contact-info">support@saveenergysystems.com</div>
+                    <div class="contact-hours">Response within 2 hours</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Search Bar (Fixed Bottom) -->
+    <div class="search-container">
+        <div class="search-content">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput"
+                placeholder="Ask another question..."
+                onkeypress="handleKeyPress(event)"
+            >
+            <button class="search-btn" onclick="handleSearch()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Load user data from session (NO REDIRECT - SIMPLE VERSION)
+        window.addEventListener('load', () => {
+            // Check for authentication
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+            
+            let email = 'User';
+            
+            // If we have user data, use it
+            if (userDataStr) {
+                try {
+                    const userData = JSON.parse(userDataStr);
+                    email = userData.email || userData.username || 'User';
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+            
+            // Update UI
+            document.getElementById('userEmail').textContent = email;
+            const initial = email.charAt(0).toUpperCase();
+            document.getElementById('userAvatar').textContent = initial;
+        });
+
+        function handleSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            if (!query) return;
+            alert(`AI Search: "${query}"\n\nThis will be connected to GuideFlowAI backend in Phase 2.`);
+            input.value = '';
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        }
+
+        function logout() {
+            // Clear all session data
+            sessionStorage.removeItem('auth_token');
+            sessionStorage.removeItem('user_data');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            localStorage.removeItem('demo_mode');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

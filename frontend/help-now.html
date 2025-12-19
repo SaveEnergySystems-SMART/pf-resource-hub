@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Now - Planet Fitness & SES Resource Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pf-dark-purple: #290241;
+            --pf-bright-purple: #9600FA;
+            --pf-light-purple: #FAEEFF;
+            --pf-yellow: #FFDC00;
+            --pf-white: #FFFFFF;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #F9FAFB;
+            min-height: 100vh;
+            padding-bottom: 140px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo-section img {
+            height: 100px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: #E5E7EB;
+        }
+
+        .tagline {
+            color: #6B7280;
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 2px solid var(--pf-light-purple);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+        }
+
+        .nav-link {
+            padding: 16px 8px;
+            color: #6B7280;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        .nav-link.active {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        /* Emergency Button */
+        .emergency-banner {
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.3);
+        }
+
+        .emergency-banner h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .call-button {
+            display: inline-block;
+            padding: 24px 48px;
+            background: white;
+            color: #DC2626;
+            font-size: 32px;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .call-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .call-button i {
+            margin-right: 12px;
+        }
+
+        .emergency-subtitle {
+            color: white;
+            font-size: 18px;
+            margin-top: 20px;
+            opacity: 0.95;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin: 60px 0 30px;
+        }
+
+        .section-header h2 {
+            color: var(--pf-dark-purple);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: #6B7280;
+            font-size: 16px;
+        }
+
+        /* Emergency Scenarios Grid */
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .scenario-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .scenario-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--pf-light-purple);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .scenario-icon i {
+            font-size: 32px;
+            color: var(--pf-bright-purple);
+        }
+
+        .scenario-card.critical .scenario-icon {
+            background: #FEE2E2;
+        }
+
+        .scenario-card.critical .scenario-icon i {
+            color: #DC2626;
+        }
+
+        .scenario-card h3 {
+            color: var(--pf-dark-purple);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .scenario-card ul {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .scenario-card li {
+            color: #374151;
+            font-size: 15px;
+            line-height: 1.8;
+            padding-left: 28px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .scenario-card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--pf-bright-purple);
+            font-weight: 700;
+        }
+
+        .scenario-card.critical li::before {
+            content: "!";
+            background: #DC2626;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        /* Quick Reference */
+        .quick-ref-box {
+            background: var(--pf-light-purple);
+            border-left: 4px solid var(--pf-bright-purple);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 40px 0;
+        }
+
+        .quick-ref-box h3 {
+            color: var(--pf-dark-purple);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .quick-ref-box ul {
+            list-style: none;
+        }
+
+        .quick-ref-box li {
+            color: #374151;
+            font-size: 16px;
+            line-height: 2;
+            padding-left: 32px;
+            position: relative;
+        }
+
+        .quick-ref-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #16A34A;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        /* Contact Cards */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .contact-card {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--pf-bright-purple);
+            box-shadow: 0 4px 16px rgba(150, 0, 250, 0.15);
+        }
+
+        .contact-card i {
+            font-size: 48px;
+            color: var(--pf-bright-purple);
+            margin-bottom: 16px;
+        }
+
+        .contact-card h4 {
+            color: var(--pf-dark-purple);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .contact-card .phone {
+            color: var(--pf-bright-purple);
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            display: block;
+            margin: 12px 0;
+        }
+
+        .contact-card .phone:hover {
+            color: var(--pf-dark-purple);
+        }
+
+        .contact-card .detail {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        /* Search Bar (Bottom Fixed) */
+        .search-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #E5E7EB;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            z-index: 50;
+        }
+
+        .search-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .search-label {
+            color: var(--pf-dark-purple);
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: var(--font-sans);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--pf-bright-purple);
+            box-shadow: 0 0 0 4px rgba(150, 0, 250, 0.1);
+        }
+
+        .search-btn {
+            padding: 14px 32px;
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(41, 2, 65, 0.3);
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--pf-bright-purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo-section {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo-divider {
+                display: none;
+            }
+
+            .emergency-banner h1 {
+                font-size: 32px;
+            }
+
+            .call-button {
+                font-size: 24px;
+                padding: 18px 32px;
+            }
+
+            .scenarios-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N3GWJBMD4C');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div>
+                    <img src="images/Logo-Primary.svg" alt="Planet Fitness">
+                </div>
+                <div class="logo-divider"></div>
+                <div>
+                    <img src="images/ses-logo.png" alt="Save Energy Systems">
+                    <p class="tagline">AI-driven energy and facility management systems</p>
+                </div>
+            </div>
+
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar"></div>
+                <span id="userEmail"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="dashboard.html" class="nav-link">🏠 Dashboard</a>
+            <a href="help-now.html" class="nav-link active">🚨 Help Now</a>
+            <a href="order-parts.html" class="nav-link">📦 Order Parts</a>
+            <a href="resources.html" class="nav-link">📚 Resources</a>
+            <a href="why-ses.html" class="nav-link">💡 Why SES</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Emergency Banner -->
+        <div class="emergency-banner">
+            <h1><i class="bi bi-exclamation-triangle-fill"></i> HVAC Emergency?</h1>
+            <a href="tel:6175644800" class="call-button">
+                <i class="bi bi-telephone-fill"></i>
+                (617) 564-4800
+            </a>
+            <p class="emergency-subtitle">Available 24/7/365 • Response Time: Under 2 Hours</p>
+        </div>
+
+        <!-- When to Call Immediately -->
+        <div class="section-header">
+            <h2>When to Call SES Immediately</h2>
+            <p>These situations require immediate professional assistance</p>
+        </div>
+
+        <div class="quick-ref-box">
+            <h3><i class="bi bi-exclamation-circle"></i> Call (617) 564-4800 Now If You See:</h3>
+            <ul>
+                <li>No cooling/heating in entire facility</li>
+                <li>Burning smell from HVAC system</li>
+                <li>Smoke or sparks visible</li>
+                <li>Water leaking from units</li>
+                <li>Loud grinding or banging noises</li>
+                <li>Breakers tripping repeatedly</li>
+                <li>Temperature above 85°F or below 60°F</li>
+                <li>Multiple zones not responding</li>
+                <li>Member safety concerns</li>
+            </ul>
+        </div>
+
+        <!-- Critical Emergency Scenarios -->
+        <div class="section-header">
+            <h2>Critical Emergency Scenarios</h2>
+            <p>Step-by-step guidance for urgent situations</p>
+        </div>
+
+        <div class="scenarios-grid">
+            <!-- Complete HVAC Failure -->
+            <div class="scenario-card critical">
+                <div class="scenario-icon">
+                    <i class="bi bi-power"></i>
+                </div>
+                <h3>Complete HVAC Failure</h3>
+                <ul>
+                    <li>Call SES: (617) 564-4800</li>
+                    <li>Check main circuit breakers (don't reset if tripping)</li>
+                    <li>Open emergency ticket in portal</li>
+                    <li>Notify members if temperature unsafe</li>
+                    <li>Contact regional manager</li>
+                </ul>
+            </div>
+
+            <!-- Fire/Smoke -->
+            <div class="scenario-card critical">
+                <div class="scenario-icon">
+                    <i class="bi bi-fire"></i>
+                </div>
+                <h3>Fire/Smoke/Burning Smell</h3>
+                <ul>
+                    <li>EVACUATE facility if smoke visible</li>
+                    <li>Call 911 FIRST for fire/smoke</li>
+                    <li>Turn off HVAC main power if SAFE</li>
+                    <li>Use fire extinguisher only if trained</li>
+                    <li>Then call SES: (617) 564-4800</li>
+                </ul>
+            </div>
+
+            <!-- Water Leak -->
+            <div class="scenario-card critical">
+                <div class="scenario-icon">
+                    <i class="bi bi-droplet-fill"></i>
+                </div>
+                <h3>Water Leak/Flooding</h3>
+                <ul>
+                    <li>Shut off water if accessible</li>
+                    <li>Move equipment away from water</li>
+                    <li>Call SES: (617) 564-4800</li>
+                    <li>Place caution signs/barriers</li>
+                    <li>Document with photos</li>
+                </ul>
+            </div>
+
+            <!-- Extreme Temperature -->
+            <div class="scenario-card critical">
+                <div class="scenario-icon">
+                    <i class="bi bi-thermometer-high"></i>
+                </div>
+                <h3>Extreme Temperature</h3>
+                <ul>
+                    <li>Check SES dashboard for alerts</li>
+                    <li>Verify thermostat settings</li>
+                    <li>Call SES: (617) 564-4800</li>
+                    <li>Post member advisories</li>
+                    <li>Consider facility closure if extreme</li>
+                </ul>
+            </div>
+
+            <!-- Electrical Issues -->
+            <div class="scenario-card critical">
+                <div class="scenario-icon">
+                    <i class="bi bi-lightning-fill"></i>
+                </div>
+                <h3>Electrical Issues</h3>
+                <ul>
+                    <li>Turn off affected breakers</li>
+                    <li>Call SES: (617) 564-4800</li>
+                    <li>Evacuate area if sparking</li>
+                    <li>Do NOT attempt repairs</li>
+                    <li>Wait for qualified technician</li>
+                </ul>
+            </div>
+
+            <!-- Unusual Noises -->
+            <div class="scenario-card">
+                <div class="scenario-icon">
+                    <i class="bi bi-volume-up-fill"></i>
+                </div>
+                <h3>Unusual Noises</h3>
+                <ul>
+                    <li><strong>Grinding/Scraping:</strong> Turn off immediately</li>
+                    <li><strong>Banging:</strong> Note when it occurs</li>
+                    <li><strong>Hissing:</strong> Check filters and vents</li>
+                    <li><strong>Clicking:</strong> Normal if occasional</li>
+                    <li>Call SES if persistent: (617) 564-4800</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Diagnostic Checklist -->
+        <div class="section-header">
+            <h2>Quick Diagnostic Checklist</h2>
+            <p>Before calling SES, gather this information to speed up resolution</p>
+        </div>
+
+        <div class="quick-ref-box">
+            <h3><i class="bi bi-clipboard-check"></i> Have This Ready When You Call:</h3>
+            <ul>
+                <li>Location address and site ID</li>
+                <li>Your name and callback number</li>
+                <li>Detailed description of the problem</li>
+                <li>When the issue started</li>
+                <li>Which zones/areas are affected</li>
+                <li>Any unusual noises, smells, or visible issues</li>
+                <li>Current indoor temperature readings</li>
+                <li>Whether breakers have tripped</li>
+            </ul>
+        </div>
+
+        <!-- SES Contact Options -->
+        <div class="section-header">
+            <h2>SES Contact Options</h2>
+            <p>Multiple ways to reach our support team</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="bi bi-telephone-fill"></i>
+                <h4>24/7 Emergency</h4>
+                <a href="tel:6175644800" class="phone">(617) 564-4800</a>
+                <p class="detail">Available 24/7/365<br>Response: Under 2 hours</p>
+            </div>
+
+            <div class="contact-card">
+                <i class="bi bi-envelope-fill"></i>
+                <h4>Email Support</h4>
+                <a href="mailto:support@saveenergysystems.com" class="phone" style="font-size: 16px;">support@saveenergysystems.com</a>
+                <p class="detail">Non-emergency support<br>Response: Within 4 hours</p>
+            </div>
+
+            <div class="contact-card">
+                <i class="bi bi-globe"></i>
+                <h4>Online Portal</h4>
+                <a href="http://portal.saveenergysystems.com/" target="_blank" class="phone" style="font-size: 16px;">Open Portal</a>
+                <p class="detail">Track tickets & orders<br>View system status</p>
+            </div>
+        </div>
+
+        <!-- What GMs Can/Cannot Do -->
+        <div class="section-header">
+            <h2>GM Safety Guidelines</h2>
+            <p>Know what you can safely do yourself vs. when to call SES</p>
+        </div>
+
+        <div class="scenarios-grid">
+            <div class="scenario-card">
+                <div class="scenario-icon">
+                    <i class="bi bi-check-circle-fill" style="color: #16A34A;"></i>
+                </div>
+                <h3>GMs CAN Safely Do:</h3>
+                <ul>
+                    <li>Check thermostat settings and adjust</li>
+                    <li>Reset breakers (turn OFF first if comfortable)</li>
+                    <li>Document unusual noises/conditions</li>
+                    <li>Check for obvious airflow blockages</li>
+                    <li>Clean or replace air filters (if accessible)</li>
+                    <li>Check for visible water leaks</li>
+                    <li>Take photos of any issues</li>
+                    <li>Monitor temperature readings</li>
+                </ul>
+            </div>
+
+            <div class="scenario-card critical">
+                <div class="scenario-icon">
+                    <i class="bi bi-x-circle-fill"></i>
+                </div>
+                <h3>MUST Call SES For:</h3>
+                <ul>
+                    <li>Any electrical work on HVAC systems</li>
+                    <li>HVAC unit mechanical repairs</li>
+                    <li>Part replacements or installations</li>
+                    <li>System programming or software changes</li>
+                    <li>Refrigerant-related work</li>
+                    <li>Control board modifications</li>
+                    <li>Compressor or motor work</li>
+                    <li>Wiring changes or additions</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Search Bar (Fixed Bottom) -->
+    <div class="search-container">
+        <div class="search-content">
+            <label class="search-label">
+                <span style="position: relative; display: inline-block; margin-right: 4px;">
+                    <i class="bi bi-person-circle"></i>
+                    <i class="bi bi-lightning-charge-fill" style="position: absolute; bottom: -3px; right: -8px; font-size: 0.6em; color: var(--pf-yellow);"></i>
+                </span>
+                Ask Steph anything:
+            </label>
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput"
+                    placeholder="e.g., 'My HVAC isn't working' or 'How do I order filters?'"
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="search-btn" onclick="handleSearch()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data from session (NO REDIRECT - SIMPLE VERSION)
+        window.addEventListener('load', () => {
+            // Check for authentication
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+            
+            let email = 'User';
+            
+            // If we have user data, use it
+            if (userDataStr) {
+                try {
+                    const userData = JSON.parse(userDataStr);
+                    email = userData.email || userData.username || 'User';
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+            
+            // Update UI
+            document.getElementById('userEmail').textContent = email;
+            const initial = email.charAt(0).toUpperCase();
+            document.getElementById('userAvatar').textContent = initial;
+        });
+
+        // Handle search
+        function handleSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            console.log('Searching for:', query);
+            
+            // TODO: Implement real AI search in Phase 2
+            alert(`Steph AI will answer: "${query}"\n\nThis will be connected to OpenAI + Pinecone in Phase 2.`);
+            
+            input.value = '';
+        }
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        }
+
+        // Logout
+        function logout() {
+            // Clear all session data
+            sessionStorage.removeItem('auth_token');
+            sessionStorage.removeItem('user_data');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            localStorage.removeItem('demo_mode');
+            
+            // Redirect to login
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

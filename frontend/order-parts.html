@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Parts - Planet Fitness Resource Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #2E1A47 0%, #5A2E82 100%);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-container img {
+            height: 40px;
+        }
+
+        .user-info {
+            color: #1A0933;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-button {
+            background: #F0E6FF;
+            border: 1px solid #5B2A86;
+            color: #1A0933;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-button:hover {
+            background: #E0D1FF;
+        }
+
+        .nav {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav a.active {
+            background: #FFDC00;
+            color: #1A0933;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            color: #2E1A47;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .page-header h1 i {
+            color: #7B4ECC;
+            font-size: 1.2em;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .emergency-banner {
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+
+        .emergency-banner i {
+            font-size: 2em;
+        }
+
+        .emergency-banner .content {
+            flex: 1;
+        }
+
+        .emergency-banner h3 {
+            margin-bottom: 5px;
+        }
+
+        .emergency-banner a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .ordering-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .method-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .method-card i {
+            font-size: 2.5em;
+            color: #7B4ECC;
+            margin-bottom: 15px;
+        }
+
+        .method-card h3 {
+            color: #2E1A47;
+            margin-bottom: 10px;
+        }
+
+        .method-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .method-card .btn {
+            display: inline-block;
+            background: #7B4ECC;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .method-card .btn:hover {
+            background: #5A2E82;
+        }
+
+        .content-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-section h2 {
+            color: #2E1A47;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #FFDC00;
+        }
+
+        .content-section h2 i {
+            color: #7B4ECC;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+        }
+
+        .step {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #7B4ECC;
+        }
+
+        .step-number {
+            background: #7B4ECC;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #2E1A47;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .part-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .part-card h4 {
+            color: #2E1A47;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .part-card h4 i {
+            color: #7B4ECC;
+        }
+
+        .part-details {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .part-details strong {
+            color: #2E1A47;
+        }
+
+        .warning-box {
+            background: #FFF3CD;
+            border-left: 4px solid #FFC107;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .warning-box i {
+            color: #FFC107;
+            margin-right: 10px;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist li i {
+            color: #28a745;
+            font-size: 1.2em;
+        }
+
+        .search-bar-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1A0933;
+            padding: 15px 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-container i {
+            color: #FFDC00;
+            font-size: 1.5em;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: 2px solid #FFDC00;
+        }
+
+        @media (max-width: 768px) {
+            .logo-container img {
+                height: 30px;
+            }
+
+            .page-header h1 {
+                font-size: 1.8em;
+            }
+
+            .ordering-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .parts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N3GWJBMD4C');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <img src="images/Logo-Primary.svg" alt="Planet Fitness">
+            <img src="images/ses-logo.png" alt="Save Energy Systems">
+        </div>
+        <div class="user-info">
+            <span id="userName">Loading...</span>
+            <div class="user-menu">
+                <button class="user-button" onclick="logout()">
+                    <i class="bi bi-person-circle"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="help-now.html"><i class="bi bi-exclamation-circle"></i> Help Now</a>
+        <a href="order-parts.html" class="active"><i class="bi bi-cart"></i> Order Parts</a>
+        <a href="resources.html"><i class="bi bi-book"></i> Resources</a>
+        <a href="why-ses.html"><i class="bi bi-award"></i> Why SES</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>
+                <i class="bi bi-cart-check"></i>
+                Order Parts
+            </h1>
+            <p>Fast and easy HVAC parts ordering for your Planet Fitness location</p>
+        </div>
+
+        <!-- Emergency Banner -->
+        <div class="emergency-banner">
+            <i class="bi bi-telephone-fill"></i>
+            <div class="content">
+                <h3>Emergency Parts Needed?</h3>
+                <p>Call SES now for same-day availability: <a href="tel:6175644800">(617) 564-4800</a></p>
+            </div>
+        </div>
+
+        <!-- Ordering Methods -->
+        <div class="ordering-methods">
+            <div class="method-card">
+                <i class="bi bi-globe"></i>
+                <h3>Online Portal</h3>
+                <p>Access the full parts catalog with real-time inventory and pricing</p>
+                <a href="http://portal.saveenergysystems.com/cms_sys/index.php/PartsCatalog" target="_blank" class="btn">
+                    <i class="bi bi-box-arrow-up-right"></i> Open Portal
+                </a>
+            </div>
+
+            <div class="method-card">
+                <i class="bi bi-telephone-forward"></i>
+                <h3>Phone Orders</h3>
+                <p>Speak with a parts specialist for assistance and recommendations</p>
+                <a href="tel:6175644800" class="btn">
+                    <i class="bi bi-telephone"></i> Call (617) 564-4800
+                </a>
+            </div>
+
+            <div class="method-card">
+                <i class="bi bi-envelope"></i>
+                <h3>Email Orders</h3>
+                <p>Send your parts list and we'll process your order within 2 hours</p>
+                <a href="mailto:support@saveenergysystems.com" class="btn">
+                    <i class="bi bi-envelope"></i> Send Email
+                </a>
+            </div>
+
+            <div class="method-card">
+                <i class="bi bi-lightning-fill"></i>
+                <h3>Spare Parts UAT</h3>
+                <p>Alternative ordering system for urgent parts requests</p>
+                <a href="https://spare-parts.uat.se.com/" target="_blank" class="btn">
+                    <i class="bi bi-box-arrow-up-right"></i> UAT Portal
+                </a>
+            </div>
+        </div>
+
+        <!-- How to Order Section -->
+        <div class="content-section">
+            <h2><i class="bi bi-list-ol"></i> How to Order Parts</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Identify Part Needed</h4>
+                        <p>Check equipment label for model number, note part description, take photo of existing part, and review SES dashboard for recommendations.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Access Ordering System</h4>
+                        <p>Login to SES Portal with your credentials, navigate to Parts Catalog, or call (617) 564-4800 for assistance.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Search and Order</h4>
+                        <p>Enter part number or keyword, verify compatibility with your system, check availability and lead time, add to cart and submit.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Track Order</h4>
+                        <p>Receive confirmation email, track shipment via portal. Standard shipping: 2-3 days. Emergency: Next day available.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Parts Section -->
+        <div class="content-section">
+            <h2><i class="bi bi-box-seam"></i> Common Replacement Parts</h2>
+            
+            <div class="parts-grid">
+                <!-- Filters -->
+                <div class="part-card">
+                    <h4><i class="bi bi-filter"></i> Air Filters</h4>
+                    <div class="part-details">
+                        <strong>Sizes:</strong> 16x20x1, 16x25x1, 20x20x1, 20x25x1<br>
+                        <strong>MERV Rating:</strong> MERV 8 (standard), MERV 11 (high-eff)<br>
+                        <strong>Order Qty:</strong> Box of 12 recommended<br>
+                        <strong>Replace:</strong> Every 30-90 days
+                    </div>
+                </div>
+
+                <!-- Thermostats -->
+                <div class="part-card">
+                    <h4><i class="bi bi-thermometer-half"></i> Smart Thermostats</h4>
+                    <div class="part-details">
+                        <strong>Type:</strong> Wi-Fi enabled, touchscreen<br>
+                        <strong>Batteries:</strong> CR2032 (2 per unit)<br>
+                        <strong>Compatibility:</strong> All SES DLC systems<br>
+                        <strong>Install:</strong> SES certified tech required
+                    </div>
+                </div>
+
+                <!-- Sensors -->
+                <div class="part-card">
+                    <h4><i class="bi bi-broadcast"></i> Temperature Sensors</h4>
+                    <div class="part-details">
+                        <strong>Type:</strong> Zone-specific wireless sensors<br>
+                        <strong>Battery Life:</strong> 2-3 years<br>
+                        <strong>Replace:</strong> As needed<br>
+                        <strong>Install:</strong> SES tech recommended
+                    </div>
+                </div>
+
+                <!-- Fan Belts -->
+                <div class="part-card">
+                    <h4><i class="bi bi-arrow-repeat"></i> Fan Belts</h4>
+                    <div class="part-details">
+                        <strong>Types:</strong> V-belt, serpentine<br>
+                        <strong>Sizes:</strong> System-specific<br>
+                        <strong>Inspect:</strong> Quarterly<br>
+                        <strong>Replace:</strong> Every 2-3 years
+                    </div>
+                </div>
+
+                <!-- Coil Cleaner -->
+                <div class="part-card">
+                    <h4><i class="bi bi-droplet"></i> Coil Cleaner</h4>
+                    <div class="part-details">
+                        <strong>Type:</strong> Professional grade, biodegradable<br>
+                        <strong>Usage:</strong> Quarterly maintenance<br>
+                        <strong>Order:</strong> Bulk available<br>
+                        <strong>Safety:</strong> Follow all instructions
+                    </div>
+                </div>
+
+                <!-- Drain Components -->
+                <div class="part-card">
+                    <h4><i class="bi bi-water"></i> Drain Line Parts</h4>
+                    <div class="part-details">
+                        <strong>Types:</strong> Condensate pumps, float switches<br>
+                        <strong>Replace:</strong> As needed<br>
+                        <strong>Maintenance:</strong> Quarterly cleaning<br>
+                        <strong>Critical:</strong> Prevents water damage
+                    </div>
+                </div>
+            </div>
+
+            <!-- Important Warnings -->
+            <div class="warning-box">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <strong>SES CERTIFIED TECH ONLY:</strong> Control boards, relays, contactors, and capacitors require professional installation. Never attempt electrical work on HVAC systems.
+            </div>
+
+            <div class="warning-box">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <strong>EPA CERTIFIED ONLY:</strong> Refrigerant (R-410A, R-32) can only be ordered and handled by EPA certified technicians through SES at (617) 564-4800.
+            </div>
+        </div>
+
+        <!-- Emergency Stock Section -->
+        <div class="content-section">
+            <h2><i class="bi bi-shield-check"></i> Recommended Emergency Stock</h2>
+            <p style="color: #666; margin-bottom: 20px;">Keep these items on-site for quick response to common issues:</p>
+            <ul class="checklist">
+                <li><i class="bi bi-check-circle-fill"></i> Air filters (2-month supply)</li>
+                <li><i class="bi bi-check-circle-fill"></i> Thermostat batteries (CR2032 x 10)</li>
+                <li><i class="bi bi-check-circle-fill"></i> Fuses (various amp ratings)</li>
+                <li><i class="bi bi-check-circle-fill"></i> Condensate drain tablets</li>
+                <li><i class="bi bi-check-circle-fill"></i> Basic tools (screwdrivers, flashlight)</li>
+                <li><i class="bi bi-check-circle-fill"></i> SES emergency contact card</li>
+                <li><i class="bi bi-check-circle-fill"></i> Equipment model/serial number list</li>
+                <li><i class="bi bi-check-circle-fill"></i> Parts ordering login credentials</li>
+            </ul>
+        </div>
+
+        <!-- Seasonal Ordering -->
+        <div class="content-section">
+            <h2><i class="bi bi-calendar3"></i> Seasonal Ordering Schedule</h2>
+            <div class="parts-grid">
+                <div class="part-card">
+                    <h4><i class="bi bi-flower1"></i> Spring (April-May)</h4>
+                    <div class="part-details">
+                        • Stock cooling season filters<br>
+                        • Order coil cleaning supplies<br>
+                        • Verify emergency inventory
+                    </div>
+                </div>
+
+                <div class="part-card">
+                    <h4><i class="bi bi-sun"></i> Summer (July-August)</h4>
+                    <div class="part-details">
+                        • Mid-season filter order<br>
+                        • Backup capacitors<br>
+                        • Drain line maintenance supplies
+                    </div>
+                </div>
+
+                <div class="part-card">
+                    <h4><i class="bi bi-tree"></i> Fall (September-October)</h4>
+                    <div class="part-details">
+                        • Transition to heating filters<br>
+                        • Check heating components<br>
+                        • Winter emergency supplies
+                    </div>
+                </div>
+
+                <div class="part-card">
+                    <h4><i class="bi bi-snow"></i> Winter (January-February)</h4>
+                    <div class="part-details">
+                        • Mid-season filter order<br>
+                        • Freeze protection supplies<br>
+                        • Emergency heat components
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Orders Section -->
+        <div class="content-section">
+            <h2><i class="bi bi-truck"></i> Track Your Orders</h2>
+            <div class="ordering-methods">
+                <div class="method-card">
+                    <i class="bi bi-list-check"></i>
+                    <h3>Ticket System</h3>
+                    <p>View all open parts orders and service tickets</p>
+                    <a href="http://portal.saveenergysystems.com/cms_sys/index.php/TicketList" target="_blank" class="btn">View Tickets</a>
+                </div>
+
+                <div class="method-card">
+                    <i class="bi bi-clock-history"></i>
+                    <h3>Audit Log</h3>
+                    <p>Review complete history of all parts orders</p>
+                    <a href="http://portal.saveenergysystems.com/cms_sys/index.php/AuditLog" target="_blank" class="btn">View History</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warranty Information -->
+        <div class="content-section">
+            <h2><i class="bi bi-patch-check"></i> Warranty Information</h2>
+            <div class="parts-grid">
+                <div class="part-card">
+                    <h4>Standard Parts</h4>
+                    <p style="color: #666;">1 year manufacturer warranty</p>
+                </div>
+                <div class="part-card">
+                    <h4>SES Control Systems</h4>
+                    <p style="color: #666;">5 years warranty coverage</p>
+                </div>
+                <div class="part-card">
+                    <h4>Major Components</h4>
+                    <p style="color: #666;">3-5 years (varies by part)</p>
+                </div>
+                <div class="part-card">
+                    <h4>Wear Items</h4>
+                    <p style="color: #666;">No warranty (filters, belts)</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #666;">
+                <strong>Warranty Claims:</strong> Contact SES within warranty period at (617) 564-4800 with proof of purchase. 
+                Approved parts shipped free, installation may be additional.
+            </p>
+        </div>
+
+        <!-- Cost Management Tips -->
+        <div class="content-section">
+            <h2><i class="bi bi-piggy-bank"></i> Cost Management Tips</h2>
+            <ul class="checklist">
+                <li><i class="bi bi-currency-dollar"></i> Order in bulk for volume discounts</li>
+                <li><i class="bi bi-currency-dollar"></i> Schedule regular maintenance to prevent failures</li>
+                <li><i class="bi bi-currency-dollar"></i> Stock common items to avoid emergency shipping</li>
+                <li><i class="bi bi-currency-dollar"></i> Use SES-approved parts for warranty protection</li>
+                <li><i class="bi bi-currency-dollar"></i> Track parts usage for budget forecasting</li>
+                <li><i class="bi bi-currency-dollar"></i> Join preventive maintenance program</li>
+                <li><i class="bi bi-currency-dollar"></i> Consider annual parts package</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Fixed Search Bar -->
+    <div class="search-bar-fixed">
+        <div class="search-container">
+            <span style="position: relative; display: inline-block; font-size: 1.5em;">
+                <i class="bi bi-person-circle" style="color: #7B4ECC;"></i>
+                <i class="bi bi-lightning-charge-fill" style="position: absolute; bottom: -3px; right: -8px; font-size: 0.6em; color: #FFDC00;"></i>
+            </span>
+            <input type="text" class="search-input" placeholder="Ask Steph anything about parts ordering..." id="searchInput">
+        </div>
+    </div>
+
+    <script>
+        // Load user session
+        window.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('pfUser') || '{"name":"Guest"}');
+            document.getElementById('userName').textContent = user.name;
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('pfUser');
+            window.location.href = 'index.html';
+        }
+
+        // Search functionality (Phase 2: Connect to GuideFlow AI backend)
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value;
+                alert('Steph AI search coming in Phase 2!\n\nYour question: "' + query + '"\n\nFor now, call SES at (617) 564-4800 for immediate assistance.');
+            }
+        });
+    </script>
+</body>
+</html>

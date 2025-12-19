@@ -1,0 +1,143 @@
+╔═══════════════════════════════════════════════════════════════╗
+║  📦 SES MULTI-TENANT GUIDEFLOW HUBS - DOCUMENTATION PACKAGE  ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📁 FOLDER: /home/user/pf-resource-hub/
+📊 FILES: 7 documents (140KB total)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 WHO SHOULD READ WHAT?
+
+┌─────────────────────────────────────────────────────────────┐
+│ 👨‍💻 DEVELOPERS / TECH TEAM                                   │
+├─────────────────────────────────────────────────────────────┤
+│ 1. DEV-TEAM-START-HERE.md (READ FIRST!)                    │
+│    └─> Onboarding, reading order, setup instructions       │
+│                                                             │
+│ 2. MULTI-TENANT-ARCHITECTURE.md (TECHNICAL BLUEPRINT)      │
+│    └─> Database schemas, subdomains, permissions           │
+│                                                             │
+│ 3. STEPH-REQUIREMENTS-WITH-DEMOS.md (USE CASES)           │
+│    └─> What features to build, actual examples            │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ 💼 BUSINESS / LEADERSHIP / SALES                            │
+├─────────────────────────────────────────────────────────────┤
+│ 1. STEPH-REQUIREMENTS-WITH-DEMOS.md (START HERE!)         │
+│    └─> What client wants, live GuideFlow examples          │
+│                                                             │
+│ 2. SIMPLE-PITCH.md (CLIENT-FRIENDLY)                       │
+│    └─> Easy explanations, franchise opportunity            │
+│                                                             │
+│ 3. EXECUTIVE-SUMMARY.md (FULL BUSINESS CASE)              │
+│    └─> Revenue projections, timelines, metrics             │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ 🎨 PRESENTATIONS / QUICK REFERENCE                          │
+├─────────────────────────────────────────────────────────────┤
+│ 1. ONE-PAGE-VISUAL.md (VISUAL SUMMARY)                     │
+│    └─> ASCII diagrams, one-page overview                   │
+│                                                             │
+│ 2. README.md (GUIDE TO ALL DOCS)                           │
+│    └─> What each file contains                             │
+└─────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 QUICK FACTS:
+
+PROJECT:  Multi-tenant AI-powered resource hubs
+CLIENT:   Planet Fitness (first client) + SES Internal
+TECH:     Hono + Cloudflare Pages + D1 + Pinecone + OpenAI
+TIMELINE: 4-6 weeks to MVP
+COST:     Minimal (we already have GuideFlowAI built!)
+REVENUE:  $2M-$7M potential in 12 months
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 ARCHITECTURE AT A GLANCE:
+
+saveenergysystems.com
+├── planetfitness.saveenergysystems.com (PF GMs - 500 users)
+├── internal.saveenergysystems.com (SES employees - 47 users)
+└── admin.saveenergysystems.com (Super Admin - YOU)
+
+Each subdomain = separate microsite:
+✅ Own logo, colors, branding
+✅ Own password protection
+✅ Own user list (isolated)
+✅ Own content files
+✅ Own Google Analytics
+
+Two-level admin:
+✅ Super admin (you) = see ALL microsites
+✅ Client admin (Steph for PF) = see THEIR microsite only
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🗄️ DATABASE (Cloudflare D1):
+
+4 Tables:
+1. clients (microsites: PF, LA Fitness, SES Internal)
+2. users (per client, with client_id foreign key)
+3. search_logs (analytics per client)
+4. admin_permissions (who can manage what)
+
+See MULTI-TENANT-ARCHITECTURE.md for SQL schemas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 CONTENT STRUCTURE:
+
+/clients/
+├── planetfitness/
+│   ├── config.json (logo, colors, admin email, GA4 ID)
+│   └── resources/
+│       ├── work-order-submission.txt
+│       ├── billing-guide.txt
+│       └── (20+ text files)
+├── internal/
+│   ├── config.json
+│   └── resources/
+│       ├── lockbox-codes.txt
+│       └── (15+ text files)
+└── template/ (clone for new clients!)
+
+Add new client = copy template folder + edit config (5 days!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ NEXT STEPS:
+
+1. Download all 7 files from /home/user/pf-resource-hub/
+2. Developers read: DEV-TEAM-START-HERE.md
+3. Business reads: STEPH-REQUIREMENTS-WITH-DEMOS.md
+4. Schedule kickoff meeting
+5. Clone GuideFlowAI codebase
+6. Start Phase 1 (Multi-tenant core)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 THE ELEVATOR PITCH:
+
+"We're building white-labeled AI search portals for facility 
+managers. One codebase, multiple clients. Planet Fitness GMs 
+find answers in 10 seconds instead of 10 minutes. Support 
+calls dropped 60%. Clone it for other fitness chains in 5 days 
+each. $2M-$7M revenue opportunity."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 QUESTIONS?
+
+Reference the docs:
+- Business questions → SIMPLE-PITCH.md
+- Technical questions → MULTI-TENANT-ARCHITECTURE.md
+- Requirements → STEPH-REQUIREMENTS-WITH-DEMOS.md
+- Getting started → DEV-TEAM-START-HERE.md
+
+Created: December 19, 2025
+Project: SES Multi-Tenant GuideFlow Hubs
