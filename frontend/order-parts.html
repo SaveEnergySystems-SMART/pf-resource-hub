@@ -20,79 +20,219 @@
             padding-bottom: 80px;
         }
 
-        .header {
+        /* Header */
+        header {
             background: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        .logo-container {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
             gap: 20px;
         }
 
-        .logo-container img {
-            height: 100px;
-        }
-
-        .user-info {
-            color: #1A0933;
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 24px;
         }
 
+        .logo-section img {
+            height: 100px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo-section img:first-child {
+            height: 75px;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: #E5E7EB;
+        }
+
+        /* User Menu */
         .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--pf-bright-purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-dropdown {
             position: relative;
         }
 
-        .user-button {
-            background: #F0E6FF;
-            border: 1px solid #5B2A86;
-            color: #1A0933;
-            padding: 8px 16px;
-            border-radius: 20px;
+        .user-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: all 0.2s ease;
         }
 
-        .user-button:hover {
-            background: #E0D1FF;
+        .user-dropdown-btn:hover {
+            background: #F9FAFB;
+            border-color: var(--pf-bright-purple);
+            color: var(--pf-bright-purple);
         }
 
-        .nav {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 20px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .nav a {
+        .admin-badge {
+            background: var(--pf-bright-purple);
             color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            transition: all 0.3s;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #1F2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
         }
 
-        .nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .dropdown-item:hover {
+            background: var(--pf-light-purple);
+            color: var(--pf-bright-purple);
         }
 
-        .nav a.active {
-            background: #FFDC00;
-            color: #1A0933;
+        .dropdown-item i {
+            font-size: 16px;
+            color: var(--pf-bright-purple);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 4px 0;
+        }
+
+        .logout-btn {
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
             font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 2px solid var(--pf-light-purple);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+        }
+
+        .nav-link {
+            padding: 16px 8px;
+            color: #6B7280;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-yellow);
+        }
+
+        .nav-link.active {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
         }
 
         .container {
@@ -409,30 +549,58 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="logo-container">
-            <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
-            <img src="images/ses-logo.png" alt="Save Energy Systems">
-        </div>
-        <div class="user-info">
-            <span id="userName">Loading...</span>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems">
+                <div class="logo-divider"></div>
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
+            </div>
+
             <div class="user-menu">
-                <button class="user-button" onclick="logout()">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Logout</span>
-                </button>
+                <div class="user-avatar" id="userAvatar"></div>
+                <span id="userEmail"></span>
+                
+                <!-- Admin Dropdown (only visible for admins) -->
+                <div class="user-dropdown" id="adminDropdown" style="display: none;">
+                    <button class="user-dropdown-btn" onclick="toggleDropdown()">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Admin</span>
+                        <span class="admin-badge">ADMIN</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-header">Admin Tools</div>
+                        <a href="admin-ses.html" class="dropdown-item" id="sesAdminLink" style="display: none;">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>SES Super Admin</span>
+                        </a>
+                        <a href="admin-pf.html" class="dropdown-item" id="pfAdminLink" style="display: none;">
+                            <i class="bi bi-building"></i>
+                            <span>PF Admin Dashboard</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" onclick="window.open('https://analytics.google.com', '_blank')">
+                            <i class="bi bi-graph-up"></i>
+                            <span>Google Analytics</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
-    </div>
+    </header>
 
     <!-- Navigation -->
-    <div class="nav">
-        <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-        <a href="help-now.html"><i class="bi bi-exclamation-circle"></i> Help Now</a>
-        <a href="order-parts.html" class="active"><i class="bi bi-cart"></i> Order Parts</a>
-        <a href="resources.html"><i class="bi bi-book"></i> Resources</a>
-        <a href="why-ses.html"><i class="bi bi-award"></i> Why SES</a>
-    </div>
+    <nav>
+        <div class="nav-content">
+            <a href="dashboard.html" class="nav-link">AI Assistant</a>
+            <a href="resources.html" class="nav-link">Resources</a>
+            <a href="order-parts.html" class="nav-link active">Order Parts</a>
+            <a href="help-now.html" class="nav-link">Help Now</a>
+        </div>
+    </nav>
 
     <!-- Main Content -->
     <div class="container">
@@ -478,7 +646,7 @@
                 <i class="bi bi-envelope"></i>
                 <h3>Email Orders</h3>
                 <p>Send your parts list and we'll process your order within 2 hours</p>
-                <a href="/cdn-cgi/l/email-protection#e4979194948b9690a497859281818a8196839d979d9790818997ca878b89" class="btn">
+                <a href="/cdn-cgi/l/email-protection#c0b3b5b0b0afb2b480b3a1b6a5a5aea5b2a7b9b3b9b3b4a5adb3eea3afad" class="btn">
                     <i class="bi bi-envelope"></i> Send Email
                 </a>
             </div>

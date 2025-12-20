@@ -36,7 +36,11 @@
         }
 
         .logo-container img {
-            height: 40px;
+            height: 100px;
+        }
+        
+        .logo-container img:nth-child(2) {
+            height: 75px;
         }
 
         .user-info {
@@ -242,28 +246,6 @@
             margin-top: 2px;
         }
 
-        .testimonial-box {
-            background: linear-gradient(135deg, #FFDC00 0%, #FFC000 100%);
-            color: #1A0933;
-            padding: 30px;
-            border-radius: 12px;
-            margin: 20px 0;
-            font-style: italic;
-            box-shadow: 0 4px 15px rgba(255, 220, 0, 0.3);
-        }
-
-        .testimonial-box p {
-            font-size: 1.2em;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        .testimonial-author {
-            font-weight: bold;
-            font-style: normal;
-            text-align: right;
-        }
-
         .tech-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -377,7 +359,7 @@
     <!-- Header -->
     <div class="header">
         <div class="logo-container">
-            <img src="images/Logo-Primary.svg" alt="Planet Fitness">
+            <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
             <img src="images/ses-logo.png" alt="Save Energy Systems">
         </div>
         <div class="user-info">
@@ -579,21 +561,11 @@
             </ul>
         </div>
 
-        <!-- Case Study / Testimonials -->
+        <!-- Success Metrics -->
         <div class="content-section">
-            <h2><i class="bi bi-star-fill"></i> Success Stories</h2>
+            <h2><i class="bi bi-star-fill"></i> Success Metrics</h2>
             <p style="color: #666; margin-bottom: 20px;">Real results from Planet Fitness franchise partners</p>
             
-            <div class="testimonial-box">
-                <p>"The SES system has transformed our energy management. We're saving over $12K per location annually with zero impact on member experience."</p>
-                <div class="testimonial-author">— Regional Franchise Owner, 8 Locations</div>
-            </div>
-
-            <div class="testimonial-box">
-                <p>"Having 23 locations on one dashboard makes management effortless. The predictive alerts have prevented multiple costly failures."</p>
-                <div class="testimonial-author">— Multi-Unit Operator, 23 Locations</div>
-            </div>
-
             <h3 style="color: #2E1A47; margin: 25px 0 15px;">Key Success Metrics:</h3>
             <div class="benefit-cards">
                 <div class="benefit-card">
@@ -667,7 +639,7 @@
                 <a href="tel:6175644800" style="background: #FFDC00; color: #1A0933; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
                     <i class="bi bi-telephone-fill"></i> Call (617) 564-4800
                 </a>
-                <a href="mailto:support@saveenergysystems.com" style="background: white; color: #5A2E82; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
+                <a href="/cdn-cgi/l/email-protection#f4878184849b8680b487958291919a9186938d878d8780919987da979b99" style="background: white; color: #5A2E82; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
                     <i class="bi bi-envelope-fill"></i> Email Support
                 </a>
                 <a href="https://dashboard.saveenergysystems.com/" target="_blank" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
@@ -688,7 +660,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user session
         window.addEventListener('DOMContentLoaded', function() {
             const user = JSON.parse(localStorage.getItem('pfUser') || '{"name":"Guest"}');

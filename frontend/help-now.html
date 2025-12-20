@@ -58,6 +58,10 @@
             max-width: 200px;
             object-fit: contain;
         }
+        
+        .logo-section img:first-child {
+            height: 75px;
+        }
 
         .logo-divider {
             width: 1px;
@@ -449,7 +453,31 @@
         }
 
         .logout-btn {
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
+            border-radius: 8px;
             padding: 8px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
             background: transparent;
             border: 1px solid #E5E7EB;
             border-radius: 8px;
@@ -460,9 +488,82 @@
             transition: all 0.2s ease;
         }
 
-        .logout-btn:hover {
+        .user-dropdown-btn:hover {
             background: #F9FAFB;
-            border-color: #D1D5DB;
+            border-color: var(--pf-bright-purple);
+            color: var(--pf-bright-purple);
+        }
+
+        .admin-badge {
+            background: var(--pf-bright-purple);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #1F2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item:hover {
+            background: var(--pf-light-purple);
+            color: var(--pf-bright-purple);
+        }
+
+        .dropdown-item i {
+            font-size: 16px;
+            color: var(--pf-bright-purple);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 4px 0;
         }
 
         /* Responsive */
@@ -517,19 +618,41 @@
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <div>
-                    <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
-                </div>
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems">
                 <div class="logo-divider"></div>
-                <div>
-                    <img src="images/ses-logo.png" alt="Save Energy Systems">
-                    <p class="tagline">AI-driven energy and facility management systems</p>
-                </div>
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
             </div>
 
             <div class="user-menu">
                 <div class="user-avatar" id="userAvatar"></div>
                 <span id="userEmail"></span>
+                
+                <!-- Admin Dropdown (only visible for admins) -->
+                <div class="user-dropdown" id="adminDropdown" style="display: none;">
+                    <button class="user-dropdown-btn" onclick="toggleDropdown()">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Admin</span>
+                        <span class="admin-badge">ADMIN</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-header">Admin Tools</div>
+                        <a href="admin-ses.html" class="dropdown-item" id="sesAdminLink" style="display: none;">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>SES Super Admin</span>
+                        </a>
+                        <a href="admin-pf.html" class="dropdown-item" id="pfAdminLink" style="display: none;">
+                            <i class="bi bi-building"></i>
+                            <span>PF Admin Dashboard</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" onclick="window.open('https://analytics.google.com', '_blank')">
+                            <i class="bi bi-graph-up"></i>
+                            <span>Google Analytics</span>
+                        </button>
+                    </div>
+                </div>
+                
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -538,11 +661,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="dashboard.html" class="nav-link">🏠 Dashboard</a>
-            <a href="help-now.html" class="nav-link active">🚨 Help Now</a>
-            <a href="order-parts.html" class="nav-link">📦 Order Parts</a>
-            <a href="resources.html" class="nav-link">📚 Resources</a>
-            <a href="why-ses.html" class="nav-link">💡 Why SES</a>
+            <a href="dashboard.html" class="nav-link">AI Assistant</a>
+            <a href="resources.html" class="nav-link">Resources</a>
+            <a href="order-parts.html" class="nav-link">Order Parts</a>
+            <a href="help-now.html" class="nav-link active">Help Now</a>
         </div>
     </nav>
 
@@ -714,7 +836,7 @@
             <div class="contact-card">
                 <i class="bi bi-envelope-fill"></i>
                 <h4>Email Support</h4>
-                <a href="/cdn-cgi/l/email-protection#7b080e0b0b14090f3b081a0d1e1e151e091c020802080f1e160855181416" class="phone" style="font-size: 16px;"><span class="__cf_email__" data-cfemail="81f2f4f1f1eef3f5c1f2e0f7e4e4efe4f3e6f8f2f8f2f5e4ecf2afe2eeec">[email&#160;protected]</span></a>
+                <a href="/cdn-cgi/l/email-protection#b6c5c3c6c6d9c4c2f6c5d7c0d3d3d8d3c4d1cfc5cfc5c2d3dbc598d5d9db" class="phone" style="font-size: 16px;"><span class="__cf_email__" data-cfemail="a9dadcd9d9c6dbdde9dac8dfccccc7ccdbced0dad0daddccc4da87cac6c4">[email&#160;protected]</span></a>
                 <p class="detail">Non-emergency support<br>Response: Within 4 hours</p>
             </div>
 
@@ -793,19 +915,34 @@
     </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Load user data from session (NO REDIRECT - SIMPLE VERSION)
+        // Load user data from session
         window.addEventListener('load', () => {
             // Check for authentication
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
             
             let email = 'User';
+            let userRole = null;
             
             // If we have user data, use it
             if (userDataStr) {
                 try {
                     const userData = JSON.parse(userDataStr);
                     email = userData.email || userData.username || 'User';
+                    userRole = userData.role;
+                    
+                    // Show admin dropdown if user is admin
+                    if (userRole === 'ses_admin' || userRole === 'pf_admin') {
+                        document.getElementById('adminDropdown').style.display = 'block';
+                        
+                        // Show appropriate admin links
+                        if (userRole === 'ses_admin') {
+                            document.getElementById('sesAdminLink').style.display = 'flex';
+                            document.getElementById('pfAdminLink').style.display = 'flex';
+                        } else if (userRole === 'pf_admin') {
+                            document.getElementById('pfAdminLink').style.display = 'flex';
+                        }
+                    }
                 } catch (e) {
                     console.error('Error parsing user data:', e);
                 }
@@ -815,6 +952,22 @@
             document.getElementById('userEmail').textContent = email;
             const initial = email.charAt(0).toUpperCase();
             document.getElementById('userAvatar').textContent = initial;
+        });
+
+        // Toggle admin dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const dropdownBtn = document.querySelector('.user-dropdown-btn');
+            
+            if (dropdown && dropdownBtn && !dropdownBtn.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
         });
 
         // Handle search
