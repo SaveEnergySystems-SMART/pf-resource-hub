@@ -13,9 +13,13 @@ class OpenAIService:
         """Initialize OpenAI service"""
         self.api_key = os.getenv('OPENAI_API_KEY', '')
         
-        if self.api_key:
-            self.client = OpenAI(api_key=self.api_key)
-            print("✅ OpenAI initialized successfully")
+        if self.api_key and self.api_key.startswith('sk-'):
+            try:
+                self.client = OpenAI(api_key=self.api_key)
+                print("✅ OpenAI initialized successfully")
+            except Exception as e:
+                self.client = None
+                print(f"⚠️  OpenAI initialization failed: {e}")
         else:
             self.client = None
             print("⚠️  OPENAI_API_KEY not configured. AI chat will not work.")
