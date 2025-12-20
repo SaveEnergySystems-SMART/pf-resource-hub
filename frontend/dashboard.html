@@ -36,6 +36,16 @@
             --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
         }
 
+        /* Prevent flash of content before auth check */
+        body {
+            opacity: 0;
+            transition: opacity 0.2s ease-in;
+        }
+        
+        body.auth-checked {
+            opacity: 1;
+        }
+
         body {
             font-family: var(--font-sans);
             background: #F9FAFB;
@@ -697,7 +707,7 @@
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
             
-            // If no auth, redirect to login
+            // If no auth, redirect to login (keep body hidden)
             if (!authToken || !userDataStr) {
                 window.location.href = 'login-final.html';
                 return;
@@ -726,7 +736,7 @@
                 }
             } catch (e) {
                 console.error('Error parsing user data:', e);
-                // If user data is corrupted, redirect to login
+                // If user data is corrupted, redirect to login (keep body hidden)
                 window.location.href = 'login-final.html';
                 return;
             }
@@ -735,6 +745,9 @@
             document.getElementById('userEmail').textContent = email;
             const initial = email.charAt(0).toUpperCase();
             document.getElementById('userAvatar').textContent = initial;
+            
+            // ✅ Show page now that auth is verified
+            document.body.classList.add('auth-checked');
         });
 
         // Toggle admin dropdown
