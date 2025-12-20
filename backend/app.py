@@ -21,7 +21,7 @@ from email_service import (
     send_admin_password_reset_email,
     send_account_deactivated_email
 )
-from gemini_service import get_ai_response
+from openai_service import get_ai_response
 
 # Initialize Flask app
 app = Flask(__name__)
