@@ -35,6 +35,59 @@ CORS(app, origins=app.config['CORS_ORIGINS'])
 db.init_app(app)
 
 # =============================================================================
+# AUTO-INITIALIZE DATABASE ON STARTUP
+# =============================================================================
+
+def ensure_database_initialized():
+    """Ensure database is initialized (runs on app startup, even with Gunicorn)"""
+    try:
+        with app.app_context():
+            # Try to query users table
+            User.query.first()
+            print("✅ Database already initialized")
+    except Exception as e:
+        print(f"⚠️ Database not initialized, creating tables: {e}")
+        with app.app_context():
+            db.create_all()
+            
+            # Create default admin users
+            ses_admin = User.query.filter_by(email=Config.SES_SUPER_ADMIN_EMAIL).first()
+            if not ses_admin:
+                ses_admin = User(
+                    username='asoler',
+                    email=Config.SES_SUPER_ADMIN_EMAIL,
+                    first_name='Adriana',
+                    last_name='Soler',
+                    role='ses_admin',
+                    is_active=True
+                )
+                ses_admin.set_password('SES-Admin-2025!')
+                db.session.add(ses_admin)
+                print(f"✅ Created SES Super Admin: {ses_admin.email}")
+            
+            pf_admin = User.query.filter_by(email=Config.PF_ADMIN_TEST_EMAIL).first()
+            if not pf_admin:
+                pf_admin = User(
+                    username='pfadmin',
+                    email=Config.PF_ADMIN_TEST_EMAIL,
+                    first_name='Adriana',
+                    last_name='Test Admin',
+                    role='pf_admin',
+                    location='Boston Region',
+                    is_active=True,
+                    created_by_id=ses_admin.id if ses_admin else None
+                )
+                pf_admin.set_password('PF-Admin-2025!')
+                db.session.add(pf_admin)
+                print(f"✅ Created PF Test Admin: {pf_admin.email}")
+            
+            db.session.commit()
+            print("✅ Database initialized successfully!")
+
+# Run database initialization check on module load
+ensure_database_initialized()
+
+# =============================================================================
 # AUTHENTICATION DECORATORS
 # =============================================================================
 
