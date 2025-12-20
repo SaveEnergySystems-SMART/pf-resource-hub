@@ -1,0 +1,213 @@
+TROUBLESHOOTING GUIDE
+PLANET FITNESS HVAC DIAGNOSTICS
+
+QUICK DIAGNOSTIC FLOWCHART:
+
+PROBLEM: No Cooling/Heating in One Zone
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Check thermostat display - Is it on?
+  → No: Check breaker, replace batteries
+  → Yes: Continue to Step 2
+
+Step 2: Check set temperature vs actual
+  → Difference < 3°F: Normal operation
+  → Difference > 3°F: Continue to Step 3
+
+Step 3: Feel air coming from vents
+  → No air: Check filter, call SES (617) 564-4800
+  → Weak air: Check filter, replace if dirty
+  → Strong air but wrong temp: Call SES
+
+Step 4: Check outdoor unit running
+  → Not running: Call SES immediately
+  → Running but loud: Call SES
+  → Running normally: Log issue, call SES
+
+PROBLEM: Multiple Zones Not Working
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This is a SYSTEM-LEVEL issue:
+1. Check SES dashboard for alerts
+2. Verify main breaker on
+3. Call SES immediately: (617) 564-4800
+4. Do not attempt multiple resets
+5. Document which zones affected
+6. Note time issue started
+
+PROBLEM: High Energy Bills
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Possible Causes:
+□ Filters need replacement
+□ Outdoor units blocked/dirty
+□ Thermostat settings too extreme
+□ Doors/windows left open
+□ System needs maintenance
+□ Weather extremes
+
+Actions:
+1. Review SES energy dashboard
+2. Compare to previous months
+3. Check filter dates
+4. Inspect outdoor units
+5. Call SES for energy audit: (617) 564-4800
+6. Review operational hours
+
+PROBLEM: Unusual Noises
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Grinding/Scraping:
+→ Turn off unit immediately
+→ Call SES emergency: (617) 564-4800
+→ Possible bearing failure
+
+Banging/Clanging:
+→ Note when it occurs (startup/shutdown)
+→ Call SES: (617) 564-4800
+→ Possible loose component
+
+Hissing/Whistling:
+→ Check air filters
+→ Inspect vents for blockages
+→ Call SES if persistent
+
+Clicking:
+→ Normal if occasional
+→ Call SES if constant: (617) 564-4800
+→ May indicate electrical issue
+
+PROBLEM: Water Leaks
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Indoor Unit Leaking:
+1. Turn off unit
+2. Place catch bucket
+3. Check drain line for clogs
+4. Call SES: (617) 564-4800
+5. Document location and amount
+
+Outdoor Unit Water:
+→ Normal condensation in summer
+→ Should drain away properly
+→ Call SES if pooling: (617) 564-4800
+
+PROBLEM: Frequent Breaker Trips
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DO NOT repeatedly reset breaker:
+1. Turn off HVAC at thermostat
+2. Reset breaker once
+3. Wait 5 minutes
+4. Turn on HVAC
+5. If trips again, call SES: (617) 564-4800
+6. This indicates electrical problem
+
+PROBLEM: Bad Odors
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Burning Smell:
+→ Turn off system immediately
+→ Call SES emergency: (617) 564-4800
+→ Possible electrical issue
+
+Musty/Moldy Smell:
+→ Change filters
+→ Check for water leaks
+→ Call SES for duct cleaning: (617) 564-4800
+
+Gas/Chemical Smell:
+→ Evacuate facility
+→ Call gas company
+→ Then call SES: (617) 564-4800
+
+CLIMATE-SPECIFIC TROUBLESHOOTING:
+
+COLD CLIMATE ISSUES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ice on Outdoor Unit:
+→ Normal light frost in winter
+→ Heavy ice = problem
+→ Turn off system
+→ Call SES: (617) 564-4800
+
+Insufficient Heat:
+→ Check emergency heat setting
+→ Verify outdoor unit not blocked by snow
+→ Call SES for defrost cycle check
+
+HOT/HUMID CLIMATE ISSUES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+High Humidity Indoors:
+→ Check drain lines clear
+→ Verify dehumidification running
+→ Call SES for settings adjustment
+
+Insufficient Cooling:
+→ Clean outdoor coils (spray gently)
+→ Ensure adequate clearance
+→ Check filters
+→ Call SES if persistent
+
+PREVENTIVE MAINTENANCE CHECKLIST:
+
+MONTHLY GM TASKS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Check/replace air filters
+□ Visual inspection of outdoor units
+□ Listen for unusual noises
+□ Review SES dashboard alerts
+□ Check thermostat operation
+□ Inspect drain lines for clogs
+□ Document any concerns
+□ Review energy usage trends
+
+QUARTERLY SES INSPECTIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ System performance analysis
+□ Refrigerant level check
+□ Electrical connections inspection
+□ Coil cleaning (indoor/outdoor)
+□ Belt and bearing inspection
+□ Control calibration
+□ Safety system testing
+□ Efficiency optimization
+
+DIAGNOSTIC TOOLS AVAILABLE:
+
+SES Portal Tools:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Dashboard: https://dashboard.saveenergysystems.com/
+- Real-time system status
+- Energy usage graphs
+- Alert history
+- Maintenance schedules
+- Performance reports
+
+Ticket System: http://portal.saveenergysystems.com/cms_sys/index.php/TicketList
+- Open new tickets
+- Track existing issues
+- View resolution history
+- Upload photos/videos
+- Communication log
+
+WHEN TO CALL SES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Call Immediately For:
+🚨 No cooling/heating (multiple zones)
+🚨 Burning smells
+🚨 Smoke or sparks
+🚨 Water leaks
+🚨 Repeated breaker trips
+🚨 Loud unusual noises
+🚨 Safety concerns
+
+Schedule Maintenance For:
+📅 Routine filter changes needed
+📅 Annual system tune-up
+📅 Energy efficiency concerns
+📅 Preventive maintenance
+📅 Training needs
+📅 System upgrades
+
+CONTACT INFORMATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+24/7 Support: (617) 564-4800
+Email: support@saveenergysystems.com
+Emergency Portal: http://portal.saveenergysystems.com/
+Dashboard: https://dashboard.saveenergysystems.com/
+
+Generated: 12/19/2025

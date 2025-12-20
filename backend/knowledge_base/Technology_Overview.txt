@@ -1,0 +1,60 @@
+SES TECHNOLOGY OVERVIEW
+DEMAND LIMITING CONTROLLER (DLC) SYSTEM
+
+DLC CORE FEATURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Real-Time Monitoring: 24/7/365 system surveillance
+• Automated HVAC Control: AI-powered optimization
+• Remote Diagnostics: Instant issue identification
+• Weather-Responsive Operation: Predictive adjustments
+• Predictive Maintenance Alerts: Proactive management
+• Multi-Zone Management: Individual room control
+• Energy Usage Tracking: Detailed analytics
+
+MONITORING CAPABILITIES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Energy Usage Tracking: Real-time kWh monitoring
+• System Performance Alerts: Instant notifications
+• Maintenance Scheduling: Automated reminders
+• Dashboard Access: Web and mobile apps
+• Multi-Site Management: Corporate overview
+• Historical Data Analysis: Trend reporting
+• Anomaly Detection: AI-powered alerts
+
+SMART FEATURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Occupancy-Based Control: Auto adjustments
+• Time-of-Day Optimization: Peak shaving
+• Weather Integration: External condition response
+• Demand Response Ready: Utility program compatible
+• Load Balancing: Multi-unit coordination
+• Zone-Level Control: Individual room precision
+• Fresh Air Management: COVID-19 protocols
+
+SYSTEM INTEGRATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Compatible with All Major HVAC Brands
+• Wireless Communication: Cellular and Wi-Fi
+• Cloud-Based Platform: Secure data storage
+• API Access: Third-party integration
+• Mobile App: iOS and Android
+• Email/SMS Alerts: Customizable notifications
+• Remote Access: Anywhere, anytime
+
+DEPLOYMENT SPECIFICATIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Installation Time: 4-6 hours per site
+• No HVAC Downtime Required
+• Minimal Wall Modifications
+• Professional Installation Included
+• Training Provided: On-site and remote
+• Warranty: 5 years standard
+
+CONTACT & ACCESS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SES Support: (617) 564-4800
+Technical Email: support@saveenergysystems.com
+Main Dashboard: https://dashboard.saveenergysystems.com/
+Customer Portal: http://portal.saveenergysystems.com/cms_sys/index.php/Psession/index
+
+Generated: 12/19/2025

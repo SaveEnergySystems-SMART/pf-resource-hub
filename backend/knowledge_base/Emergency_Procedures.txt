@@ -1,0 +1,163 @@
+EMERGENCY PROCEDURES
+PLANET FITNESS HVAC CRISIS MANAGEMENT
+
+IMMEDIATE EMERGENCY RESPONSE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Assess the situation
+Step 2: Ensure member and staff safety
+Step 3: Call SES Emergency: (617) 564-4800
+Step 4: Follow operator instructions
+Step 5: Document incident details
+Step 6: Notify regional management
+Step 7: Track resolution in SES portal
+
+CRITICAL EMERGENCY SCENARIOS:
+
+SCENARIO 1: COMPLETE HVAC FAILURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Symptoms:
+- No cooling/heating in entire facility
+- All zones unresponsive
+- System dashboard shows offline
+
+Immediate Actions:
+1. Call SES immediately: (617) 564-4800
+2. Check main circuit breakers (don't reset if tripping)
+3. Open emergency ticket in portal
+4. Post signage if facility must close
+5. Notify members if temperature unsafe
+6. Contact regional manager
+7. Request emergency technician dispatch
+
+Expected Response:
+- SES acknowledgment: Within 15 minutes
+- Technician dispatch: Within 2 hours
+- Temporary solution: Same day
+- Full repair: 24-48 hours
+
+SCENARIO 2: FIRE/SMOKE/BURNING SMELL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Immediate Actions:
+1. EVACUATE facility immediately if smoke visible
+2. Call 911 first for fire/smoke
+3. Turn off HVAC main power if safe
+4. Use fire extinguisher only if trained
+5. Call SES after emergency services: (617) 564-4800
+6. Do not re-enter until cleared
+7. Document for insurance
+
+Do Not:
+- Investigate source alone
+- Attempt repairs
+- Re-energize system
+- Allow members in facility
+
+SCENARIO 3: WATER LEAK/FLOODING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Immediate Actions:
+1. Identify water source location
+2. Shut off water if accessible
+3. Move equipment/members away from water
+4. Call SES: (617) 564-4800
+5. Place caution signs/barriers
+6. Document with photos
+7. Call restoration company if major
+
+Priorities:
+- Member safety first
+- Prevent electrical hazards
+- Minimize equipment damage
+- Document for insurance
+
+SCENARIO 4: EXTREME TEMPERATURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Temperature > 85°F or < 60°F:
+
+Actions:
+1. Check SES dashboard for alerts
+2. Verify thermostat settings
+3. Call SES: (617) 564-4800
+4. Open high-bay doors if safe
+5. Set up temporary fans if available
+6. Post member advisories
+7. Consider facility closure if extreme
+
+Member Safety:
+- Monitor for heat exhaustion symptoms
+- Provide extra water stations
+- Reduce high-intensity activities
+- Shorten operating hours if needed
+
+SCENARIO 5: ELECTRICAL ISSUES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Symptoms:
+- Breakers tripping repeatedly
+- Sparks or arcing
+- Lights flickering with HVAC
+- Burning electrical smell
+
+Immediate Actions:
+1. Turn off affected breakers
+2. Call SES immediately: (617) 564-4800
+3. Evacuate area if sparking
+4. Do not attempt repairs
+5. Keep members away from equipment
+6. Document observations
+7. Wait for qualified technician
+
+ESCALATION PROTOCOL:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Level 1: SES Support (617) 564-4800
+↓ (No response in 15 min)
+Level 2: SES Emergency Email: support@saveenergysystems.com
+↓ (No response in 30 min)
+Level 3: Regional Planet Fitness Manager
+↓ (Life safety concern)
+Level 4: 911 / Local Emergency Services
+
+EMERGENCY CONTACT TREE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. SES Emergency: (617) 564-4800
+2. SES Email: support@saveenergysystems.com
+3. SES Portal Ticket: http://portal.saveenergysystems.com/cms_sys/index.php/TicketList
+4. Regional Manager: [Your assigned contact]
+5. Corporate Facilities: [Your assigned contact]
+6. Local HVAC Contractor: [Backup only]
+
+DOCUMENTATION REQUIREMENTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+For All Emergencies, Document:
+✓ Date and exact time of incident
+✓ First person who noticed issue
+✓ Detailed description of problem
+✓ Actions taken before calling SES
+✓ SES ticket number received
+✓ Technician arrival time
+✓ Resolution details and time
+✓ Photos of any damage
+✓ Member impact (complaints, closures)
+✓ Financial impact estimate
+
+POST-EMERGENCY CHECKLIST:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Verify system fully operational
+□ Test all zones and controls
+□ Complete incident report in SES portal
+□ Update regional management
+□ Review with staff for lessons learned
+□ Schedule follow-up inspection
+□ Update emergency procedures if needed
+□ File insurance claim if applicable
+
+EMERGENCY SUPPLIES TO KEEP ON HAND:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Flashlights with fresh batteries
+• Caution tape and barriers
+• Fire extinguishers (check dates)
+• First aid kit
+• Emergency contact list posted
+• Incident report forms
+• Camera for documentation
+• Basic tools for breaker access
+
+Generated: 12/19/2025

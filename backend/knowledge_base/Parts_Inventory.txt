@@ -1,0 +1,218 @@
+PARTS INVENTORY & ORDERING GUIDE
+PLANET FITNESS HVAC REPLACEMENT PARTS
+
+SES PARTS ORDERING SYSTEMS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Primary Portal: http://portal.saveenergysystems.com/cms_sys/index.php/PartsCatalog
+Spare Parts UAT: https://spare-parts.uat.se.com/
+Phone Orders: (617) 564-4800
+Email Orders: support@saveenergysystems.com
+Emergency Parts: Call for same-day availability
+
+HOW TO ORDER PARTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Identify Part Needed
+- Check equipment label for model number
+- Note part description and function
+- Take photo of existing part
+- Review SES dashboard for part recommendations
+
+Step 2: Access Ordering System
+- Login to SES Portal with credentials
+- Navigate to Parts Catalog
+- Or call (617) 564-4800 for assistance
+
+Step 3: Search and Order
+- Enter part number or keyword
+- Verify compatibility with your system
+- Check availability and lead time
+- Add to cart and submit
+
+Step 4: Track Order
+- Receive confirmation email
+- Track shipment via portal
+- Standard shipping: 2-3 business days
+- Emergency shipping: Next day available
+- International: 5-7 business days
+
+COMMON REPLACEMENT PARTS:
+
+FILTERS (Monthly/Quarterly Replacement):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Part: Standard Air Filters
+Sizes: 16x20x1, 16x25x1, 20x20x1, 20x25x1
+MERV Rating: MERV 8 (standard), MERV 11 (high-efficiency)
+Order Quantity: Box of 12 recommended
+Replacement Schedule: 30-90 days depending on usage
+Part Numbers: Contact SES for specific models
+
+Part: High-Efficiency HEPA Filters
+Sizes: Custom per location
+MERV Rating: MERV 13+
+Order Quantity: 6-month supply
+Replacement Schedule: 6 months
+Cost: Premium pricing
+
+THERMOSTATS & SENSORS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Part: SES Smart Thermostat
+Type: Wi-Fi enabled, touchscreen
+Compatibility: All SES DLC systems
+Backup batteries: CR2032 (2 per unit)
+Installation: SES certified tech required
+
+Part: Temperature Sensors
+Type: Zone-specific wireless sensors
+Battery Life: 2-3 years
+Replacement Schedule: As needed
+Installation: SES tech recommended
+
+Part: Humidity Sensors
+Type: Indoor air quality monitoring
+Battery Life: 2-3 years
+Calibration: Annual recommended
+
+ELECTRICAL COMPONENTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Part: Control Boards
+Type: DLC main controller
+Compatibility: Model-specific
+Installation: SES CERTIFIED TECH ONLY
+Warranty: 5 years standard
+
+Part: Relays and Contactors
+Type: Heavy-duty rated
+Voltage: 24V and 240V options
+Installation: SES CERTIFIED TECH ONLY
+
+Part: Capacitors
+Type: Run and start capacitors
+Voltage: System-specific
+Installation: SES CERTIFIED TECH ONLY
+Safety Warning: Can hold dangerous charge
+
+MECHANICAL COMPONENTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Part: Fan Belts
+Type: V-belt, serpentine
+Sizes: System-specific
+Inspection: Quarterly recommended
+Replacement: Every 2-3 years
+
+Part: Fan Blades
+Type: Direct drive and belt-driven
+Material: Aluminum, steel
+Installation: SES tech recommended
+
+Part: Drain Line Components
+Type: Condensate pumps, float switches
+Replacement: As needed
+Maintenance: Quarterly cleaning
+
+REFRIGERANT & COIL ITEMS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Part: Refrigerant (R-410A, R-32)
+Ordering: EPA certified tech only
+Service: Through SES only: (617) 564-4800
+Storage: Not available for GM ordering
+
+Part: Coil Cleaner
+Type: Professional grade, biodegradable
+Usage: Quarterly maintenance
+Order: Bulk available
+Application: Follow safety instructions
+
+EMERGENCY PARTS STOCK (Recommended On-Site):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Air filters (2-month supply)
+□ Thermostat batteries (CR2032 x 10)
+□ Fuses (various amp ratings)
+□ Condensate drain tablets
+□ Basic tools (screwdrivers, flashlight)
+□ SES emergency contact card
+□ Equipment model/serial number list
+□ Parts ordering login credentials
+
+PARTS INVENTORY MANAGEMENT:
+
+Monthly Inventory Check:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Count remaining filters
+□ Check thermostat battery levels
+□ Verify spare parts not expired
+□ Update inventory log
+□ Place orders 2 weeks before depletion
+□ Review usage patterns
+□ Adjust stock levels seasonally
+
+Seasonal Ordering Schedule:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Spring (April-May):
+- Stock up on cooling season filters
+- Order coil cleaning supplies
+- Verify emergency parts inventory
+
+Summer (July-August):
+- Mid-season filter order
+- Backup capacitors
+- Drain line maintenance supplies
+
+Fall (September-October):
+- Transition to heating season filters
+- Check heating components
+- Winter emergency supplies
+
+Winter (January-February):
+- Mid-season filter order
+- Freeze protection supplies
+- Emergency heat components
+
+PARTS WARRANTY INFORMATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Standard Parts: 1 year manufacturer warranty
+SES Control Systems: 5 years
+Major Components: 3-5 years (varies)
+Wear Items: No warranty (filters, belts)
+Installation Labor: 90 days
+
+Warranty Claims:
+1. Contact SES within warranty period
+2. Provide proof of purchase
+3. Describe issue/failure
+4. SES will determine coverage
+5. Approved parts shipped free
+6. Installation may be additional
+
+COST MANAGEMENT TIPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 Order in bulk for volume discounts
+💰 Schedule regular maintenance to prevent failures
+💰 Stock common items to avoid emergency shipping
+💰 Use SES-approved parts for warranty protection
+💰 Track parts usage for budget forecasting
+💰 Join preventive maintenance program
+💰 Consider annual parts package
+
+ORDERING CONTACT INFORMATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Parts Catalog: http://portal.saveenergysystems.com/cms_sys/index.php/PartsCatalog
+Spare Parts: https://spare-parts.uat.se.com/
+Phone Orders: (617) 564-4800
+Email: support@saveenergysystems.com
+Emergency Parts: Same phone, request priority
+
+Shipping Addresses:
+Verify your facility address on file
+Update if location has moved
+Confirm receiving hours
+Designate parts receiver
+
+PARTS TRACKING SYSTEMS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ticket System: http://portal.saveenergysystems.com/cms_sys/index.php/TicketList
+Order History: Login to customer portal
+Tracking Numbers: Sent via email
+Delivery Confirmation: Automatic notification
+Audit Log: http://portal.saveenergysystems.com/cms_sys/index.php/AuditLog
+
+Generated: 12/19/2025

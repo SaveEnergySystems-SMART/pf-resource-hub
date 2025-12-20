@@ -1,0 +1,396 @@
+SES MOBILE APP GUIDE
+SMARTPHONE ACCESS FOR GMS
+
+APP DOWNLOAD:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+iPhone/iPad:
+1. Open App Store
+2. Search: "Save Energy Systems" or "SES Dashboard"
+3. Download free app
+4. Install on device
+5. Open app
+
+Android:
+1. Open Google Play Store
+2. Search: "Save Energy Systems" or "SES Dashboard"
+3. Download free app
+4. Install on device
+5. Open app
+
+FIRST TIME SETUP:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Login
+- Use same credentials as web portal
+- Username: [Your SES login]
+- Password: [Your SES password]
+- Enable "Remember Me" for convenience
+
+Step 2: Enable Notifications
+- Allow push notifications (important!)
+- Emergency alerts enabled by default
+- Customize notification preferences
+- Set quiet hours if desired
+
+Step 3: Select Primary Site
+- Choose your Planet Fitness location
+- Set as favorite for quick access
+- Add additional sites if multi-location GM
+
+Step 4: Enable Biometric Login (Optional)
+- Face ID (iPhone) or Fingerprint
+- More secure and convenient
+- Can disable anytime in settings
+
+MAIN DASHBOARD FEATURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Home Screen Shows:
+📊 Real-time energy usage
+🌡️ Current temperature (all zones)
+⚠️ Active alerts/warnings
+💰 Today's energy cost
+⏰ Maintenance schedule
+📱 Quick action buttons
+
+Refresh Rate:
+- Automatic: Every 60 seconds
+- Manual: Pull down to refresh
+- Background: Updates when open
+
+TEMPERATURE MONITORING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Zone View:
+- List of all facility zones
+- Current temp each zone
+- Target temperature
+- Last updated timestamp
+- Tap zone for details
+
+Detail View:
+- 24-hour temperature graph
+- Humidity level
+- System status
+- Zone-specific alerts
+- Quick adjust option
+
+Temperature Alerts:
+🔴 Critical: Immediate notification
+🟡 Warning: In-app notification
+🟢 Normal: No alert
+
+ALERT MANAGEMENT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Notification Types:
+🚨 Emergency (Push + Sound)
+⚠️ Warning (Push notification)
+ℹ️ Information (In-app badge)
+📅 Maintenance (Daily summary)
+
+Alert Actions:
+- View details
+- Acknowledge alert
+- Create ticket
+- Call SES directly
+- Snooze (non-critical only)
+- Share with team
+
+Alert History:
+- Last 30 days viewable
+- Filter by type/severity
+- Export to email
+- Resolution status
+
+TICKET CREATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Create New Ticket:
+1. Tap "+" or "New Ticket"
+2. Select category:
+   - Emergency
+   - Maintenance
+   - Question
+   - Parts Order
+3. Add description
+4. Take/attach photos
+5. Set priority
+6. Submit
+
+Photo Attachments:
+- Camera: Take new photo
+- Gallery: Choose existing
+- Multiple photos OK
+- Auto-compress for speed
+- Timestamps automatically added
+
+Voice Notes:
+- Record description
+- Up to 2 minutes
+- Converts to text (optional)
+- Attach to ticket
+
+TICKET TRACKING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+My Tickets View:
+- Open tickets (active)
+- In progress (SES working)
+- Resolved (completed)
+- All history
+
+Ticket Details:
+- Current status
+- SES technician assigned
+- Estimated resolution time
+- Communication log
+- Photos/attachments
+- Resolution notes
+
+Push Updates:
+- Status changes
+- Technician comments
+- Resolution complete
+- Follow-up needed
+
+ENERGY MONITORING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Dashboard Displays:
+📈 Today's usage (kWh)
+💰 Today's cost estimate
+📊 This week comparison
+📉 This month trend
+🎯 Savings vs. baseline
+
+Graph Views:
+- Hourly (today)
+- Daily (this week)
+- Weekly (this month)
+- Monthly (this year)
+
+Cost Tracking:
+- Real-time cost estimate
+- Compare to last year
+- Savings calculation
+- Budget alerts
+- Export reports
+
+QUICK ACTIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+One-Tap Functions:
+📞 Call SES Emergency
+📧 Email SES Support
+🎫 Create Ticket
+📊 View Site Summary
+🔔 Check Alerts
+📱 Contact Regional Manager
+
+Emergency Mode:
+- Swipe right from home screen
+- Instant access to:
+  • Call SES
+  • Emergency checklist
+  • Evacuation procedures
+  • Important contacts
+
+PARTS ORDERING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+In-App Ordering:
+1. Tap "Parts" menu
+2. Search or browse catalog
+3. Check compatibility
+4. View availability
+5. Add to cart
+6. Submit order
+
+Barcode Scanner:
+- Scan part number
+- Instant lookup
+- Add to order
+- Track shipment
+
+Order Tracking:
+- View pending orders
+- Track shipment status
+- Delivery notifications
+- Order history
+
+MAINTENANCE SCHEDULE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Calendar View:
+- Upcoming maintenance
+- Filter changes due
+- SES service visits
+- Warranty renewals
+- Training sessions
+
+Reminders:
+- 7 days before due
+- Day before
+- Day of
+- Customize frequency
+- Snooze options
+
+Complete Task:
+- Mark as complete
+- Add notes
+- Upload photos
+- Log time spent
+- Sync to web portal
+
+SETTINGS & PREFERENCES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Account Settings:
+- Change password
+- Update contact info
+- Notification preferences
+- Language selection
+- Time zone
+- Units (°F/°C)
+
+App Settings:
+- Auto-refresh rate
+- Data usage (Wi-Fi only?)
+- Cache management
+- Biometric login
+- Dark mode
+- Text size
+
+Notification Settings:
+- Emergency alerts (always on)
+- Maintenance reminders
+- Energy reports
+- System updates
+- Marketing (opt-in)
+
+OFFLINE FUNCTIONALITY:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Available Offline:
+✓ Recent temperature data
+✓ Last 7 days alerts
+✓ Contact information
+✓ Emergency procedures
+✓ Troubleshooting guides
+✓ Saved tickets
+
+Not Available Offline:
+✗ Real-time updates
+✗ New ticket creation
+✗ Parts ordering
+✗ Dashboard refresh
+✗ Photo uploads
+
+Auto-Sync:
+- When connection restored
+- Queues actions taken offline
+- Uploads pending data
+- Updates all information
+
+WIDGETS (iOS/Android):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Home Screen Widgets:
+- Current temperature
+- Active alerts count
+- Today's energy usage
+- Quick SES call button
+- Upcoming maintenance
+
+Widget Sizes:
+- Small (2x2): Temperature
+- Medium (4x2): Full dashboard
+- Large (4x4): Detailed view
+
+Setup:
+1. Long press home screen
+2. Add widget
+3. Select SES app
+4. Choose widget type
+5. Configure display
+
+SECURITY FEATURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+App Security:
+- SSL encrypted connection
+- Session timeout (30 min)
+- Biometric authentication
+- Auto-lock
+- Remote wipe (if lost)
+- No data stored locally
+
+Privacy:
+- Location services (optional)
+- Photo access (for tickets only)
+- Camera access (for scanning)
+- Notification access
+- No data selling
+- GDPR compliant
+
+TROUBLESHOOTING APP:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+App Won't Open:
+1. Force close app
+2. Restart phone
+3. Update app
+4. Reinstall if needed
+5. Contact SES: (617) 564-4800
+
+Can't Login:
+1. Verify username/password
+2. Reset password
+3. Check internet connection
+4. Clear app cache
+5. Call SES for help
+
+Data Not Loading:
+1. Check internet connection
+2. Pull down to refresh
+3. Close and reopen app
+4. Force sync in settings
+5. Contact SES support
+
+TIPS FOR BEST EXPERIENCE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 Enable all notifications
+💡 Add widget to home screen
+💡 Use biometric login
+💡 Check app daily
+💡 Take photos of issues
+💡 Update app regularly
+💡 Keep phone charged
+💡 Save SES contact
+
+APP SUPPORT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Technical Issues:
+Phone: (617) 564-4800
+Email: support@saveenergysystems.com
+In-App: Help menu
+
+App Updates:
+- Automatic updates recommended
+- Monthly feature releases
+- Security patches
+- Bug fixes
+- Release notes in app
+
+Feedback:
+- Rate in app store
+- Submit feature requests
+- Report bugs
+- Share suggestions
+- Join beta program
+
+Generated: 12/19/2025

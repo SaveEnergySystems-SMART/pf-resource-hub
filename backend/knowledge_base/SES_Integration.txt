@@ -1,0 +1,320 @@
+SES PORTAL ACCESS & INTEGRATION
+COMPLETE SYSTEM ACCESS GUIDE
+
+PRIMARY ACCESS POINTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MAIN DASHBOARD:
+URL: https://dashboard.saveenergysystems.com/
+Purpose: Real-time monitoring and system overview
+Features:
+- Live energy usage data
+- All-site performance summary
+- Alert notifications
+- Quick action buttons
+- Mobile responsive
+- Auto-refresh every 60 seconds
+
+Login Credentials:
+- Provided by SES during setup
+- Individual user accounts per GM
+- Password reset: Forgot Password link
+- Contact SES for new accounts: (617) 564-4800
+
+CUSTOMER PORTAL (Legacy):
+URL: http://portal.saveenergysystems.com/cms_sys/index.php/Psession/index
+Purpose: Comprehensive system management
+Features:
+- Detailed site information
+- Historical data analysis
+- User management
+- Advanced reporting
+- Configuration access
+
+TICKET MANAGEMENT SYSTEM:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TICKET LIST VIEW:
+URL: http://portal.saveenergysystems.com/cms_sys/index.php/TicketList
+Functions:
+- View all open tickets
+- Check ticket status
+- Review resolution history
+- Upload attachments
+- Add comments
+- Track response times
+
+How to Create Ticket:
+1. Click "New Ticket" button
+2. Select ticket type (Emergency/Maintenance/Question)
+3. Enter location and description
+4. Upload photos if applicable
+5. Set priority level
+6. Submit and receive ticket number
+7. Track via email notifications
+
+Ticket Priorities:
+🔴 Emergency: Response within 2 hours
+🟡 Urgent: Response within 8 hours
+🟢 Routine: Response within 24 hours
+🔵 Scheduled: Planned maintenance
+
+PARTS ORDERING SYSTEM:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PARTS CATALOG:
+URL: http://portal.saveenergysystems.com/cms_sys/index.php/PartsCatalog
+Features:
+- Searchable parts database
+- Compatibility verification
+- Real-time availability
+- Pricing and lead times
+- Order tracking
+- Purchase history
+
+SPARE PARTS UAT:
+URL: https://spare-parts.uat.se.com/
+Purpose: Alternative parts ordering
+Features:
+- Additional parts catalog
+- Cross-reference tool
+- Technical specifications
+- Installation guides
+- Warranty information
+
+USER MANAGEMENT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+USER LIST & ADMINISTRATION:
+URL: http://portal.saveenergysystems.com/cms_sys/index.php/Cms/pickUser
+Functions:
+- View all facility users
+- Add new users (GM authority)
+- Modify user permissions
+- Reset user passwords
+- Deactivate former employees
+- Assign notification preferences
+
+User Roles:
+- General Manager: Full access
+- Assistant Manager: Most features
+- Maintenance Staff: Limited access
+- Regional Manager: Multi-site access
+- Corporate Admin: All locations
+
+SITE MANAGEMENT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SITE SUMMARY:
+URL: https://dashboard.saveenergysystems.com/site-summary
+Displays:
+- Current operating status
+- Today's energy usage
+- Active alerts and warnings
+- Temperature in all zones
+- Equipment runtime hours
+- Scheduled maintenance
+- Recent ticket activity
+
+SITE LIST:
+URL: http://portal.saveenergysystems.com/cms_sys/index.php/SiteList
+Features:
+- All facility locations
+- Quick site switching
+- Site-specific data
+- Comparison tools
+- Group management
+
+AUDIT & REPORTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AUDIT LOG:
+URL: http://portal.saveenergysystems.com/cms_sys/index.php/AuditLog
+Tracks:
+- All system changes
+- User activity
+- Configuration modifications
+- Parts orders
+- Ticket history
+- Login attempts
+- Permission changes
+
+Retention:
+- All data: 7 years minimum
+- Downloadable reports
+- Searchable by date/user/action
+- Export to Excel/PDF
+- Compliance documentation
+
+MOBILE APP ACCESS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+iOS APP:
+Download: Apple App Store
+Search: "Save Energy Systems" or "SES Dashboard"
+Features:
+- Push notifications
+- Quick alerts
+- Temperature control
+- Ticket creation
+- Energy monitoring
+- Offline access to key data
+
+ANDROID APP:
+Download: Google Play Store
+Search: "Save Energy Systems" or "SES Dashboard"
+Features:
+- Same as iOS version
+- Widget support
+- Background monitoring
+- Location-based alerts
+
+App Login:
+- Same credentials as web portal
+- Biometric login available
+- Automatic session management
+- Secure encrypted connection
+
+INTEGRATION FEATURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EMAIL NOTIFICATIONS:
+- Alert summaries (daily)
+- Emergency alerts (immediate)
+- Ticket updates
+- Maintenance reminders
+- Energy reports (weekly/monthly)
+- Invoice notifications
+
+SMS NOTIFICATIONS:
+- Critical alerts only
+- Emergency tickets
+- System offline warnings
+- Opt-in during setup
+- Configure in portal preferences
+
+API ACCESS:
+- Available for corporate integration
+- RESTful API endpoints
+- JSON data format
+- Authentication required
+- Contact SES for API key: (617) 564-4800
+- Documentation provided
+
+THIRD-PARTY INTEGRATIONS:
+- Building management systems (BMS)
+- Energy management platforms
+- Facility management software
+- Accounting systems
+- Custom integrations available
+
+DASHBOARD WIDGETS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Available Widgets:
+□ Real-time energy usage
+□ Current temperature (all zones)
+□ Active alerts/warnings
+□ Today's cost savings
+□ Equipment status
+□ Weather conditions
+□ Maintenance schedule
+□ Quick action buttons
+
+Customization:
+- Drag and drop layout
+- Show/hide widgets
+- Resize widgets
+- Set refresh rates
+- Save custom views
+- Share with team
+
+REPORTING TOOLS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Available Reports:
+- Energy usage (daily/weekly/monthly)
+- Cost analysis
+- System performance
+- Maintenance history
+- Alert summary
+- Comparative analysis
+- Custom reports
+
+Report Formats:
+- PDF (printable)
+- Excel (editable)
+- CSV (data import)
+- Email delivery
+- Scheduled generation
+- Dashboard viewing
+
+SECURITY FEATURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Access Security:
+- SSL encrypted connections
+- Two-factor authentication (optional)
+- Password complexity requirements
+- Session timeout (30 minutes)
+- IP logging
+- Failed login protection
+- Role-based permissions
+
+Data Security:
+- Encrypted data storage
+- Regular backups
+- Disaster recovery plan
+- GDPR compliant
+- SOC 2 Type II certified
+- Annual security audits
+
+TRAINING RESOURCES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Available Training:
+- User manual: http://portal.saveenergysystems.com/cms_sys/CMS_users_guide.pdf
+- Video tutorials (portal)
+- Live webinars (quarterly)
+- On-site training
+- Quick start guides
+- FAQ section
+- Help desk support
+
+SUPPORT CONTACTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Technical Support:
+Phone: (617) 564-4800
+Email: support@saveenergysystems.com
+Hours: 24/7/365
+Response: Within 2 hours (emergency)
+
+Portal Help:
+Built-in chat support
+Help button (every page)
+Context-sensitive help
+Tooltips throughout
+Video guides
+Searchable knowledge base
+
+TROUBLESHOOTING PORTAL ISSUES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Can't Login:
+1. Verify username/password
+2. Try password reset
+3. Clear browser cache
+4. Try different browser
+5. Check internet connection
+6. Call SES: (617) 564-4800
+
+Dashboard Not Loading:
+1. Refresh page (F5)
+2. Clear cache and cookies
+3. Check browser compatibility
+4. Disable ad blockers
+5. Try mobile app
+6. Contact SES support
+
+Generated: 12/19/2025

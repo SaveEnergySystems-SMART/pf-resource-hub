@@ -1,0 +1,104 @@
+GM SAFETY-FIRST PROTOCOLS
+PLANET FITNESS HVAC OPERATIONS GUIDE
+
+SES PARTS ORDERING SYSTEM:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Main Portal: http://portal.saveenergysystems.com/cms_sys/index.php/PartsCatalog
+Spare Parts UAT: https://spare-parts.uat.se.com/
+Phone Orders: (617) 564-4800
+Email Requests: support@saveenergysystems.com
+
+Order Process:
+1. Login to SES Portal with your credentials
+2. Navigate to Parts Catalog
+3. Search by part number or equipment type
+4. Add to cart and submit order
+5. Receive confirmation email with tracking
+6. Standard shipping: 2-3 business days
+7. Emergency shipping: Next day available
+
+GM-SAFE ACTIONS (You Can Do These):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Check thermostat settings and adjust
+✅ Reset breakers if you're comfortable (turn OFF first)
+✅ Document unusual noises or conditions
+✅ Check for obvious airflow blockages
+✅ Clean or replace air filters (if accessible)
+✅ Check for visible water leaks
+✅ Take photos of any visible issues
+✅ Note when problems started
+✅ Check outdoor unit for debris/blockage
+✅ Monitor temperature readings
+
+SES-REQUIRED ACTIONS (Call SES First):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Any electrical work on HVAC systems
+❌ HVAC unit mechanical repairs
+❌ Part replacements or installations
+❌ System programming or software changes
+❌ Refrigerant-related work
+❌ Control board modifications
+❌ Compressor or motor work
+❌ Ductwork modifications
+❌ Wiring changes or additions
+❌ Sensor installations or replacements
+
+WHEN TO CALL SES IMMEDIATELY:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 No cooling/heating in entire facility
+🚨 Burning smell from HVAC system
+🚨 Loud grinding or banging noises
+🚨 Water leaking from units
+🚨 Breakers tripping repeatedly
+🚨 Visible smoke from equipment
+🚨 Temperature above 85°F or below 60°F
+🚨 Multiple zones not responding
+🚨 Member complaints about air quality
+🚨 System alarms or error codes
+
+DAILY GM SAFETY CHECKLIST:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Morning: Check dashboard for alerts
+□ Walk through: Verify comfortable temperature
+□ Listen: Check for unusual HVAC noises
+□ Visual: Inspect accessible equipment areas
+□ Monitor: Member comfort feedback
+□ Document: Any issues in logbook
+□ Evening: Review daily energy report
+
+EMERGENCY CONTACT PROTOCOL:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Call SES Emergency Line: (617) 564-4800
+2. Provide: Location, your name, nature of issue
+3. Describe: What you see/hear/smell
+4. Follow: Instructions from SES technician
+5. Document: Ticket number provided
+6. Notify: Regional manager if major issue
+7. Track: Issue in SES portal system
+
+SAFETY BOUNDARIES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Never attempt repairs you're uncomfortable with
+Always turn off power before touching equipment
+Never ignore burning smells or smoke
+Don't override safety controls
+Call SES if uncertain about any action
+Document everything before calling
+Keep SES number easily accessible
+
+PARTS TRACKING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ticket System: http://portal.saveenergysystems.com/cms_sys/index.php/TicketList
+View Parts Orders: Login to customer portal
+Track Shipments: Confirmation emails
+Emergency Parts: Same-day available (call)
+Audit History: http://portal.saveenergysystems.com/cms_sys/index.php/AuditLog
+
+CONTACT INFORMATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+24/7 Emergency: (617) 564-4800
+Email Support: support@saveenergysystems.com
+Portal Login: http://portal.saveenergysystems.com/
+Dashboard: https://dashboard.saveenergysystems.com/
+
+Generated: 12/19/2025

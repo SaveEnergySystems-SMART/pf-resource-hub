@@ -1,0 +1,185 @@
+WEATHER EMERGENCY PROTOCOLS
+PLANET FITNESS HVAC PROTECTION GUIDE
+
+FREEZING TEMPERATURE PREPARATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+When Forecast Shows Temps Below 32°F:
+
+24 Hours Before:
+□ Call SES for pre-freeze check: (617) 564-4800
+□ Verify heating system operational
+□ Check for drafts around doors/windows
+□ Ensure thermostats set minimum 65°F
+□ Inspect outdoor units for obstructions
+□ Clear drains and condensate lines
+□ Test backup heat if equipped
+□ Stock emergency supplies
+
+During Freeze:
+□ Monitor indoor temperature hourly
+□ Keep facility heated 24/7 (don't set back)
+□ Check pipes in unheated areas
+□ Run water in bathrooms periodically
+□ Monitor SES dashboard for alerts
+□ Keep high-bay doors closed
+□ Check outdoor units for ice buildup
+□ Document any unusual noises/operations
+
+If Pipes Freeze:
+1. Call SES immediately: (617) 564-4800
+2. Shut off water main if pipe burst
+3. Open cabinet doors to warm pipes
+4. Never use open flame to thaw
+5. Document damage with photos
+6. Call plumber if needed
+7. File insurance claim if major damage
+
+HURRICANE/SEVERE STORM PREPARATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+48 Hours Before Storm:
+□ Call SES for system shutdown plan: (617) 564-4800
+□ Review emergency contacts
+□ Charge backup batteries/devices
+□ Photograph all equipment (insurance)
+□ Clear outdoor units of loose debris
+□ Secure roof-mounted equipment
+□ Test emergency lighting
+□ Stock emergency supplies
+
+24 Hours Before:
+□ Final SES consultation: (617) 564-4800
+□ Consider pre-shutdown if advised
+□ Secure all outdoor equipment
+□ Move electronics away from windows
+□ Clear floor drains
+□ Elevate equipment if flood risk
+□ Post evacuation routes
+□ Backup critical data
+
+During Storm:
+□ Monitor SES dashboard remotely if possible
+□ Do not enter facility in dangerous conditions
+□ Turn off main power if flooding occurs
+□ Document all damage with photos/video
+□ Contact SES when safe: (617) 564-4800
+□ File initial insurance report
+
+After Storm:
+□ Inspect facility for damage before entry
+□ Check for gas leaks, water damage
+□ Call SES before re-energizing: (617) 564-4800
+□ Document all damage thoroughly
+□ Do not operate damaged equipment
+□ Wait for SES clearance to resume
+□ File detailed insurance claim
+
+HEAT WAVE PROCEDURES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+When Forecast Shows 95°F+ for 3+ Days:
+
+Pre-Heat Wave (3 days before):
+□ Call SES for system check: (617) 564-4800
+□ Schedule preventive maintenance
+□ Clean outdoor unit coils
+□ Verify refrigerant levels
+□ Test all cooling zones
+□ Check air filter status
+□ Verify thermostat accuracy
+□ Stock extra filters
+
+During Heat Wave:
+□ Monitor temperature continuously
+□ Set thermostats max 74°F (don't go lower)
+□ Close window blinds during peak sun
+□ Minimize door openings
+□ Run ceiling fans if available
+□ Monitor member comfort complaints
+□ Check SES dashboard for warnings
+□ Have backup plan ready
+
+If System Struggles:
+1. Don't lower thermostat further
+2. Call SES immediately: (617) 564-4800
+3. Close unused areas to reduce load
+4. Set up temporary fans
+5. Post member advisories
+6. Consider reduced hours if extreme
+7. Follow SES guidance
+
+TORNADO/SEVERE WIND WARNINGS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Immediate Actions:
+□ Move members/staff to safe interior area
+□ Monitor weather alerts continuously
+□ Call SES if damage suspected: (617) 564-4800
+□ Do not go outside to inspect
+□ Wait for all-clear from authorities
+□ Document damage thoroughly
+□ Turn off power if roof damage
+□ Contact insurance immediately
+
+POWER OUTAGE PROTOCOLS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+During Outage:
+□ Check if outage is facility-only or area-wide
+□ Call utility company to report
+□ Notify SES: (617) 564-4800
+□ Do not reset breakers repeatedly
+□ Keep HVAC controls off during outage
+□ Secure facility if extended outage
+□ Post signage for members
+
+When Power Returns:
+□ Wait 5 minutes before re-energizing HVAC
+□ Call SES before restart: (617) 564-4800
+□ Turn on systems gradually
+□ Monitor for 30 minutes after restart
+□ Check all zones functioning
+□ Log outage duration in portal
+□ Document any equipment issues
+
+REGIONAL CLIMATE CONSIDERATIONS:
+
+NORTHERN REGIONS (Cold Climate):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Priority: Freeze protection
+Key Months: November - March
+Extra Precautions:
+- Never set back heat below 65°F
+- Weekly pipe inspections in cold areas
+- Keep outdoor units clear of snow
+- Monitor for ice dam formation
+- Test heating monthly in summer
+
+SOUTHERN REGIONS (Hot/Humid):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Priority: Cooling reliability
+Key Months: May - September
+Extra Precautions:
+- Clean coils before summer
+- Monitor humidity levels
+- Check drain lines weekly
+- Test cooling in winter months
+- Hurricane preparation critical
+
+COASTAL REGIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Priority: Storm/salt damage prevention
+Year-Round Precautions:
+- Quarterly outdoor unit washing
+- Storm shutters ready
+- Evacuation plan current
+- Flood sensors installed
+- Insurance documentation current
+
+EMERGENCY WEATHER CONTACTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SES Emergency: (617) 564-4800
+SES Email: support@saveenergysystems.com
+Portal: http://portal.saveenergysystems.com/
+Dashboard: https://dashboard.saveenergysystems.com/
+Local Utility: [Your provider]
+Insurance: [Your policy]
+Regional Manager: [Your contact]
+
+Generated: 12/19/2025
