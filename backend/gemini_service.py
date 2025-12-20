@@ -15,8 +15,8 @@ class GeminiService:
         
         if self.api_key:
             genai.configure(api_key=self.api_key)
-            # Use gemini-1.5-flash-latest for the most stable API
-            self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
+            # Use gemini-pro for stable API (compatible with all regions)
+            self.model = genai.GenerativeModel('gemini-pro')
             print("✅ Google Gemini AI initialized successfully")
         else:
             self.model = None
