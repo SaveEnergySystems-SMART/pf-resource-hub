@@ -14,127 +14,181 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background: linear-gradient(135deg, #2E1A47 0%, #5A2E82 100%);
+            background: #F9FAFB;
             color: #333;
             min-height: 100vh;
-            padding-bottom: 80px;
         }
 
         .header {
             background: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        .logo-container {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        .logo-container img {
-            height: 100px;
-        }
-        
-        .logo-container img:nth-child(2) {
+        .logo-section img {
             height: 75px;
         }
 
-        .user-info {
-            color: #1A0933;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .logo-section img:last-child {
+            height: 100px;
+        }
+
+        .logo-divider {
+            width: 2px;
+            height: 50px;
+            background: #E5E7EB;
         }
 
         .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .user-dropdown {
             position: relative;
         }
 
         .user-button {
-            background: #F0E6FF;
-            border: 1px solid #5B2A86;
-            color: #1A0933;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .user-button:hover {
-            background: #E0D1FF;
+            background: #F9FAFB;
+            border-color: #9600FA;
+            color: #9600FA;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: #9600FA;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #7700C7;
         }
 
         .dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             right: 0;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            margin-top: 8px;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             min-width: 220px;
+            display: none;
             z-index: 1000;
+            overflow: hidden;
         }
 
-        .dropdown-menu a {
+        .dropdown-menu a,
+        .dropdown-menu button {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 12px 16px;
-            color: #1A0933;
+            color: #374151;
             text-decoration: none;
-            transition: background 0.2s;
-        }
-
-        .dropdown-menu a:hover {
-            background: #F0E6FF;
-        }
-
-        .dropdown-menu hr {
-            margin: 8px 0;
+            background: transparent;
             border: none;
-            border-top: 1px solid #E0E0E0;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s ease;
         }
 
-        .nav {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 20px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+        .dropdown-menu a:hover,
+        .dropdown-menu button:hover {
+            background: #F3F4F6;
         }
 
-        .nav a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            transition: all 0.3s;
+        .dropdown-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 4px 0;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
             display: flex;
-            align-items: center;
             gap: 8px;
         }
 
-        .nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .nav-link {
+            padding: 16px 20px;
+            color: #6B7280;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
         }
 
-        .nav a.active {
-            background: #FFDC00;
-            color: #1A0933;
-            font-weight: 600;
+        .nav-link:hover {
+            color: #9600FA;
+            border-bottom-color: #9600FA;
+        }
+
+        .nav-link.active {
+            color: #9600FA;
+            border-bottom-color: #9600FA;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 20px;
+            /* Removed old container styles */
         }
 
         .page-header {
@@ -420,54 +474,59 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="logo-container">
-            <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems" style="height: 75px;">
-            <div style="width: 2px; height: 50px; background: #E0D1FF;"></div>
-            <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness" style="height: 100px;">
-        </div>
-        <div class="user-info">
-            <span id="userEmail">Loading...</span>
-            
-            <!-- Admin Dropdown -->
-            <div class="user-menu" id="adminDropdown" style="display: none;">
-                <button class="user-button" onclick="toggleDropdown()">
-                    <i class="bi bi-gear-fill"></i>
-                    <span>Admin</span>
-                    <i class="bi bi-chevron-down"></i>
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu" style="display: none;">
-                    <a href="admin-ses.html" id="sesAdminLink" style="display: none;">
-                        <i class="bi bi-shield-fill-check"></i> SES Super Admin
-                    </a>
-                    <a href="admin-pf.html" id="pfAdminLink" style="display: none;">
-                        <i class="bi bi-building"></i> PF Admin Dashboard
-                    </a>
-                    <hr>
-                    <a href="https://analytics.google.com" target="_blank">
-                        <i class="bi bi-graph-up"></i> Google Analytics
-                    </a>
-                </div>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems">
+                <div class="logo-divider"></div>
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
             </div>
-            
-            <button class="user-button" onclick="logout()">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Logout</span>
-            </button>
+
+            <div class="user-menu">
+                <span id="userEmail"></span>
+                
+                <!-- Admin Dropdown (only visible for admins) -->
+                <div class="user-dropdown" id="adminDropdown" style="display: none;">
+                    <button class="user-button" onclick="toggleDropdown()">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Admin</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="admin-ses.html" id="sesAdminLink" style="display: none;">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>SES Super Admin</span>
+                        </a>
+                        <a href="admin-pf.html" id="pfAdminLink" style="display: none;">
+                            <i class="bi bi-building"></i>
+                            <span>PF Admin Dashboard</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button onclick="window.open('https://analytics.google.com', '_blank')">
+                            <i class="bi bi-graph-up"></i>
+                            <span>Google Analytics</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
-    </div>
+    </header>
 
     <!-- Navigation -->
-    <div class="nav">
-        <a href="dashboard.html"><i class="bi bi-robot"></i> AI Assistant</a>
-        <a href="resources.html" class="active"><i class="bi bi-book"></i> Resources</a>
-        <a href="order-parts.html"><i class="bi bi-cart"></i> Order Parts</a>
-        <a href="help-now.html"><i class="bi bi-exclamation-circle"></i> Help Now</a>
-        <a href="admin-ses.html"><i class="bi bi-shield-fill-check"></i> Admin</a>
-    </div>
+    <nav>
+        <div class="nav-content">
+            <a href="dashboard.html" class="nav-link">AI Assistant</a>
+            <a href="resources.html" class="nav-link active">Resources</a>
+            <a href="order-parts.html" class="nav-link">Order Parts</a>
+            <a href="help-now.html" class="nav-link">Help Now</a>
+            <a href="why-ses.html" class="nav-link">Why SES</a>
+        </div>
+    </nav>
 
     <!-- Main Content -->
-    <div class="container">
+    <main>
         <!-- Page Header -->
         <div class="page-header">
             <h1>
@@ -625,7 +684,7 @@
                 <p style="font-size: 1.8em; margin: 10px 0;"><a href="tel:6175644800">(617) 564-4800</a></p>
                 <p>Available 24 hours/day, 7 days/week, 365 days/year</p>
                 <p><strong>Average Response Time:</strong> Under 2 hours for emergencies</p>
-                <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#64171114140b16102417051201010a0116031d171d17100109174a070b09"><span class="__cf_email__" data-cfemail="a7d4d2d7d7c8d5d3e7d4c6d1c2c2c9c2d5c0ded4ded4d3c2cad489c4c8ca">[email&#160;protected]</span></a></p>
+                <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#22515752524d50566251435447474c4750455b515b5156474f510c414d4f"><span class="__cf_email__" data-cfemail="4b383e3b3b24393f0b382a3d2e2e252e392c323832383f2e263865282426">[email&#160;protected]</span></a></p>
             </div>
 
             <h3 style="color: #2E1A47; margin: 25px 0 15px;">Contact by Issue Type:</h3>
@@ -662,7 +721,7 @@
             <h3 style="color: #2E1A47; margin: 25px 0 15px;">Escalation Procedure:</h3>
             <ol style="color: #666; line-height: 2; padding-left: 20px;">
                 <li><strong>Level 1:</strong> Call SES Support at (617) 564-4800 - Wait 15 minutes</li>
-                <li><strong>Level 2:</strong> Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a0d3d5d0d0cfd2d4e0d3c1d6c5c5cec5d2c7d9d3d9d3d4c5cdd38ec3cfcd">[email&#160;protected]</a> - Wait 30 minutes</li>
+                <li><strong>Level 2:</strong> Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a191f1a1a05181e2a190b1c0f0f040f180d131913191e0f071944090507">[email&#160;protected]</a> - Wait 30 minutes</li>
                 <li><strong>Level 3:</strong> Contact your Regional Manager - As needed</li>
                 <li><strong>Level 4:</strong> Life safety only - Call 911, then notify SES and management</li>
             </ol>
@@ -824,18 +883,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Fixed Search Bar -->
-    <div class="search-bar-fixed">
-        <div class="search-container">
-            <span style="position: relative; display: inline-block; font-size: 1.5em;">
-                <i class="bi bi-person-circle" style="color: #7B4ECC;"></i>
-                <i class="bi bi-lightning-charge-fill" style="position: absolute; bottom: -3px; right: -8px; font-size: 0.6em; color: #FFDC00;"></i>
-            </span>
-            <input type="text" class="search-input" placeholder="Ask Steph anything about resources and training..." id="searchInput">
-        </div>
-    </div>
+    </main>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user session
