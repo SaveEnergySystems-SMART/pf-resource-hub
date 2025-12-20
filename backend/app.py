@@ -21,6 +21,7 @@ from email_service import (
     send_admin_password_reset_email,
     send_account_deactivated_email
 )
+from gemini_service import get_ai_response
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -618,6 +619,60 @@ def init_database():
         
         db.session.commit()
         print("✅ Database initialized successfully!")
+
+
+# =============================================================================
+# AI CHAT ENDPOINT
+# =============================================================================
+
+@app.route('/api/chat', methods=['POST'])
+@token_required
+def chat(current_user):
+    """
+    AI Chat endpoint for HVAC troubleshooting
+    Requires authentication token
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or 'message' not in data:
+            return jsonify({'error': 'Message is required'}), 400
+        
+        user_message = data['message'].strip()
+        
+        if not user_message:
+            return jsonify({'error': 'Message cannot be empty'}), 400
+        
+        # Get conversation history (optional)
+        conversation_history = data.get('conversation_history', [])
+        
+        # Get AI response
+        ai_response = get_ai_response(user_message, conversation_history)
+        
+        # Log activity
+        try:
+            activity = ActivityLog(
+                user_id=current_user.id,
+                action='ai_chat',
+                description=f"Asked AI: {user_message[:50]}..."
+            )
+            db.session.add(activity)
+            db.session.commit()
+        except:
+            pass  # Don't fail if logging fails
+        
+        return jsonify({
+            'success': True,
+            'message': ai_response,
+            'timestamp': datetime.utcnow().isoformat()
+        }), 200
+    
+    except Exception as e:
+        print(f"❌ Chat error: {str(e)}")
+        return jsonify({
+            'error': 'An error occurred while processing your request',
+            'details': str(e)
+        }), 500
 
 
 # =============================================================================
