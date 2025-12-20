@@ -518,3 +518,36 @@ def generate_secure_password(length=12):
     alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
     password = ''.join(secrets.choice(alphabet) for i in range(length))
     return f"PF-{password[:4]}{secrets.choice('!@#$')}{password[4:8]}"
+
+
+# Module-level wrapper functions for app.py imports
+_email_service = EmailService()
+
+def send_welcome_email(to_email, user_name, temp_password):
+    """Wrapper for EmailService.send_welcome_email"""
+    return _email_service.send_welcome_email(to_email, user_name, temp_password)
+
+def send_password_reset_email(to_email, reset_token, user_name=None):
+    """Wrapper for EmailService.send_password_reset_email"""
+    return _email_service.send_password_reset_email(to_email, reset_token, user_name)
+
+def send_username_reminder_email(to_email, username, user_name=None):
+    """Wrapper for EmailService.send_username_recovery_email"""
+    return _email_service.send_username_recovery_email(to_email, username, user_name)
+
+def send_password_changed_email(to_email, user_name):
+    """Send notification when password is changed"""
+    # Simple notification - you can enhance this later
+    plain_text = f"Hi {user_name}, your password was changed successfully."
+    html_content = f"<p>Hi {user_name},</p><p>Your password was changed successfully.</p>"
+    return _email_service._send_email(to_email, "Password Changed", html_content, plain_text)
+
+def send_admin_password_reset_email(to_email, user_name, new_temp_password):
+    """Wrapper for EmailService.send_admin_password_reset_email"""
+    return _email_service.send_admin_password_reset_email(to_email, user_name, new_temp_password)
+
+def send_account_deactivated_email(to_email, user_name):
+    """Send notification when account is deactivated"""
+    plain_text = f"Hi {user_name}, your account has been deactivated. Contact your administrator for assistance."
+    html_content = f"<p>Hi {user_name},</p><p>Your account has been deactivated. Contact your administrator for assistance.</p>"
+    return _email_service._send_email(to_email, "Account Deactivated", html_content, plain_text)
