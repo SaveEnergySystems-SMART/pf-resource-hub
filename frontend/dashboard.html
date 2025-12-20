@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SES & Planet Fitness Resource Hub - Dashboard</title>
+    <title>SES & Planet Fitness Resource Hub - AI Assistant</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-N3GWJBMD4C');
+    </script>
+    
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -28,6 +40,8 @@
             font-family: var(--font-sans);
             background: #F9FAFB;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Header */
@@ -49,301 +63,6 @@
             gap: 20px;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .logo-section img {
-            height: 100px;
-            max-width: 200px;
-            object-fit: contain;
-        }
-
-        .logo-divider {
-            width: 1px;
-            height: 40px;
-            background: #E5E7EB;
-        }
-
-        .tagline {
-            color: #6B7280;
-            font-size: 13px;
-            margin-top: 4px;
-            font-weight: 400;
-        }
-
-        /* Navigation */
-        nav {
-            background: white;
-            border-bottom: 2px solid var(--pf-light-purple);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            gap: 40px;
-            overflow-x: auto;
-        }
-
-        .nav-link {
-            padding: 16px 8px;
-            color: #6B7280;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link i {
-            font-size: 18px;
-            color: var(--pf-bright-purple);
-        }
-
-        .nav-link:hover {
-            color: var(--pf-bright-purple);
-            border-bottom-color: var(--pf-bright-purple);
-        }
-
-        .nav-link:hover i {
-            transform: scale(1.1);
-        }
-
-        .nav-link.active {
-            color: var(--pf-bright-purple);
-            border-bottom-color: var(--pf-bright-purple);
-        }
-
-        .nav-link.active i {
-            transform: scale(1.1);
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0 24px;
-        }
-
-        /* Welcome Section */
-        .welcome-section {
-            background: white;
-            border-radius: 16px;
-            padding: 48px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .welcome-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
-            position: relative;
-            display: inline-block;
-        }
-
-        h1 {
-            color: var(--pf-dark-purple);
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            color: #6B7280;
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Question Cards Grid */
-        .question-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .question-card {
-            background: white;
-            border: 2px solid #E5E7EB;
-            border-radius: 16px;
-            padding: 32px 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .question-card:hover {
-            border-color: var(--pf-bright-purple);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(150, 0, 250, 0.15);
-        }
-
-        .question-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .question-title {
-            color: var(--pf-dark-purple);
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .question-desc {
-            color: #6B7280;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        /* Hero Search Section (Center Top) */
-        .hero-search {
-            background: linear-gradient(135deg, #5B2A86 0%, #7C3AAD 100%);
-            padding: 60px 24px;
-            text-align: center;
-            color: white;
-        }
-
-        .hero-search h1 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: white;
-        }
-
-        .hero-search .subtitle {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: white;
-            opacity: 1;
-            line-height: 1.6;
-        }
-
-        .hero-search-box {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .hero-search-input {
-            width: 100%;
-            padding: 20px 24px;
-            padding-right: 160px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            font-size: 17px;
-            font-family: var(--font-sans);
-            background: rgba(255, 255, 255, 0.95);
-            color: #1A0933;
-            transition: all 0.3s ease;
-        }
-
-        .hero-search-input:focus {
-            outline: none;
-            border-color: var(--pf-yellow);
-            background: white;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero-search-input::placeholder {
-            color: #9CA3AF;
-        }
-
-        .hero-search-btn {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 14px 32px;
-            background: var(--pf-yellow);
-            color: #1A0933;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            font-family: var(--font-sans);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .hero-search-btn:hover {
-            background: #FFE83D;
-            transform: translateY(-50%) scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .steph-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .steph-icon {
-            position: relative;
-            display: inline-block;
-        }
-
-        .steph-icon i:first-child {
-            font-size: 20px;
-        }
-
-        .steph-icon i:last-child {
-            position: absolute;
-            bottom: -2px;
-            right: -6px;
-            font-size: 10px;
-            color: var(--pf-yellow);
-        }
-
-        /* Question Suggestions Section */
-        .suggestions-section {
-            padding: 48px 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .suggestions-title {
-            text-align: center;
-            color: var(--pf-dark-purple);
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 32px;
-        }
-
-        .suggestions-subtitle {
-            text-align: center;
-            color: #6B7280;
-            font-size: 16px;
-            margin-top: -24px;
-            margin-bottom: 32px;
-        }
-
         /* User Menu */
         .user-menu {
             display: flex;
@@ -351,7 +70,6 @@
             gap: 12px;
             color: #6B7280;
             font-size: 14px;
-            position: relative;
         }
 
         .user-avatar {
@@ -389,6 +107,16 @@
             background: #F9FAFB;
             border-color: var(--pf-bright-purple);
             color: var(--pf-bright-purple);
+        }
+
+        .admin-badge {
+            background: var(--pf-bright-purple);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .dropdown-menu {
@@ -437,14 +165,13 @@
             text-align: left;
         }
 
-        .dropdown-item i {
-            font-size: 16px;
+        .dropdown-item:hover {
+            background: var(--pf-light-purple);
             color: var(--pf-bright-purple);
-            width: 20px;
         }
 
-        .dropdown-item:hover {
-            background: #F9FAFB;
+        .dropdown-item i {
+            font-size: 16px;
             color: var(--pf-bright-purple);
         }
 
@@ -454,105 +181,411 @@
             margin: 4px 0;
         }
 
-        .admin-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: var(--pf-yellow);
-            color: #1A0933;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-left: 8px;
-        }
-
         .logout-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid #E5E7EB;
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
             border-radius: 8px;
-            color: #6B7280;
+            padding: 8px 16px;
+            font-weight: 600;
             font-size: 14px;
-            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .logout-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo-section img {
+            height: 80px;
+            max-width: 180px;
+            object-fit: contain;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: #E5E7EB;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 2px solid var(--pf-light-purple);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+        }
+
+        .nav-link {
+            padding: 16px 8px;
+            color: #6B7280;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-yellow);
+        }
+
+        .nav-link.active {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        /* Main Chat Container */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .chat-header h1 {
+            color: var(--pf-dark-purple);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .chat-header h1 i {
+            color: var(--pf-bright-purple);
+            font-size: 36px;
+        }
+
+        .chat-header p {
+            color: #6B7280;
+            font-size: 16px;
+        }
+
+        /* Chat Messages Container */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            min-height: 400px;
+            max-height: 600px;
+        }
+
+        .message {
+            margin-bottom: 24px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .message-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .user-icon {
+            background: var(--pf-light-purple);
+            color: var(--pf-bright-purple);
+        }
+
+        .ai-icon {
+            background: var(--pf-bright-purple);
+            color: white;
+        }
+
+        .message-label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-message .message-label {
+            color: var(--pf-bright-purple);
+        }
+
+        .ai-message .message-label {
+            color: var(--pf-dark-purple);
+        }
+
+        .message-content {
+            padding: 16px;
+            border-radius: 12px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .user-message .message-content {
+            background: var(--pf-light-purple);
+            color: var(--pf-dark-purple);
+            margin-left: 42px;
+        }
+
+        .ai-message .message-content {
             background: #F9FAFB;
-            border-color: #D1D5DB;
+            color: #1F2937;
+            margin-left: 42px;
+            border-left: 3px solid var(--pf-bright-purple);
+        }
+
+        .message-source {
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-left: 3px solid var(--pf-yellow);
+            border-radius: 6px;
+            font-size: 13px;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .message-source i {
+            color: var(--pf-bright-purple);
+        }
+
+        /* Loading Animation */
+        .loading-message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            margin-left: 42px;
+            background: #F9FAFB;
+            border-radius: 12px;
+            border-left: 3px solid var(--pf-bright-purple);
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pf-bright-purple);
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Input Area */
+        .chat-input-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: var(--font-sans);
+            font-size: 15px;
+            resize: none;
+            min-height: 50px;
+            max-height: 150px;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--pf-bright-purple);
+        }
+
+        .send-button {
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 50px;
+        }
+
+        .send-button:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+        }
+
+        .send-button:disabled {
+            background: #D1D5DB;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .send-button i {
+            font-size: 18px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9CA3AF;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--pf-light-purple);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #6B7280;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .suggestion-chip {
+            background: white;
+            border: 2px solid var(--pf-light-purple);
+            color: var(--pf-bright-purple);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-chip:hover {
+            background: var(--pf-light-purple);
+            transform: translateY(-1px);
+        }
+
+        /* Scrollbar Styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #F3F4F6;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--pf-bright-purple);
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--pf-dark-purple);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
+            .chat-header h1 {
+                font-size: 24px;
             }
 
-            .logo-section {
-                flex-direction: column;
-                gap: 12px;
+            .chat-messages {
+                min-height: 300px;
+                max-height: 500px;
             }
 
-            .logo-divider {
-                display: none;
+            .message-content {
+                margin-left: 0 !important;
             }
 
-            .hero-search h1 {
-                font-size: 32px;
-            }
-
-            .hero-search .subtitle {
-                font-size: 16px;
-            }
-
-            .hero-search-input {
-                padding-right: 24px;
-                padding-bottom: 60px;
-            }
-
-            .hero-search-btn {
-                position: static;
-                width: 100%;
-                transform: none;
-                margin-top: 12px;
-            }
-
-            .hero-search-btn:hover {
-                transform: scale(1.02);
-            }
-
-            .welcome-section {
-                padding: 32px 24px;
-            }
-
-            .question-cards {
-                grid-template-columns: 1fr;
+            .nav-content {
+                gap: 20px;
             }
         }
     </style>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N3GWJBMD4C');
-    </script>
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <div>
-                    <img src="images/Logo-Primary.svg" alt="Planet Fitness" style="height: 100px;">
-                </div>
+                <img src="https://saveenergysystems.com/wp-content/uploads/2024/11/Save-Energy-Systems_Primary-Logo_Color.png" alt="Save Energy Systems">
                 <div class="logo-divider"></div>
-                <div>
-                    <img src="images/ses-logo.png" alt="Save Energy Systems">
-                    <p class="tagline">SES & PF Resource Hub - HVAC, Protocols & Facility Support</p>
-                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Planet_Fitness_logo.svg/2560px-Planet_Fitness_logo.svg.png" alt="Planet Fitness">
             </div>
 
             <div class="user-menu">
@@ -575,7 +608,7 @@
                         </a>
                         <a href="admin-pf.html" class="dropdown-item" id="pfAdminLink" style="display: none;">
                             <i class="bi bi-building"></i>
-                            <span>PF Head Admin (All Locations)</span>
+                            <span>PF Admin Dashboard</span>
                         </a>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" onclick="window.open('https://analytics.google.com', '_blank')">
@@ -593,120 +626,109 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="dashboard.html" class="nav-link active"><i class="bi bi-speedometer2"></i> Dashboard</a>
-            <a href="help-now.html" class="nav-link"><i class="bi bi-exclamation-circle"></i> Help Now</a>
-            <a href="order-parts.html" class="nav-link"><i class="bi bi-cart"></i> Order Parts</a>
-            <a href="resources.html" class="nav-link"><i class="bi bi-book"></i> Resources</a>
-            <a href="why-ses.html" class="nav-link"><i class="bi bi-award"></i> Why SES</a>
+            <a href="dashboard.html" class="nav-link active">AI Assistant</a>
+            <a href="resources.html" class="nav-link">Resources</a>
+            <a href="order-parts.html" class="nav-link">Order Parts</a>
+            <a href="help-now.html" class="nav-link">Help Now</a>
+            <a href="admin-ses.html" class="nav-link">Admin</a>
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Main Chat Interface -->
     <main>
-        <!-- Hero Search Section -->
-        <div class="hero-search">
-            <div class="steph-badge">
-                <span class="steph-icon">
-                    <i class="bi bi-person-circle"></i>
-                    <i class="bi bi-lightning-charge-fill"></i>
-                </span>
-                <span>Ask Steph</span>
-            </div>
-            <h1>Hi, I'm Steph—Your Resource Assistant</h1>
-            <p class="subtitle">
-                I'm here to help with <strong>Save Energy Systems (SES) and Planet Fitness</strong> questions. 
-                Ask me about HVAC troubleshooting, SES protocols, parts ordering, emergency contacts, 
-                work orders, and facility management. Your one-stop resource for all SES & PF needs!
-            </p>
-            <div class="hero-search-box">
-                <input 
-                    type="text" 
-                    class="hero-search-input" 
-                    id="searchInput"
-                    placeholder="e.g., 'My HVAC isn't working' or 'How do I order filters?'"
-                    onkeypress="handleKeyPress(event)"
-                >
-                <button class="hero-search-btn" onclick="handleSearch()">
-                    <i class="bi bi-send-fill"></i> Send
-                </button>
+        <div class="chat-header">
+            <h1>
+                <i class="bi bi-robot"></i>
+                SES HVAC Resource Assistant
+            </h1>
+            <p>Get help with troubleshooting, smart monitoring, parts ordering, and SES protocols for Planet Fitness facilities.</p>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <i class="bi bi-chat-dots"></i>
+                <h3>How can I help you today?</h3>
+                <p>Ask about HVAC troubleshooting, smart monitoring systems, preventive maintenance, parts ordering, emergency procedures, or SES protocols.</p>
+                
+                <div class="suggestion-chips">
+                    <div class="suggestion-chip" onclick="askSuggestion('How do I troubleshoot a water leak?')">
+                        Water leak troubleshooting
+                    </div>
+                    <div class="suggestion-chip" onclick="askSuggestion('What should I check if AC is not cooling?')">
+                        AC not cooling
+                    </div>
+                    <div class="suggestion-chip" onclick="askSuggestion('How do I reset a breaker?')">
+                        Reset breaker
+                    </div>
+                    <div class="suggestion-chip" onclick="askSuggestion('Emergency contact procedures')">
+                        Emergency contacts
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Question Suggestions -->
-        <div class="suggestions-section">
-            <h2 class="suggestions-title">Popular Questions</h2>
-            <p class="suggestions-subtitle">Or choose a topic below to get started quickly</p>
-            <div class="question-cards">
-            <div class="question-card" onclick="askQuestion('How do I troubleshoot my HVAC system?')">
-                <div class="question-icon"><i class="bi bi-snow" style="color: var(--pf-bright-purple);"></i></div>
-                <div class="question-title">HVAC Troubleshooting</div>
-                <div class="question-desc">Get help with heating, cooling, and air quality issues</div>
-            </div>
-
-            <div class="question-card" onclick="askQuestion('How do I order parts for my location?')">
-                <div class="question-icon"><i class="bi bi-box-seam" style="color: var(--pf-bright-purple);"></i></div>
-                <div class="question-title">Order Parts</div>
-                <div class="question-desc">Learn how to order filters, supplies, and equipment</div>
-            </div>
-
-            <div class="question-card" onclick="askQuestion('What are the emergency contact protocols?')">
-                <div class="question-icon"><i class="bi bi-exclamation-triangle" style="color: #DC2626;"></i></div>
-                <div class="question-title">Emergency Protocols</div>
-                <div class="question-desc">Access emergency contacts and urgent procedures</div>
-            </div>
-
-            <div class="question-card" onclick="askQuestion('How do I submit a work order?')">
-                <div class="question-icon"><i class="bi bi-tools" style="color: var(--pf-bright-purple);"></i></div>
-                <div class="question-title">Submit Work Order</div>
-                <div class="question-desc">Steps to request maintenance or repairs</div>
-            </div>
-
-            <div class="question-card" onclick="askQuestion('What are the winter maintenance procedures?')">
-                <div class="question-icon"><i class="bi bi-calendar-check" style="color: var(--pf-bright-purple);"></i></div>
-                <div class="question-title">Seasonal Maintenance</div>
-                <div class="question-desc">Winterization, snow removal, and seasonal tasks</div>
-            </div>
-
-            <div class="question-card" onclick="askQuestion('How do I contact billing support?')">
-                <div class="question-icon"><i class="bi bi-currency-dollar" style="color: var(--pf-bright-purple);"></i></div>
-                <div class="question-title">Billing Questions</div>
-                <div class="question-desc">Get help with invoices and payment questions</div>
+        <!-- Input Area -->
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <textarea 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="Type your HVAC question here..."
+                    rows="1"
+                    onkeydown="handleKeyPress(event)"
+                ></textarea>
+                <button id="sendButton" class="send-button" onclick="sendMessage()">
+                    <span>Send</span>
+                    <i class="bi bi-send-fill"></i>
+                </button>
             </div>
         </div>
     </main>
 
     <script>
-        // Load user data from session (NO REDIRECT - SIMPLE VERSION)
+        const API_URL = 'https://pf-resource-hub.onrender.com';
+        let conversationHistory = [];
+
+        // CHECK AUTHENTICATION ON LOAD
         window.addEventListener('load', () => {
             // Check for authentication
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
             
+            // If no auth, redirect to login
+            if (!authToken || !userDataStr) {
+                window.location.href = 'login-final.html';
+                return;
+            }
+
             let email = 'User';
             let userRole = null;
             
-            // If we have user data, use it
-            if (userDataStr) {
-                try {
-                    const userData = JSON.parse(userDataStr);
-                    email = userData.email || userData.username || 'User';
-                    userRole = userData.role;
+            // Load user data
+            try {
+                const userData = JSON.parse(userDataStr);
+                email = userData.email || userData.username || 'User';
+                userRole = userData.role;
+                
+                // Show admin dropdown if user is admin
+                if (userRole === 'ses_admin' || userRole === 'pf_admin') {
+                    document.getElementById('adminDropdown').style.display = 'block';
                     
-                    // Show admin dropdown if user is admin
-                    if (userRole === 'ses_admin' || userRole === 'pf_admin') {
-                        document.getElementById('adminDropdown').style.display = 'block';
-                        
-                        // Show appropriate admin links
-                        if (userRole === 'ses_admin') {
-                            document.getElementById('sesAdminLink').style.display = 'flex';
-                            document.getElementById('pfAdminLink').style.display = 'flex'; // SES admin can see both
-                        } else if (userRole === 'pf_admin') {
-                            document.getElementById('pfAdminLink').style.display = 'flex';
-                        }
+                    // Show appropriate admin links
+                    if (userRole === 'ses_admin') {
+                        document.getElementById('sesAdminLink').style.display = 'flex';
+                        document.getElementById('pfAdminLink').style.display = 'flex'; // SES admin can see both
+                    } else if (userRole === 'pf_admin') {
+                        document.getElementById('pfAdminLink').style.display = 'flex';
                     }
-                } catch (e) {
-                    console.error('Error parsing user data:', e);
                 }
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                // If user data is corrupted, redirect to login
+                window.location.href = 'login-final.html';
+                return;
             }
             
             // Update UI
@@ -715,46 +737,6 @@
             document.getElementById('userAvatar').textContent = initial;
         });
 
-        // Handle search
-        function handleSearch() {
-            const input = document.getElementById('searchInput');
-            const query = input.value.trim();
-
-            if (!query) return;
-
-            console.log('Searching for:', query);
-            
-            // Helpful response for now (until AI is connected)
-            alert(`Thanks for your question: "${query}"\n\n` +
-                  `📞 FOR IMMEDIATE HELP:\n` +
-                  `• HVAC Emergency: Call (617) 564-4800\n` +
-                  `• SES Support: Contact your account manager\n\n` +
-                  `📚 BROWSE RESOURCES:\n` +
-                  `• Help Now - Emergency protocols\n` +
-                  `• Order Parts - Equipment & supplies\n` +
-                  `• Resources - Guides & documentation\n\n` +
-                  `💡 Steph's smart search feature coming soon!`);
-            
-            input.value = '';
-        }
-
-        // Handle Enter key
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                handleSearch();
-            }
-        }
-
-        // Handle question card click
-        function askQuestion(question) {
-            document.getElementById('searchInput').value = question;
-            document.getElementById('searchInput').focus();
-            
-            // Optional: Auto-submit the question
-            // handleSearch();
-        }
-
-        // Logout
         // Toggle admin dropdown
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdownMenu');
@@ -764,23 +746,191 @@
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('dropdownMenu');
-            const dropdownBtn = event.target.closest('.user-dropdown-btn');
+            const dropdownBtn = document.querySelector('.user-dropdown-btn');
             
-            if (!dropdownBtn && dropdown) {
+            if (dropdown && dropdownBtn && !dropdownBtn.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('show');
             }
         });
 
+        // Logout function
         function logout() {
-            // Clear all session data
             sessionStorage.removeItem('auth_token');
             sessionStorage.removeItem('user_data');
             localStorage.removeItem('auth_token');
             localStorage.removeItem('user_data');
-            localStorage.removeItem('demo_mode');
+            window.location.href = 'login-final.html';
+        }
+
+        // Auto-resize textarea
+        const chatInput = document.getElementById('chatInput');
+        chatInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+        });
+
+        // Handle Enter key (Shift+Enter for new line)
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Suggestion chip click
+        function askSuggestion(question) {
+            document.getElementById('chatInput').value = question;
+            sendMessage();
+        }
+
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
             
-            // Redirect to login
-            window.location.href = 'index.html';
+            if (!message) return;
+
+            // Hide empty state
+            document.getElementById('emptyState').style.display = 'none';
+
+            // Add user message to UI
+            addMessage('user', message);
+            
+            // Clear input
+            input.value = '';
+            input.style.height = 'auto';
+            
+            // Disable send button
+            const sendButton = document.getElementById('sendButton');
+            sendButton.disabled = true;
+
+            // Show loading
+            addLoadingMessage();
+
+            try {
+                // Get auth token
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+
+                // Call API with authentication
+                const response = await fetch(`${API_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        conversation_history: conversationHistory
+                    })
+                });
+
+                const data = await response.json();
+
+                // Remove loading
+                removeLoadingMessage();
+
+                if (response.status === 401) {
+                    // Token expired, redirect to login
+                    alert('Your session has expired. Please login again.');
+                    logout();
+                    return;
+                }
+
+                if (data.success) {
+                    // Add AI response
+                    addMessage('ai', data.message);
+                    
+                    // Update conversation history
+                    conversationHistory.push(
+                        { role: 'user', content: message },
+                        { role: 'assistant', content: data.message }
+                    );
+                } else {
+                    addMessage('ai', '❌ Sorry, I encountered an error. Please try again or contact support.');
+                }
+            } catch (error) {
+                removeLoadingMessage();
+                addMessage('ai', '❌ Connection error. Please check your internet connection and try again.');
+                console.error('Chat error:', error);
+            } finally {
+                sendButton.disabled = false;
+            }
+        }
+
+        // Add message to UI
+        function addMessage(role, content) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}-message`;
+
+            // Extract source if present
+            let messageText = content;
+            let source = '';
+            
+            if (content.includes('📄 **Sources:**')) {
+                const parts = content.split('📄 **Sources:**');
+                messageText = parts[0].trim();
+                source = parts[1].trim();
+            } else if (content.includes('Source:')) {
+                const parts = content.split('Source:');
+                messageText = parts[0].trim();
+                source = parts[1].trim();
+            }
+
+            const icon = role === 'user' 
+                ? '<i class="bi bi-person-circle"></i>' 
+                : '<i class="bi bi-robot"></i>';
+
+            const label = role === 'user' ? 'You' : 'AI Assistant';
+
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <div class="message-icon ${role}-icon">${icon}</div>
+                    <span class="message-label">${label}</span>
+                </div>
+                <div class="message-content">${formatMessage(messageText)}</div>
+                ${source ? `<div class="message-source"><i class="bi bi-file-text"></i> ${source}</div>` : ''}
+            `;
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Format message (preserve line breaks)
+        function formatMessage(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+
+        // Add loading message
+        function addLoadingMessage() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message ai-message';
+            loadingDiv.id = 'loadingMessage';
+            loadingDiv.innerHTML = `
+                <div class="message-header">
+                    <div class="message-icon ai-icon"><i class="bi bi-robot"></i></div>
+                    <span class="message-label">AI Assistant</span>
+                </div>
+                <div class="loading-message">
+                    <span>Searching documentation</span>
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(loadingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Remove loading message
+        function removeLoadingMessage() {
+            const loadingMessage = document.getElementById('loadingMessage');
+            if (loadingMessage) {
+                loadingMessage.remove();
+            }
         }
     </script>
 </body>

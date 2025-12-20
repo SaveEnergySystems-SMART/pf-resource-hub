@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SES & Planet Fitness Resource Hub - Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Planet Fitness Colors */
+            --pf-dark-purple: #290241;
+            --pf-bright-purple: #9600FA;
+            --pf-light-purple: #FAEEFF;
+            --pf-yellow: #FFDC00;
+            --pf-white: #FFFFFF;
+            
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #F9FAFB;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo-section img {
+            height: 100px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: #E5E7EB;
+        }
+
+        .tagline {
+            color: #6B7280;
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 2px solid var(--pf-light-purple);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+        }
+
+        .nav-link {
+            padding: 16px 8px;
+            color: #6B7280;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link i {
+            font-size: 18px;
+            color: var(--pf-bright-purple);
+        }
+
+        .nav-link:hover {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        .nav-link:hover i {
+            transform: scale(1.1);
+        }
+
+        .nav-link.active {
+            color: var(--pf-bright-purple);
+            border-bottom-color: var(--pf-bright-purple);
+        }
+
+        .nav-link.active i {
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 24px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1 {
+            color: var(--pf-dark-purple);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #6B7280;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Question Cards Grid */
+        .question-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .question-card {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .question-card:hover {
+            border-color: var(--pf-bright-purple);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(150, 0, 250, 0.15);
+        }
+
+        .question-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .question-title {
+            color: var(--pf-dark-purple);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .question-desc {
+            color: #6B7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Hero Search Section (Center Top) */
+        .hero-search {
+            background: linear-gradient(135deg, #5B2A86 0%, #7C3AAD 100%);
+            padding: 60px 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-search h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .hero-search .subtitle {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: white;
+            opacity: 1;
+            line-height: 1.6;
+        }
+
+        .hero-search-box {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-search-input {
+            width: 100%;
+            padding: 20px 24px;
+            padding-right: 160px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            font-size: 17px;
+            font-family: var(--font-sans);
+            background: rgba(255, 255, 255, 0.95);
+            color: #1A0933;
+            transition: all 0.3s ease;
+        }
+
+        .hero-search-input:focus {
+            outline: none;
+            border-color: var(--pf-yellow);
+            background: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-search-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .hero-search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 14px 32px;
+            background: var(--pf-yellow);
+            color: #1A0933;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .hero-search-btn:hover {
+            background: #FFE83D;
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .steph-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .steph-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .steph-icon i:first-child {
+            font-size: 20px;
+        }
+
+        .steph-icon i:last-child {
+            position: absolute;
+            bottom: -2px;
+            right: -6px;
+            font-size: 10px;
+            color: var(--pf-yellow);
+        }
+
+        /* Question Suggestions Section */
+        .suggestions-section {
+            padding: 48px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .suggestions-title {
+            text-align: center;
+            color: var(--pf-dark-purple);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        .suggestions-subtitle {
+            text-align: center;
+            color: #6B7280;
+            font-size: 16px;
+            margin-top: -24px;
+            margin-bottom: 32px;
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6B7280;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--pf-bright-purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .user-dropdown-btn:hover {
+            background: #F9FAFB;
+            border-color: var(--pf-bright-purple);
+            color: var(--pf-bright-purple);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #1F2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item i {
+            font-size: 16px;
+            color: var(--pf-bright-purple);
+            width: 20px;
+        }
+
+        .dropdown-item:hover {
+            background: #F9FAFB;
+            color: var(--pf-bright-purple);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 4px 0;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--pf-yellow);
+            color: #1A0933;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo-section {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo-divider {
+                display: none;
+            }
+
+            .hero-search h1 {
+                font-size: 32px;
+            }
+
+            .hero-search .subtitle {
+                font-size: 16px;
+            }
+
+            .hero-search-input {
+                padding-right: 24px;
+                padding-bottom: 60px;
+            }
+
+            .hero-search-btn {
+                position: static;
+                width: 100%;
+                transform: none;
+                margin-top: 12px;
+            }
+
+            .hero-search-btn:hover {
+                transform: scale(1.02);
+            }
+
+            .welcome-section {
+                padding: 32px 24px;
+            }
+
+            .question-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N3GWJBMD4C');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div>
+                    <img src="images/Logo-Primary.svg" alt="Planet Fitness" style="height: 100px;">
+                </div>
+                <div class="logo-divider"></div>
+                <div>
+                    <img src="images/ses-logo.png" alt="Save Energy Systems">
+                    <p class="tagline">SES & PF Resource Hub - HVAC, Protocols & Facility Support</p>
+                </div>
+            </div>
+
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar"></div>
+                <span id="userEmail"></span>
+                
+                <!-- Admin Dropdown (only visible for admins) -->
+                <div class="user-dropdown" id="adminDropdown" style="display: none;">
+                    <button class="user-dropdown-btn" onclick="toggleDropdown()">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Admin</span>
+                        <span class="admin-badge">ADMIN</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-header">Admin Tools</div>
+                        <a href="admin-ses.html" class="dropdown-item" id="sesAdminLink" style="display: none;">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>SES Super Admin</span>
+                        </a>
+                        <a href="admin-pf.html" class="dropdown-item" id="pfAdminLink" style="display: none;">
+                            <i class="bi bi-building"></i>
+                            <span>PF Head Admin (All Locations)</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" onclick="window.open('https://analytics.google.com', '_blank')">
+                            <i class="bi bi-graph-up"></i>
+                            <span>Google Analytics</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="dashboard.html" class="nav-link active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a href="help-now.html" class="nav-link"><i class="bi bi-exclamation-circle"></i> Help Now</a>
+            <a href="order-parts.html" class="nav-link"><i class="bi bi-cart"></i> Order Parts</a>
+            <a href="resources.html" class="nav-link"><i class="bi bi-book"></i> Resources</a>
+            <a href="why-ses.html" class="nav-link"><i class="bi bi-award"></i> Why SES</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Search Section -->
+        <div class="hero-search">
+            <div class="steph-badge">
+                <span class="steph-icon">
+                    <i class="bi bi-person-circle"></i>
+                    <i class="bi bi-lightning-charge-fill"></i>
+                </span>
+                <span>Ask Steph</span>
+            </div>
+            <h1>Hi, I'm Steph—Your Resource Assistant</h1>
+            <p class="subtitle">
+                I'm here to help with <strong>Save Energy Systems (SES) and Planet Fitness</strong> questions. 
+                Ask me about HVAC troubleshooting, SES protocols, parts ordering, emergency contacts, 
+                work orders, and facility management. Your one-stop resource for all SES & PF needs!
+            </p>
+            <div class="hero-search-box">
+                <input 
+                    type="text" 
+                    class="hero-search-input" 
+                    id="searchInput"
+                    placeholder="e.g., 'My HVAC isn't working' or 'How do I order filters?'"
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="hero-search-btn" onclick="handleSearch()">
+                    <i class="bi bi-send-fill"></i> Send
+                </button>
+            </div>
+        </div>
+
+        <!-- Question Suggestions -->
+        <div class="suggestions-section">
+            <h2 class="suggestions-title">Popular Questions</h2>
+            <p class="suggestions-subtitle">Or choose a topic below to get started quickly</p>
+            <div class="question-cards">
+            <div class="question-card" onclick="askQuestion('How do I troubleshoot my HVAC system?')">
+                <div class="question-icon"><i class="bi bi-snow" style="color: var(--pf-bright-purple);"></i></div>
+                <div class="question-title">HVAC Troubleshooting</div>
+                <div class="question-desc">Get help with heating, cooling, and air quality issues</div>
+            </div>
+
+            <div class="question-card" onclick="askQuestion('How do I order parts for my location?')">
+                <div class="question-icon"><i class="bi bi-box-seam" style="color: var(--pf-bright-purple);"></i></div>
+                <div class="question-title">Order Parts</div>
+                <div class="question-desc">Learn how to order filters, supplies, and equipment</div>
+            </div>
+
+            <div class="question-card" onclick="askQuestion('What are the emergency contact protocols?')">
+                <div class="question-icon"><i class="bi bi-exclamation-triangle" style="color: #DC2626;"></i></div>
+                <div class="question-title">Emergency Protocols</div>
+                <div class="question-desc">Access emergency contacts and urgent procedures</div>
+            </div>
+
+            <div class="question-card" onclick="askQuestion('How do I submit a work order?')">
+                <div class="question-icon"><i class="bi bi-tools" style="color: var(--pf-bright-purple);"></i></div>
+                <div class="question-title">Submit Work Order</div>
+                <div class="question-desc">Steps to request maintenance or repairs</div>
+            </div>
+
+            <div class="question-card" onclick="askQuestion('What are the winter maintenance procedures?')">
+                <div class="question-icon"><i class="bi bi-calendar-check" style="color: var(--pf-bright-purple);"></i></div>
+                <div class="question-title">Seasonal Maintenance</div>
+                <div class="question-desc">Winterization, snow removal, and seasonal tasks</div>
+            </div>
+
+            <div class="question-card" onclick="askQuestion('How do I contact billing support?')">
+                <div class="question-icon"><i class="bi bi-currency-dollar" style="color: var(--pf-bright-purple);"></i></div>
+                <div class="question-title">Billing Questions</div>
+                <div class="question-desc">Get help with invoices and payment questions</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load user data from session (NO REDIRECT - SIMPLE VERSION)
+        window.addEventListener('load', () => {
+            // Check for authentication
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+            
+            let email = 'User';
+            let userRole = null;
+            
+            // If we have user data, use it
+            if (userDataStr) {
+                try {
+                    const userData = JSON.parse(userDataStr);
+                    email = userData.email || userData.username || 'User';
+                    userRole = userData.role;
+                    
+                    // Show admin dropdown if user is admin
+                    if (userRole === 'ses_admin' || userRole === 'pf_admin') {
+                        document.getElementById('adminDropdown').style.display = 'block';
+                        
+                        // Show appropriate admin links
+                        if (userRole === 'ses_admin') {
+                            document.getElementById('sesAdminLink').style.display = 'flex';
+                            document.getElementById('pfAdminLink').style.display = 'flex'; // SES admin can see both
+                        } else if (userRole === 'pf_admin') {
+                            document.getElementById('pfAdminLink').style.display = 'flex';
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+            
+            // Update UI
+            document.getElementById('userEmail').textContent = email;
+            const initial = email.charAt(0).toUpperCase();
+            document.getElementById('userAvatar').textContent = initial;
+        });
+
+        // Handle search
+        function handleSearch() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            console.log('Searching for:', query);
+            
+            // Helpful response for now (until AI is connected)
+            alert(`Thanks for your question: "${query}"\n\n` +
+                  `📞 FOR IMMEDIATE HELP:\n` +
+                  `• HVAC Emergency: Call (617) 564-4800\n` +
+                  `• SES Support: Contact your account manager\n\n` +
+                  `📚 BROWSE RESOURCES:\n` +
+                  `• Help Now - Emergency protocols\n` +
+                  `• Order Parts - Equipment & supplies\n` +
+                  `• Resources - Guides & documentation\n\n` +
+                  `💡 Steph's smart search feature coming soon!`);
+            
+            input.value = '';
+        }
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        }
+
+        // Handle question card click
+        function askQuestion(question) {
+            document.getElementById('searchInput').value = question;
+            document.getElementById('searchInput').focus();
+            
+            // Optional: Auto-submit the question
+            // handleSearch();
+        }
+
+        // Logout
+        // Toggle admin dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const dropdownBtn = event.target.closest('.user-dropdown-btn');
+            
+            if (!dropdownBtn && dropdown) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        function logout() {
+            // Clear all session data
+            sessionStorage.removeItem('auth_token');
+            sessionStorage.removeItem('user_data');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            localStorage.removeItem('demo_mode');
+            
+            // Redirect to login
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
