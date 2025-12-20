@@ -837,7 +837,7 @@
             <div class="contact-card">
                 <i class="bi bi-envelope-fill"></i>
                 <h4>Email Support</h4>
-                <a href="/cdn-cgi/l/email-protection#05767075756a77714576647360606b6077627c767c76716068762b666a68" class="phone" style="font-size: 16px;"><span class="__cf_email__" data-cfemail="3e4d4b4e4e514c4a7e4d5f485b5b505b4c59474d474d4a5b534d105d5153">[email&#160;protected]</span></a>
+                <a href="/cdn-cgi/l/email-protection#75060005051a07013506140310101b1007120c060c06011018065b161a18" class="phone" style="font-size: 16px;"><span class="__cf_email__" data-cfemail="e5969095958a9791a596849380808b8097829c969c9691808896cb868a88">[email&#160;protected]</span></a>
                 <p class="detail">Non-emergency support<br>Response: Within 4 hours</p>
             </div>
 
@@ -891,29 +891,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Search Bar (Fixed Bottom) -->
-    <div class="search-container">
-        <div class="search-content">
-            <label class="search-label">
-                <span style="position: relative; display: inline-block; margin-right: 4px;">
-                    <i class="bi bi-person-circle"></i>
-                    <i class="bi bi-lightning-charge-fill" style="position: absolute; bottom: -3px; right: -8px; font-size: 0.6em; color: var(--pf-yellow);"></i>
-                </span>
-                Ask Steph anything:
-            </label>
-            <div class="search-box">
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    id="searchInput"
-                    placeholder="e.g., 'My HVAC isn't working' or 'How do I order filters?'"
-                    onkeypress="handleKeyPress(event)"
-                >
-                <button class="search-btn" onclick="handleSearch()">Send</button>
-            </div>
-        </div>
-    </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user data from session
@@ -970,28 +947,6 @@
                 dropdown.classList.remove('show');
             }
         });
-
-        // Handle search
-        function handleSearch() {
-            const input = document.getElementById('searchInput');
-            const query = input.value.trim();
-
-            if (!query) return;
-
-            console.log('Searching for:', query);
-            
-            // TODO: Implement real AI search in Phase 2
-            alert(`Steph AI will answer: "${query}"\n\nThis will be connected to OpenAI + Pinecone in Phase 2.`);
-            
-            input.value = '';
-        }
-
-        // Handle Enter key
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                handleSearch();
-            }
-        }
 
         // Logout
         function logout() {

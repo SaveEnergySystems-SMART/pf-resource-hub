@@ -12,6 +12,14 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --pf-dark-purple: #290241;
+            --pf-bright-purple: #9600FA;
+            --pf-light-purple: #FAEEFF;
+            --pf-yellow: #FFDC00;
+            --pf-white: #FFFFFF;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             background: #F9FAFB;
@@ -646,7 +654,7 @@
                 <i class="bi bi-envelope"></i>
                 <h3>Email Orders</h3>
                 <p>Send your parts list and we'll process your order within 2 hours</p>
-                <a href="/cdn-cgi/l/email-protection#fe8d8b8e8e918c8abe8d9f889b9b909b8c99878d878d8a9b938dd09d9193" class="btn">
+                <a href="/cdn-cgi/l/email-protection#9feceaefeff0edebdfecfee9fafaf1faedf8e6ece6ecebfaf2ecb1fcf0f2" class="btn">
                     <i class="bi bi-envelope"></i> Send Email
                 </a>
             </div>
@@ -903,17 +911,6 @@
         </div>
     </div>
 
-    <!-- Fixed Search Bar -->
-    <div class="search-bar-fixed">
-        <div class="search-container">
-            <span style="position: relative; display: inline-block; font-size: 1.5em;">
-                <i class="bi bi-person-circle" style="color: #7B4ECC;"></i>
-                <i class="bi bi-lightning-charge-fill" style="position: absolute; bottom: -3px; right: -8px; font-size: 0.6em; color: #FFDC00;"></i>
-            </span>
-            <input type="text" class="search-input" placeholder="Ask Steph anything about parts ordering..." id="searchInput">
-        </div>
-    </div>
-
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user session
         window.addEventListener('DOMContentLoaded', function() {
@@ -926,14 +923,6 @@
             localStorage.removeItem('pfUser');
             window.location.href = 'index.html';
         }
-
-        // Search functionality (Phase 2: Connect to GuideFlow AI backend)
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const query = this.value;
-                alert('Steph AI search coming in Phase 2!\n\nYour question: "' + query + '"\n\nFor now, call SES at (617) 564-4800 for immediate assistance.');
-            }
-        });
     </script>
 </body>
 </html>
