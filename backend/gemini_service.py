@@ -15,8 +15,8 @@ class GeminiService:
         
         if self.api_key:
             genai.configure(api_key=self.api_key)
-            # Use Gemini 1.5 Flash for fast, cost-effective responses
-              self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
+            # Use gemini-1.5-flash-latest for the most stable API
+            self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
             print("✅ Google Gemini AI initialized successfully")
         else:
             self.model = None
