@@ -1,26 +1,20 @@
 """
-Simple RAG Service for PF Resource Hub
-Uses local TF-IDF search instead of embeddings (no API quota limits)
+Simple RAG Service for PF Resource Hub - NO DEPENDENCIES VERSION
+Just loads and searches text files using basic Python
 """
 
 import os
 import re
 from typing import List, Dict, Tuple
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
 
 class SimpleRAGService:
     def __init__(self, docs_directory: str = None):
         """Initialize simple RAG service"""
         if docs_directory is None:
-            # Default to knowledge_base folder in backend
             docs_directory = os.path.join(os.path.dirname(__file__), 'knowledge_base')
         self.docs_directory = docs_directory
         self.documents = []
         self.document_names = []
-        self.vectorizer = None
-        self.tfidf_matrix = None
         
         # Load documents
         self._load_documents()
@@ -45,19 +39,18 @@ class SimpleRAGService:
                     chunks = self._split_into_chunks(content, chunk_size=1000, overlap=200)
                     
                     for i, chunk in enumerate(chunks):
-                        self.documents.append(chunk)
-                        self.document_names.append(f"{filename} (chunk {i+1})")
+                        self.documents.append({
+                            'text': chunk,
+                            'source': filename,
+                            'chunk_id': i
+                        })
                     
                     print(f"  ✅ Loaded: {filename} ({len(chunks)} chunks)")
                 
                 except Exception as e:
                     print(f"  ❌ Error loading {filename}: {str(e)}")
         
-        print(f"\n✅ Loaded {len(self.documents)} document chunks from {len(set(self.document_names))} files")
-        
-        # Create TF-IDF vectors
-        if self.documents:
-            self._create_index()
+        print(f"\n✅ Loaded {len(self.documents)} document chunks from {len(set([d['source'] for d in self.documents]))} files")
     
     def _split_into_chunks(self, text: str, chunk_size: int = 1000, overlap: int = 200) -> List[str]:
         """Split text into overlapping chunks"""
@@ -73,55 +66,37 @@ class SimpleRAGService:
         
         return chunks
     
-    def _create_index(self):
-        """Create TF-IDF index"""
-        print("\n🔍 Creating search index...")
-        self.vectorizer = TfidfVectorizer(
-            max_features=1000,
-            stop_words='english',
-            ngram_range=(1, 2)
-        )
-        self.tfidf_matrix = self.vectorizer.fit_transform(self.documents)
-        print("✅ Search index created")
-    
     def search(self, query: str, top_k: int = 3) -> List[Dict]:
         """
-        Search documents for relevant context
-        
-        Args:
-            query: User's question
-            top_k: Number of relevant chunks to return
-        
-        Returns:
-            List of relevant document chunks with scores
+        Search documents using simple keyword matching
         """
-        if not self.documents or self.vectorizer is None:
+        if not self.documents:
             print("❌ No documents loaded")
             return []
         
         try:
-            # Transform query
-            query_vector = self.vectorizer.transform([query])
+            # Convert query to lowercase and extract keywords
+            query_lower = query.lower()
+            query_words = set(re.findall(r'\w+', query_lower))
             
-            # Calculate similarity
-            similarities = cosine_similarity(query_vector, self.tfidf_matrix).flatten()
-            
-            # Get top k results
-            top_indices = similarities.argsort()[-top_k:][::-1]
-            
-            results = []
-            for idx in top_indices:
-                if similarities[idx] > 0:  # Only include relevant results
-                    # Extract source filename (remove chunk info)
-                    source = self.document_names[idx].split(' (chunk ')[0]
-                    
-                    results.append({
-                        'source': source,
-                        'text': self.documents[idx],
-                        'score': float(similarities[idx])
+            # Score each document
+            scored_docs = []
+            for doc in self.documents:
+                text_lower = doc['text'].lower()
+                
+                # Count matching words
+                score = sum(1 for word in query_words if word in text_lower)
+                
+                if score > 0:
+                    scored_docs.append({
+                        'source': doc['source'],
+                        'text': doc['text'],
+                        'score': score
                     })
             
-            return results
+            # Sort by score and return top_k
+            scored_docs.sort(key=lambda x: x['score'], reverse=True)
+            return scored_docs[:top_k]
         
         except Exception as e:
             print(f"❌ Search error: {str(e)}")
@@ -130,9 +105,6 @@ class SimpleRAGService:
     def get_context_for_query(self, query: str, top_k: int = 3) -> Tuple[str, List[str]]:
         """
         Get relevant context and sources for a query
-        
-        Returns:
-            (context_text, list_of_sources)
         """
         results = self.search(query, top_k=top_k)
         
@@ -166,9 +138,6 @@ def init_rag():
 def search_docs(query: str, top_k: int = 3) -> Tuple[str, List[str]]:
     """
     Search documents and return context + sources
-    
-    Returns:
-        (context_text, list_of_sources)
     """
     service = init_rag()
     return service.get_context_for_query(query, top_k=top_k)
