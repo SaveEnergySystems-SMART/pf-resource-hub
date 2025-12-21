@@ -1122,10 +1122,10 @@
                 const data = await response.json();
                 
                 // Update UI with REAL Google Analytics data
-                document.getElementById('totalUsers').textContent = data.overview.total_users.toLocaleString();
-                document.getElementById('pageViews').textContent = data.overview.page_views.toLocaleString();
-                document.getElementById('sessions').textContent = data.overview.sessions.toLocaleString();
-                document.getElementById('avgDuration').textContent = data.overview.avg_session_duration;
+                document.getElementById('totalUsers').textContent = data.data.overview.totalUsers.toLocaleString();
+                document.getElementById('pageViews').textContent = data.data.overview.pageViews.toLocaleString();
+                document.getElementById('sessions').textContent = data.data.overview.sessions.toLocaleString();
+                document.getElementById('avgDuration').textContent = data.data.overview.avgDuration;
                 
                 // Update change indicators
                 const userChange = data.overview.user_change || 0;
@@ -1189,9 +1189,9 @@
                 const data = await response.json();
                 
                 // Extract labels and data from API response
-                const labels = data.traffic_chart.labels;
-                const userData = data.traffic_chart.users;
-                const sessionData = data.traffic_chart.sessions;
+                const labels = data.data.traffic.dates;
+                const userData = data.data.traffic.users;
+                const sessionData = data.data.traffic.sessions;
                 
                 if (trafficChart) {
                     trafficChart.destroy();
@@ -1331,7 +1331,7 @@
                 }
                 
                 const data = await response.json();
-                const pages = data.top_pages || [];
+                const pages = data.data.topPages || [];
                 
                 const tbody = document.getElementById('topPagesTable');
                 tbody.innerHTML = pages.map(p => `
@@ -1364,7 +1364,7 @@
                 }
                 
                 const data = await response.json();
-                const locations = data.geo_data || [];
+                const locations = data.data.locations || [];
                 
                 const tbody = document.getElementById('geoTable');
                 tbody.innerHTML = locations.map(l => `
