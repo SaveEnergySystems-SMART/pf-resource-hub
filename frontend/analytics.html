@@ -1098,7 +1098,7 @@
 
         async function loadOverviewStats() {
             const apiUrl = 'https://pf-resource-hub.onrender.com';
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
                 // Show loading state
@@ -1171,7 +1171,7 @@
         async function loadTrafficChart() {
             const ctx = document.getElementById('trafficChart').getContext('2d');
             const apiUrl = 'https://pf-resource-hub.onrender.com';
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
                 // Fetch REAL traffic data from backend
@@ -1311,7 +1311,7 @@
 
         async function loadTopPages() {
             const apiUrl = 'https://pf-resource-hub.onrender.com';
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
                 const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
@@ -1344,7 +1344,7 @@
 
         async function loadGeoData() {
             const apiUrl = 'https://pf-resource-hub.onrender.com';
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
                 const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
