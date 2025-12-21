@@ -1127,10 +1127,10 @@
                 document.getElementById('sessions').textContent = data.data.overview.sessions.toLocaleString();
                 document.getElementById('avgDuration').textContent = data.data.overview.avgDuration;
                 
-                // Update change indicators
-                const userChange = data.overview.user_change || 0;
-                const viewChange = data.overview.page_view_change || 0;
-                const sessionChange = data.overview.session_change || 0;
+                // Update change indicators (not provided by backend yet)
+                const userChange = 0;
+                const viewChange = 0;
+                const sessionChange = 0;
                 
                 const userIcon = userChange >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
                 const viewIcon = viewChange >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
