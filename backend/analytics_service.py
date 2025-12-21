@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 import os
 
 # Google Analytics Property ID
-GA_PROPERTY_ID = "417819960"  # This is the numeric part of G-N3GWJBMD4C
+GA_PROPERTY_ID = "516934723"  # Planet Fitness Resource Hub property
 
 # Path to service account credentials
 CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), 'ga-credentials.json')
