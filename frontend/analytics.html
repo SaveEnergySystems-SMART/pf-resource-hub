@@ -1289,6 +1289,11 @@
                     }
                 }
             });
+                
+            } catch (error) {
+                console.error('Error loading traffic chart:', error);
+                // Fallback: Chart will remain empty if data fetch fails
+            }
         }
 
         function getChartDays() {
