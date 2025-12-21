@@ -18,19 +18,29 @@ import os
 # Google Analytics Property ID
 GA_PROPERTY_ID = "5161391734"  # Planet Fitness Resource Hub property
 
-# Path to service account credentials
-# Check for Render secret file first, then fall back to local file
-CREDENTIALS_PATH = os.environ.get('GA_CREDENTIALS_PATH', '/etc/secrets/ga-credentials.json')
-if not os.path.exists(CREDENTIALS_PATH):
-    CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), 'ga-credentials.json')
-
 # Initialize the client
 def get_analytics_client():
     """Create and return authenticated Analytics Data API client"""
-    credentials = service_account.Credentials.from_service_account_file(
-        CREDENTIALS_PATH,
-        scopes=['https://www.googleapis.com/auth/analytics.readonly']
-    )
+    import json
+    
+    # Try to get credentials from environment variable (Render deployment)
+    credentials_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS_JSON')
+    
+    if credentials_json:
+        # Parse JSON from environment variable
+        credentials_info = json.loads(credentials_json)
+        credentials = service_account.Credentials.from_service_account_info(
+            credentials_info,
+            scopes=['https://www.googleapis.com/auth/analytics.readonly']
+        )
+    else:
+        # Fall back to local file for development
+        credentials_path = os.path.join(os.path.dirname(__file__), 'ga-credentials.json')
+        credentials = service_account.Credentials.from_service_account_file(
+            credentials_path,
+            scopes=['https://www.googleapis.com/auth/analytics.readonly']
+        )
+    
     return BetaAnalyticsDataClient(credentials=credentials)
 
 
