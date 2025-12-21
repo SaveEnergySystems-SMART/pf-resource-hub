@@ -153,7 +153,10 @@
         /* Navigation */
         nav {
             background: white;
-            border-bottom: 1px solid #E5E7EB;
+            border-bottom: 2px solid #FAEEFF;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .nav-content {
@@ -162,6 +165,7 @@
             padding: 0 24px;
             display: flex;
             gap: 40px;
+            overflow-x: auto;
         }
 
         .nav-link {
@@ -170,6 +174,7 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
+            white-space: nowrap;
             border-bottom: 3px solid transparent;
             transition: all 0.2s ease;
         }
@@ -757,7 +762,7 @@
                 <a href="tel:6175644800" style="background: #FFDC00; color: #1A0933; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
                     <i class="bi bi-telephone-fill"></i> Call (617) 564-4800
                 </a>
-                <a href="/cdn-cgi/l/email-protection#2655535656495452665547504343484354415f555f5552434b550845494b" style="background: white; color: #5A2E82; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
+                <a href="/cdn-cgi/l/email-protection#25565055554a57516556445340404b4057425c565c56514048560b464a48" style="background: white; color: #5A2E82; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
                     <i class="bi bi-envelope-fill"></i> Email Support
                 </a>
                 <a href="https://dashboard.saveenergysystems.com/" target="_blank" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.2em; display: inline-flex; align-items: center; gap: 10px;">
@@ -767,9 +772,31 @@
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer style="background: white; border-top: 2px solid #E5E7EB; padding: 24px 0; margin-top: 60px;">
+        <div style="max-width: 1600px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="font-size: 14px; color: #6B7280;">
+                <strong style="color: #9600FA;">Designed & Developed by 
+                    <a href="https://adrianasoler.com" target="_blank" style="color: #9600FA; text-decoration: none; font-weight: 600;">Adriana Soler</a>
+                </strong>
+            </div>
+            <div style="font-size: 14px; color: #6B7280; text-align: right;">
+                <div>© <span id="currentYear"></span> Save Energy Systems. All rights reserved.</div>
+                <div style="margin-top: 4px;">
+                    <a href="tel:+16175644800" style="color: #290241; text-decoration: none; font-weight: 500;">
+                        <i class="bi bi-telephone-fill"></i> (617) 564-4800
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user session
         window.addEventListener('DOMContentLoaded', function() {
+            // Set current year for footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
             // Check authentication
             const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userData = JSON.parse(sessionStorage.getItem('user_data') || localStorage.getItem('user_data') || '{}');

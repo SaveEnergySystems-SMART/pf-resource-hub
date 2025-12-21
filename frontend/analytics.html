@@ -961,6 +961,25 @@
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer style="background: white; border-top: 2px solid #E5E7EB; padding: 24px 0; margin-top: 60px;">
+        <div style="max-width: 1600px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="font-size: 14px; color: #6B7280;">
+                <strong style="color: #9600FA;">Designed & Developed by 
+                    <a href="https://adrianasoler.com" target="_blank" style="color: #9600FA; text-decoration: none; font-weight: 600;">Adriana Soler</a>
+                </strong>
+            </div>
+            <div style="font-size: 14px; color: #6B7280; text-align: right;">
+                <div>© <span id="currentYear"></span> Save Energy Systems. All rights reserved.</div>
+                <div style="margin-top: 4px;">
+                    <a href="tel:+16175644800" style="color: #290241; text-decoration: none; font-weight: 500;">
+                        <i class="bi bi-telephone-fill"></i> (617) 564-4800
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
         let currentDateRange = '30days';
         let currentTab = 'overview';
@@ -970,6 +989,9 @@
 
         // Check authentication
         window.addEventListener('DOMContentLoaded', function() {
+            // Set current year for footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userData = JSON.parse(sessionStorage.getItem('user_data') || localStorage.getItem('user_data') || '{}');
 
@@ -1074,27 +1096,58 @@
             loadGeoData();
         }
 
-        function loadOverviewStats() {
-            // Simulate data based on date range
-            const multiplier = getDateRangeMultiplier();
+        async function loadOverviewStats() {
+            const apiUrl = 'https://pf-resource-hub.onrender.com';
+            const token = localStorage.getItem('token');
             
-            const totalUsers = Math.floor((Math.random() * 500 + 200) * multiplier);
-            const pageViews = totalUsers * (Math.floor(Math.random() * 5) + 3);
-            const sessions = Math.floor(totalUsers * 1.3);
-            const avgDuration = (Math.random() * 5 + 2).toFixed(1);
-            
-            const userChange = (Math.random() * 30 + 5).toFixed(1);
-            const viewChange = (Math.random() * 25 + 5).toFixed(1);
-            const sessionChange = (Math.random() * 20 + 5).toFixed(1);
-            
-            document.getElementById('totalUsers').textContent = totalUsers.toLocaleString();
-            document.getElementById('pageViews').textContent = pageViews.toLocaleString();
-            document.getElementById('sessions').textContent = sessions.toLocaleString();
-            document.getElementById('avgDuration').textContent = avgDuration + 'm';
-            
-            document.getElementById('usersChange').innerHTML = `<i class="bi bi-arrow-up"></i><span>+${userChange}%</span>`;
-            document.getElementById('viewsChange').innerHTML = `<i class="bi bi-arrow-up"></i><span>+${viewChange}%</span>`;
-            document.getElementById('sessionsChange').innerHTML = `<i class="bi bi-arrow-up"></i><span>+${sessionChange}%</span>`;
+            try {
+                // Show loading state
+                document.getElementById('totalUsers').textContent = '...';
+                document.getElementById('pageViews').textContent = '...';
+                document.getElementById('sessions').textContent = '...';
+                document.getElementById('avgDuration').textContent = '...';
+                
+                // Fetch REAL data from backend
+                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch analytics data');
+                }
+                
+                const data = await response.json();
+                
+                // Update UI with REAL Google Analytics data
+                document.getElementById('totalUsers').textContent = data.overview.total_users.toLocaleString();
+                document.getElementById('pageViews').textContent = data.overview.page_views.toLocaleString();
+                document.getElementById('sessions').textContent = data.overview.sessions.toLocaleString();
+                document.getElementById('avgDuration').textContent = data.overview.avg_session_duration;
+                
+                // Update change indicators
+                const userChange = data.overview.user_change || 0;
+                const viewChange = data.overview.page_view_change || 0;
+                const sessionChange = data.overview.session_change || 0;
+                
+                const userIcon = userChange >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
+                const viewIcon = viewChange >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
+                const sessionIcon = sessionChange >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
+                
+                document.getElementById('usersChange').innerHTML = `<i class="bi ${userIcon}"></i><span>${userChange >= 0 ? '+' : ''}${userChange.toFixed(1)}%</span>`;
+                document.getElementById('viewsChange').innerHTML = `<i class="bi ${viewIcon}"></i><span>${viewChange >= 0 ? '+' : ''}${viewChange.toFixed(1)}%</span>`;
+                document.getElementById('sessionsChange').innerHTML = `<i class="bi ${sessionIcon}"></i><span>${sessionChange >= 0 ? '+' : ''}${sessionChange.toFixed(1)}%</span>`;
+                
+            } catch (error) {
+                console.error('Error loading analytics:', error);
+                // Fallback to demo data if API fails
+                document.getElementById('totalUsers').textContent = 'N/A';
+                document.getElementById('pageViews').textContent = 'N/A';
+                document.getElementById('sessions').textContent = 'N/A';
+                document.getElementById('avgDuration').textContent = 'N/A';
+            }
         }
 
         function getDateRangeMultiplier() {
@@ -1115,52 +1168,60 @@
             return multipliers[currentDateRange] || 1;
         }
 
-        function loadTrafficChart() {
+        async function loadTrafficChart() {
             const ctx = document.getElementById('trafficChart').getContext('2d');
+            const apiUrl = 'https://pf-resource-hub.onrender.com';
+            const token = localStorage.getItem('token');
             
-            // Generate data based on date range
-            const days = getChartDays();
-            const labels = [];
-            const userData = [];
-            const sessionData = [];
-            
-            for (let i = days - 1; i >= 0; i--) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-                userData.push(Math.floor(Math.random() * 50) + 10);
-                sessionData.push(Math.floor(Math.random() * 60) + 15);
-            }
-            
-            if (trafficChart) {
-                trafficChart.destroy();
-            }
-            
-            trafficChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Users',
-                            data: userData,
-                            borderColor: '#9600FA',
-                            backgroundColor: 'rgba(150, 0, 250, 0.1)',
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Sessions',
-                            data: sessionData,
-                            borderColor: '#FFDC00',
-                            backgroundColor: 'rgba(255, 220, 0, 0.1)',
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 3
-                        }
-                    ]
-                },
+            try {
+                // Fetch REAL traffic data from backend
+                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch traffic data');
+                }
+                
+                const data = await response.json();
+                
+                // Extract labels and data from API response
+                const labels = data.traffic_chart.labels;
+                const userData = data.traffic_chart.users;
+                const sessionData = data.traffic_chart.sessions;
+                
+                if (trafficChart) {
+                    trafficChart.destroy();
+                }
+                
+                trafficChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Users',
+                                data: userData,
+                                borderColor: '#9600FA',
+                                backgroundColor: 'rgba(150, 0, 250, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                borderWidth: 3
+                            },
+                            {
+                                label: 'Sessions',
+                                data: sessionData,
+                                borderColor: '#FFDC00',
+                                backgroundColor: 'rgba(255, 220, 0, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                borderWidth: 3
+                            }
+                        ]
+                    },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
@@ -1248,43 +1309,70 @@
             return dayMap[currentDateRange] || 30;
         }
 
-        function loadTopPages() {
-            const pages = [
-                { page: '/dashboard.html', views: 1523, percent: 35 },
-                { page: '/resources.html', views: 892, percent: 20 },
-                { page: '/order-parts.html', views: 654, percent: 15 },
-                { page: '/help-now.html', views: 543, percent: 12 },
-                { page: '/why-ses.html', views: 432, percent: 10 },
-                { page: '/', views: 345, percent: 8 }
-            ];
+        async function loadTopPages() {
+            const apiUrl = 'https://pf-resource-hub.onrender.com';
+            const token = localStorage.getItem('token');
             
-            const tbody = document.getElementById('topPagesTable');
-            tbody.innerHTML = pages.map(p => `
-                <tr>
-                    <td>${p.page}</td>
-                    <td class="number">${p.views.toLocaleString()}</td>
-                    <td>${p.percent}%</td>
-                </tr>
-            `).join('');
+            try {
+                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch top pages');
+                }
+                
+                const data = await response.json();
+                const pages = data.top_pages || [];
+                
+                const tbody = document.getElementById('topPagesTable');
+                tbody.innerHTML = pages.map(p => `
+                    <tr>
+                        <td>${p.page}</td>
+                        <td class="number">${p.views.toLocaleString()}</td>
+                        <td>${p.percent}%</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading top pages:', error);
+                document.getElementById('topPagesTable').innerHTML = '<tr><td colspan="3" style="text-align:center;">Unable to load data</td></tr>';
+            }
         }
 
-        function loadGeoData() {
-            const locations = [
-                { location: 'United States', users: 1234, sessions: 1567 },
-                { location: 'Massachusetts', users: 456, sessions: 589 },
-                { location: 'New York', users: 234, sessions: 298 },
-                { location: 'California', users: 189, sessions: 234 },
-                { location: 'Florida', users: 156, sessions: 198 }
-            ];
+        async function loadGeoData() {
+            const apiUrl = 'https://pf-resource-hub.onrender.com';
+            const token = localStorage.getItem('token');
             
-            const tbody = document.getElementById('geoTable');
-            tbody.innerHTML = locations.map(l => `
-                <tr>
-                    <td>${l.location}</td>
-                    <td class="number">${l.users.toLocaleString()}</td>
-                    <td class="number">${l.sessions.toLocaleString()}</td>
-                </tr>
-            `).join('');
+            try {
+                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch geo data');
+                }
+                
+                const data = await response.json();
+                const locations = data.geo_data || [];
+                
+                const tbody = document.getElementById('geoTable');
+                tbody.innerHTML = locations.map(l => `
+                    <tr>
+                        <td>${l.location}</td>
+                        <td class="number">${l.users.toLocaleString()}</td>
+                        <td class="number">${l.sessions.toLocaleString()}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading geo data:', error);
+                document.getElementById('geoTable').innerHTML = '<tr><td colspan="3" style="text-align:center;">Unable to load data</td></tr>';
+            }
         }
 
         function loadRealtimeData() {

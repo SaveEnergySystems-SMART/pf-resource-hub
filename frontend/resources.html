@@ -692,7 +692,7 @@
                 <p style="font-size: 1.8em; margin: 10px 0;"><a href="tel:6175644800">(617) 564-4800</a></p>
                 <p>Available 24 hours/day, 7 days/week, 365 days/year</p>
                 <p><strong>Average Response Time:</strong> Under 2 hours for emergencies</p>
-                <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#8af9fffafae5f8fecaf9ebfcefefe4eff8edf3f9f3f9feefe7f9a4e9e5e7"><span class="__cf_email__" data-cfemail="34474144445b46407447554251515a5146534d474d47405159471a575b59">[email&#160;protected]</span></a></p>
+                <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#50232520203f22241023312635353e3522372923292324353d237e333f3d"><span class="__cf_email__" data-cfemail="dfacaaafafb0adab9facbea9babab1baadb8a6aca6acabbab2acf1bcb0b2">[email&#160;protected]</span></a></p>
             </div>
 
             <h3 style="color: #2E1A47; margin: 25px 0 15px;">Contact by Issue Type:</h3>
@@ -729,7 +729,7 @@
             <h3 style="color: #2E1A47; margin: 25px 0 15px;">Escalation Procedure:</h3>
             <ol style="color: #666; line-height: 2; padding-left: 20px;">
                 <li><strong>Level 1:</strong> Call SES Support at (617) 564-4800 - Wait 15 minutes</li>
-                <li><strong>Level 2:</strong> Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9dadcd9d9c6dbdde9dac8dfccccc7ccdbced0dad0daddccc4da87cac6c4">[email&#160;protected]</a> - Wait 30 minutes</li>
+                <li><strong>Level 2:</strong> Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f5868085859a8781b586948390909b9087928c868c8681909886db969a98">[email&#160;protected]</a> - Wait 30 minutes</li>
                 <li><strong>Level 3:</strong> Contact your Regional Manager - As needed</li>
                 <li><strong>Level 4:</strong> Life safety only - Call 911, then notify SES and management</li>
             </ol>
@@ -893,9 +893,31 @@
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer style="background: white; border-top: 2px solid #E5E7EB; padding: 24px 0; margin-top: 60px;">
+        <div style="max-width: 1600px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="font-size: 14px; color: #6B7280;">
+                <strong style="color: #9600FA;">Designed & Developed by 
+                    <a href="https://adrianasoler.com" target="_blank" style="color: #9600FA; text-decoration: none; font-weight: 600;">Adriana Soler</a>
+                </strong>
+            </div>
+            <div style="font-size: 14px; color: #6B7280; text-align: right;">
+                <div>© <span id="currentYear"></span> Save Energy Systems. All rights reserved.</div>
+                <div style="margin-top: 4px;">
+                    <a href="tel:+16175644800" style="color: #290241; text-decoration: none; font-weight: 500;">
+                        <i class="bi bi-telephone-fill"></i> (617) 564-4800
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user session
         window.addEventListener('DOMContentLoaded', function() {
+            // Set current year for footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
             // Check authentication
             const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userData = JSON.parse(sessionStorage.getItem('user_data') || localStorage.getItem('user_data') || '{}');

@@ -654,7 +654,7 @@
                 <i class="bi bi-envelope"></i>
                 <h3>Email Orders</h3>
                 <p>Send your parts list and we'll process your order within 2 hours</p>
-                <a href="/cdn-cgi/l/email-protection#9feceaefeff0edebdfecfee9fafaf1faedf8e6ece6ecebfaf2ecb1fcf0f2" class="btn">
+                <a href="/cdn-cgi/l/email-protection#691a1c1919061b1d291a081f0c0c070c1b0e101a101a1d0c041a470a0604" class="btn">
                     <i class="bi bi-envelope"></i> Send Email
                 </a>
             </div>
@@ -911,9 +911,31 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer style="background: white; border-top: 2px solid #E5E7EB; padding: 24px 0; margin-top: 60px;">
+        <div style="max-width: 1600px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="font-size: 14px; color: #6B7280;">
+                <strong style="color: #9600FA;">Designed & Developed by 
+                    <a href="https://adrianasoler.com" target="_blank" style="color: #9600FA; text-decoration: none; font-weight: 600;">Adriana Soler</a>
+                </strong>
+            </div>
+            <div style="font-size: 14px; color: #6B7280; text-align: right;">
+                <div>© <span id="currentYear"></span> Save Energy Systems. All rights reserved.</div>
+                <div style="margin-top: 4px;">
+                    <a href="tel:+16175644800" style="color: #290241; text-decoration: none; font-weight: 500;">
+                        <i class="bi bi-telephone-fill"></i> (617) 564-4800
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Load user session
         window.addEventListener('DOMContentLoaded', function() {
+            // Set current year for footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
             const user = JSON.parse(localStorage.getItem('pfUser') || '{"name":"Guest"}');
             document.getElementById('userName').textContent = user.name;
         });
