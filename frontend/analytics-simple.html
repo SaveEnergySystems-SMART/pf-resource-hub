@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Planet Fitness Resource Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pf-dark-purple: #290241;
+            --pf-bright-purple: #9600FA;
+            --pf-light-purple: #FAEEFF;
+            --pf-yellow: #FFDC00;
+            --pf-white: #FFFFFF;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #F9FAFB;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo-section img {
+            height: 100px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .logo-section img:first-child {
+            height: 75px;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: #E5E7EB;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--pf-bright-purple);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .back-button:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(150, 0, 250, 0.3);
+        }
+
+        /* Analytics Container */
+        .analytics-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .analytics-header {
+            background: white;
+            padding: 24px 30px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .analytics-header h1 {
+            font-size: 28px;
+            color: var(--pf-dark-purple);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .analytics-header p {
+            color: #6B7280;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .info-box {
+            background: var(--pf-light-purple);
+            border-left: 4px solid var(--pf-bright-purple);
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .info-box i {
+            color: var(--pf-bright-purple);
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .info-box-content {
+            flex: 1;
+        }
+
+        .info-box-content strong {
+            display: block;
+            color: var(--pf-dark-purple);
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .info-box-content p {
+            color: #6B7280;
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* iframe Container */
+        .analytics-iframe-container {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-height: 800px;
+            position: relative;
+        }
+
+        .analytics-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            min-height: 800px;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .loading-overlay i {
+            font-size: 48px;
+            color: var(--pf-bright-purple);
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        .loading-overlay p {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Quick Access Tabs */
+        .quick-tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quick-tab {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid var(--pf-light-purple);
+            border-radius: 8px;
+            color: var(--pf-bright-purple);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-tab:hover {
+            background: var(--pf-bright-purple);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .analytics-header h1 {
+                font-size: 22px;
+            }
+
+            .analytics-iframe-container {
+                min-height: 600px;
+            }
+
+            .quick-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems">
+                <div class="logo-divider"></div>
+                <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
+            </div>
+
+            <div class="header-actions">
+                <a href="dashboard.html" class="back-button">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="analytics-wrapper">
+        <div class="analytics-header">
+            <h1>
+                <i class="bi bi-graph-up-arrow"></i>
+                Website Analytics Dashboard
+            </h1>
+            <p>Real-time insights into your Planet Fitness Resource Hub performance</p>
+
+            <div class="info-box">
+                <i class="bi bi-info-circle-fill"></i>
+                <div class="info-box-content">
+                    <strong>How to Use This Dashboard</strong>
+                    <p>
+                        Sign in with your Google account (if not already signed in) to view full analytics. 
+                        You'll see visitor traffic, page views, user locations, and behavior patterns for 
+                        the Planet Fitness Resource Hub.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quick Access Tabs -->
+            <div class="quick-tabs">
+                <button onclick="loadView('home')" class="quick-tab">
+                    <i class="bi bi-house-door"></i>
+                    <span>Home</span>
+                </button>
+                <button onclick="loadView('reports')" class="quick-tab">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Reports</span>
+                </button>
+                <button onclick="loadView('realtime')" class="quick-tab">
+                    <i class="bi bi-lightning"></i>
+                    <span>Realtime</span>
+                </button>
+                <a href="https://analytics.google.com" target="_blank" class="quick-tab">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                    <span>Open Full GA</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Analytics iframe -->
+        <div class="analytics-iframe-container">
+            <div class="loading-overlay" id="loadingOverlay">
+                <i class="bi bi-arrow-clockwise"></i>
+                <p>Loading Google Analytics...</p>
+            </div>
+            <iframe 
+                id="analyticsFrame"
+                src="https://analytics.google.com/analytics/web/"
+                allow="fullscreen"
+                onload="hideLoading()">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        // Function to load different GA views
+        function loadView(view) {
+            const iframe = document.getElementById('analyticsFrame');
+            const baseUrl = 'https://analytics.google.com/analytics/web/';
+            
+            // Show loading
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            switch(view) {
+                case 'home':
+                    iframe.src = baseUrl + '#/report-home';
+                    break;
+                case 'reports':
+                    iframe.src = baseUrl + '#/reports';
+                    break;
+                case 'realtime':
+                    iframe.src = baseUrl + '#/realtime';
+                    break;
+                default:
+                    iframe.src = baseUrl;
+            }
+        }
+
+        // Hide loading overlay when iframe loads
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 1000);
+            }
+        }
+
+        // Check authentication
+        window.addEventListener('DOMContentLoaded', function() {
+            // Check if user is authenticated
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userData = JSON.parse(sessionStorage.getItem('user_data') || localStorage.getItem('user_data') || '{}');
+
+            if (!authToken) {
+                // Not logged in - redirect to login
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Check if admin
+            if (userData.role !== 'admin' && userData.role !== 'ses_admin' && userData.role !== 'pf_admin') {
+                // Not an admin - redirect to dashboard
+                alert('Access denied. This page is only available to administrators.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
