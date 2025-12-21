@@ -32,24 +32,8 @@ env = os.environ.get('FLASK_ENV', 'development')
 app.config.from_object(config[env])
 
 # Initialize extensions
-import re
-
-def check_origin(origin):
-    """Check if origin is allowed"""
-    allowed_patterns = [
-        r'^https://pf-resource-hub\.pages\.dev$',
-        r'^https://.*\.pf-resource-hub\.pages\.dev$',
-        r'^http://localhost:\d+$',
-        r'^http://127\.0\.0\.1:\d+$',
-        r'^https://.*\.sandbox\.novita\.ai$'
-    ]
-    for pattern in allowed_patterns:
-        if re.match(pattern, origin):
-            return True
-    return False
-
 CORS(app, 
-     origins=check_origin,
+     resources={r"/*": {"origins": "*"}},  # Allow all origins for now
      supports_credentials=True,
      allow_headers=['Content-Type', 'Authorization'],
      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
