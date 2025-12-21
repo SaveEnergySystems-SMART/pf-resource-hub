@@ -19,7 +19,10 @@ import os
 GA_PROPERTY_ID = "5161391734"  # Planet Fitness Resource Hub property
 
 # Path to service account credentials
-CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), 'ga-credentials.json')
+# Check for Render secret file first, then fall back to local file
+CREDENTIALS_PATH = os.environ.get('GA_CREDENTIALS_PATH', '/etc/secrets/ga-credentials.json')
+if not os.path.exists(CREDENTIALS_PATH):
+    CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), 'ga-credentials.json')
 
 # Initialize the client
 def get_analytics_client():
