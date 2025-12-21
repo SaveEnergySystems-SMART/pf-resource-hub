@@ -34,10 +34,10 @@ class Config:
     # CORS
     CORS_ORIGINS = [
         'https://pf-resource-hub.pages.dev',
+        'https://*.pf-resource-hub.pages.dev',  # All Cloudflare preview branches
         'http://localhost:3000',
         'http://127.0.0.1:3000',
-        'https://3000-i7ealb3ubmjtlryte4w5n-2b54fc91.sandbox.novita.ai',
-        'https://5000-i7ealb3ubmjtlryte4w5n-2b54fc91.sandbox.novita.ai'
+        'https://*.sandbox.novita.ai'  # All sandbox URLs
     ]
 
 class DevelopmentConfig(Config):

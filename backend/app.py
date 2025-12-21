@@ -22,6 +22,7 @@ from email_service import (
     send_account_deactivated_email
 )
 from openai_service import get_ai_response
+from analytics_service import get_all_analytics_data
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -31,7 +32,27 @@ env = os.environ.get('FLASK_ENV', 'development')
 app.config.from_object(config[env])
 
 # Initialize extensions
-CORS(app, origins=app.config['CORS_ORIGINS'])
+import re
+
+def check_origin(origin):
+    """Check if origin is allowed"""
+    allowed_patterns = [
+        r'^https://pf-resource-hub\.pages\.dev$',
+        r'^https://.*\.pf-resource-hub\.pages\.dev$',
+        r'^http://localhost:\d+$',
+        r'^http://127\.0\.0\.1:\d+$',
+        r'^https://.*\.sandbox\.novita\.ai$'
+    ]
+    for pattern in allowed_patterns:
+        if re.match(pattern, origin):
+            return True
+    return False
+
+CORS(app, 
+     origins=check_origin,
+     supports_credentials=True,
+     allow_headers=['Content-Type', 'Authorization'],
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 db.init_app(app)
 
 # =============================================================================
@@ -724,6 +745,62 @@ def chat(current_user):
         print(f"❌ Chat error: {str(e)}")
         return jsonify({
             'error': 'An error occurred while processing your request',
+            'details': str(e)
+        }), 500
+
+
+# =============================================================================
+# ANALYTICS API
+# =============================================================================
+
+@app.route('/api/analytics', methods=['GET'])
+@token_required
+def get_analytics(current_user):
+    """Get Google Analytics data for the dashboard"""
+    try:
+        # Check if user is admin
+        if current_user.role not in ['admin', 'ses_admin', 'pf_admin']:
+            return jsonify({
+                'error': 'Access denied. Admin access required.'
+            }), 403
+        
+        # Get query parameters
+        date_range = request.args.get('range', '30days')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
+        
+        # Convert string dates to datetime if provided
+        if start_date and end_date:
+            from datetime import datetime
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        
+        # Fetch analytics data
+        analytics_data = get_all_analytics_data(date_range, start_date, end_date)
+        
+        # Log activity
+        try:
+            activity = ActivityLog(
+                user_id=current_user.id,
+                action='view_analytics',
+                details=f'Viewed analytics dashboard - Range: {date_range}'
+            )
+            db.session.add(activity)
+            db.session.commit()
+        except:
+            pass  # Don't fail if logging fails
+        
+        return jsonify({
+            'success': True,
+            'data': analytics_data,
+            'dateRange': date_range,
+            'timestamp': datetime.utcnow().isoformat()
+        }), 200
+    
+    except Exception as e:
+        print(f"❌ Analytics error: {str(e)}")
+        return jsonify({
+            'error': 'An error occurred while fetching analytics data',
             'details': str(e)
         }), 500
 
