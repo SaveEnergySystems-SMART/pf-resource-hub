@@ -18,6 +18,10 @@ class Config:
     if DATABASE_URL.startswith('postgres://'):
         DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
     
+    # Debug logging - print database connection info
+    print(f"🔍 DATABASE_URL from environment: {DATABASE_URL[:50]}...")
+    print(f"🔍 Database type: {'PostgreSQL' if 'postgresql://' in DATABASE_URL else 'SQLite' if 'sqlite:///' in DATABASE_URL else 'Unknown'}")
+    
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
