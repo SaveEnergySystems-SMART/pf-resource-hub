@@ -930,20 +930,81 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Load user session
-        window.addEventListener('DOMContentLoaded', function() {
-            // Set current year for footer
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
+    <script>
+        // Set current year for footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Check authentication and show admin dropdown
+        window.addEventListener('load', function() {
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
             
-            const user = JSON.parse(localStorage.getItem('pfUser') || '{"name":"Guest"}');
-            document.getElementById('userName').textContent = user.name;
+            if (!authToken || !userDataStr) {
+                // Not logged in, redirect
+                window.location.href = 'login-final.html';
+                return;
+            }
+
+            let email = 'User';
+            let userRole = null;
+            
+            try {
+                const userData = JSON.parse(userDataStr);
+                email = userData.email || userData.username || 'User';
+                userRole = userData.role;
+                
+                // Show admin dropdown if user is admin
+                if (userRole === 'ses_admin' || userRole === 'pf_admin') {
+                    document.getElementById('adminDropdown').style.display = 'block';
+                    
+                    // Show appropriate admin links
+                    if (userRole === 'ses_admin') {
+                        document.getElementById('sesAdminLink').style.display = 'flex';
+                        document.getElementById('pfAdminLink').style.display = 'flex';
+                    } else if (userRole === 'pf_admin') {
+                        document.getElementById('pfAdminLink').style.display = 'flex';
+                    }
+                }
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+            }
+            
+            // Update UI
+            if (document.getElementById('userEmail')) {
+                document.getElementById('userEmail').textContent = email;
+            }
+            if (document.getElementById('userAvatar')) {
+                const initial = email.charAt(0).toUpperCase();
+                document.getElementById('userAvatar').textContent = initial;
+            }
         });
+
+        // Toggle admin dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const dropdownBtn = document.querySelector('.user-dropdown-btn');
+            
+            if (dropdown && dropdownBtn && !dropdownBtn.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
 
         // Logout function
         function logout() {
-            localStorage.removeItem('pfUser');
-            window.location.href = 'index.html';
+            sessionStorage.removeItem('auth_token');
+            sessionStorage.removeItem('user_data');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            window.location.href = 'login-final.html';
         }
     </script>
 </body>
