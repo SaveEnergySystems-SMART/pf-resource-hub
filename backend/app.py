@@ -538,7 +538,7 @@ def create_user(current_user):
         db.session.commit()
         
         # Send welcome email
-        send_welcome_email(user.email, user.username, data['password'], user.first_name, user.role)
+        send_welcome_email(user.email, user.first_name, data['password'])
         
         log_activity(current_user.id, 'user_created', f'Created user: {user.username}')
         
