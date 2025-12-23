@@ -465,27 +465,29 @@
             <div class="user-menu">
                 <span id="userEmail"></span>
                 
-                <!-- Admin Dropdown (only visible for admins) -->
+      <!-- Admin Dropdown (only visible for admins) -->
                 <div class="user-dropdown" id="adminDropdown" style="display: none;">
-                    <button class="user-button" onclick="toggleDropdown()">
+                    <button class="user-dropdown-btn" onclick="toggleDropdown()">
                         <i class="bi bi-gear-fill"></i>
                         <span>Admin</span>
+                        <span class="admin-badge">ADMIN</span>
                         <i class="bi bi-chevron-down"></i>
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="admin-ses.html" id="sesAdminLink" style="display: none;">
+                        <div class="dropdown-header">Admin Tools</div>
+                        <a href="admin-ses.html" class="dropdown-item" id="sesAdminLink" style="display: none;">
                             <i class="bi bi-shield-fill-check"></i>
                             <span>SES Super Admin</span>
                         </a>
-                        <a href="admin-pf.html" id="pfAdminLink" style="display: none;">
+                        <a href="admin-pf.html" class="dropdown-item" id="pfAdminLink" style="display: none;">
                             <i class="bi bi-building"></i>
                             <span>PF Admin Dashboard</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <button onclick="window.open('https://analytics.google.com', '_blank')">
+                        <a href="analytics.html" class="dropdown-item">
                             <i class="bi bi-graph-up"></i>
-                            <span>Google Analytics</span>
-                        </button>
+                            <span>Analytics Dashboard</span>
+                        </a>
                     </div>
                 </div>
                 
