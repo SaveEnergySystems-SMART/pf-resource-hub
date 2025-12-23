@@ -334,8 +334,8 @@ def forgot_username():
         return jsonify({'error': str(e)}), 500
 
 
-    @app.route('/api/auth/reset-password', methods=['POST'])
-    def reset_password():
+@app.route('/api/auth/reset-password', methods=['POST'])
+def reset_password():
     """Reset password with token"""
     try:
         data = request.get_json()
