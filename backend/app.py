@@ -240,13 +240,14 @@ def logout(current_user):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
 @app.route('/api/auth/forgot-password', methods=['POST'])
 def forgot_password():
     """Request password reset"""
     try:
         data = request.get_json()
         email = data.get('email')
+        
+        print(f"🔍 [FORGOT-PASSWORD] Request received for email: {email}")
         
         if not email:
             return jsonify({'error': 'Email required'}), 400
@@ -255,11 +256,17 @@ def forgot_password():
         
         # Always return success (security best practice)
         if not user:
+            print(f"⚠️ [FORGOT-PASSWORD] User not found for email: {email}")
             return jsonify({'message': 'If email exists, reset link sent'}), 200
+        
+        print(f"✅ [FORGOT-PASSWORD] User found: {user.email} (ID: {user.id})")
         
         # Generate reset token
         token = secrets.token_urlsafe(32)
         expires_at = datetime.utcnow() + timedelta(hours=1)
+        
+        print(f"🔍 [FORGOT-PASSWORD] Creating token: {token[:15]}...")
+        print(f"🔍 [FORGOT-PASSWORD] Token expires at: {expires_at}")
         
         password_reset = PasswordReset(
             token=token,
@@ -268,19 +275,38 @@ def forgot_password():
             ip_address=request.remote_addr
         )
         db.session.add(password_reset)
-        db.session.commit()
+        
+        # Force immediate commit and flush
+        try:
+            db.session.flush()
+            db.session.commit()
+            print(f"✅ [FORGOT-PASSWORD] Token saved to database successfully")
+            
+            # Verify it was actually saved
+            verification = PasswordReset.query.filter_by(token=token).first()
+            if verification:
+                print(f"✅ [FORGOT-PASSWORD] Token verified in database: {verification.token[:15]}...")
+            else:
+                print(f"❌ [FORGOT-PASSWORD] WARNING: Token not found in database after commit!")
+                
+        except Exception as db_error:
+            print(f"❌ [FORGOT-PASSWORD] Database error: {str(db_error)}")
+            db.session.rollback()
+            raise
         
         # Send email
         reset_link = f"{app.config['FRONTEND_URL']}/reset-password.html?token={token}"
         send_password_reset_email(user.email, reset_link, user.first_name)
+        print(f"📧 [FORGOT-PASSWORD] Reset email sent to: {user.email}")
         
         log_activity(user.id, 'password_reset_requested', 'Password reset email sent')
         
         return jsonify({'message': 'If email exists, reset link sent'}), 200
         
     except Exception as e:
+        print(f"❌ [FORGOT-PASSWORD] Exception: {str(e)}")
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
-
 
 @app.route('/api/auth/forgot-username', methods=['POST'])
 def forgot_username():
