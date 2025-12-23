@@ -658,9 +658,22 @@ def delete_user(current_user, user_id):
             return jsonify({'error': 'PF admins can only delete GM users'}), 403
         
         username = user.username
+        
+        # Delete related records first to avoid foreign key constraint errors
+        # Delete activity logs
+        ActivityLog.query.filter_by(user_id=user.id).delete()
+        
+        # Delete password reset tokens
+        PasswordReset.query.filter_by(user_id=user.id).delete()
+        
+        # Delete sessions
+        Session.query.filter_by(user_id=user.id).delete()
+        
+        # Now delete the user
         db.session.delete(user)
         db.session.commit()
         
+        # Log the deletion (after commit, so it doesn't get deleted)
         log_activity(current_user.id, 'user_deleted', f'Deleted user: {username}')
         
         return jsonify({'message': 'User deleted successfully'}), 200
