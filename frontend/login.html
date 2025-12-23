@@ -64,13 +64,13 @@
         }
 
         .logo-container img {
-            max-height: 60px;
+            max-height: 50px;
             width: auto;
         }
 
         .logo-divider {
             width: 2px;
-            height: 60px;
+            height: 50px;
             background: #e5e7eb;
         }
 
@@ -217,6 +217,7 @@
             text-decoration: underline;
         }
     </style>
+    
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
     <script>
@@ -285,7 +286,6 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log('=== LOGIN ATTEMPT START ===');
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -300,8 +300,6 @@
             submitBtn.textContent = 'Signing in...';
 
             try {
-                console.log('Sending login request to:', `${API_URL}/api/auth/login`);
-                
                 const response = await fetch(`${API_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: {
@@ -310,34 +308,24 @@
                     body: JSON.stringify({ username, password })
                 });
 
-                console.log('Response status:', response.status);
                 const data = await response.json();
-                console.log('Response data:', data);
 
                 if (response.ok && data.token) {
-                    console.log('✅ Login successful!');
-                    
                     // Store auth data
                     const storage = rememberMe ? localStorage : sessionStorage;
                     storage.setItem('auth_token', data.token);
                     storage.setItem('user_data', JSON.stringify(data.user));
-                    
-                    console.log('Stored auth_token:', storage.getItem('auth_token') ? 'YES' : 'NO');
-                    console.log('Stored user_data:', storage.getItem('user_data') ? 'YES' : 'NO');
 
                     // Show success
                     successMessage.textContent = 'Login successful! Redirecting...';
                     successMessage.style.display = 'block';
 
-                    // Redirect after delay
-                    console.log('Redirecting to dashboard in 1 second...');
+                    // Redirect
                     setTimeout(() => {
-                        console.log('NOW REDIRECTING...');
                         window.location.href = 'dashboard.html';
                     }, 1000);
 
                 } else {
-                    console.log('❌ Login failed:', data.error || 'Invalid credentials');
                     errorMessage.textContent = data.error || 'Invalid username or password';
                     errorMessage.style.display = 'block';
                     submitBtn.disabled = false;
@@ -345,14 +333,12 @@
                 }
 
             } catch (error) {
-                console.error('❌ Network error:', error);
+                console.error('Network error:', error);
                 errorMessage.textContent = 'Network error. Please check your connection and try again.';
                 errorMessage.style.display = 'block';
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Sign In';
             }
-
-            console.log('=== LOGIN ATTEMPT END ===');
         });
     </script>
 </body>
