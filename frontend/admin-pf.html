@@ -692,6 +692,10 @@
             try {
                 const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
                 
+                console.log('🔍 [LOAD USERS] Starting...');
+                console.log('🔍 [LOAD USERS] Token exists:', !!token);
+                console.log('🔍 [LOAD USERS] API URL:', `${API_URL}/api/users`);
+                
                 const response = await fetch(`${API_URL}/api/users`, {
                     method: 'GET',
                     headers: {
@@ -701,8 +705,12 @@
                 });
 
                 const data = await response.json();
+                
+                console.log('🔍 [LOAD USERS] Response status:', response.status);
+                console.log('🔍 [LOAD USERS] Response data:', data);
 
                 if (response.ok && data.users) {
+                    console.log('✅ [LOAD USERS] Success! Users count:', data.users.length);
                     tbody.innerHTML = '';
                     
                     if (data.users.length === 0) {
@@ -745,11 +753,12 @@
                     document.getElementById('totalUsers').textContent = data.users.length;
                     document.getElementById('activeUsers').textContent = data.users.filter(u => u.is_active).length;
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red;">Error loading users</td></tr>';
+                    console.error('❌ [LOAD USERS] Failed:', data);
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Error: ${data.error || 'Failed to load users'}</td></tr>`;
                 }
             } catch (error) {
-                console.error('Load users error:', error);
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red;">Network error. Please refresh.</td></tr>';
+                console.error('❌ [LOAD USERS] Exception:', error);
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Network error: ${error.message}</td></tr>`;
             }
         }
 
@@ -832,6 +841,10 @@
             try {
                 const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
                 
+                console.log('🔍 [LOAD USERS] Starting...');
+                console.log('🔍 [LOAD USERS] Token exists:', !!token);
+                console.log('🔍 [LOAD USERS] API URL:', `${API_URL}/api/users`);
+                
                 const response = await fetch(`${API_URL}/api/users`, {
                     method: 'GET',
                     headers: {
@@ -841,8 +854,12 @@
                 });
 
                 const data = await response.json();
+                
+                console.log('🔍 [LOAD USERS] Response status:', response.status);
+                console.log('🔍 [LOAD USERS] Response data:', data);
 
                 if (response.ok && data.users) {
+                    console.log('✅ [LOAD USERS] Success! Users count:', data.users.length);
                     const user = data.users.find(u => u.id === userId);
                     
                     if (user) {
