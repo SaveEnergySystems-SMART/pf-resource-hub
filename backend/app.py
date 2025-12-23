@@ -335,7 +335,7 @@ def forgot_username():
 
 
     @app.route('/api/auth/reset-password', methods=['POST'])
-def reset_password():
+    def reset_password():
     """Reset password with token"""
     try:
         data = request.get_json()
