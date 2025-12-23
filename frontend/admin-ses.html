@@ -660,7 +660,7 @@
 
         // Load user data from session
         function loadUserData() {
-            const authToken = localStorage.getItem('token');
+            const authToken = localStorage.getItem('auth_token');
             const userData = localStorage.getItem('user_data');
 
             if (!authToken) {
@@ -688,7 +688,7 @@
             tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading users...</td></tr>';
 
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 
                 const response = await fetch(`${API_URL}/api/users`, {
                     method: 'GET',
@@ -757,7 +757,7 @@
             activityLog.innerHTML = '<div style="text-align: center; color: #6B7280;">Loading activity...</div>';
 
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 
                 const response = await fetch(`${API_URL}/api/activity-logs`, {
                     method: 'GET',
@@ -828,7 +828,7 @@
         // Edit user
         async function editUser(userId) {
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 
                 const response = await fetch(`${API_URL}/api/users`, {
                     method: 'GET',
@@ -868,7 +868,7 @@
         // Reset password
         async function resetPassword(userId) {
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 
                 // Get user email first
                 const usersResponse = await fetch(`${API_URL}/api/users`, {
@@ -918,7 +918,7 @@
             
             if (confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete:\n${userName} (${userEmail})\n\nThis action CANNOT be undone!`)) {
                 try {
-                    const token = localStorage.getItem('token');
+                    const token = localStorage.getItem('auth_token');
                     
                     const response = await fetch(`${API_URL}/api/users/${userId}`, {
                         method: 'DELETE',
@@ -963,7 +963,7 @@
             submitBtn.textContent = userId ? 'Updating...' : 'Creating...';
 
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 
                 if (userId) {
                     // UPDATE existing user
