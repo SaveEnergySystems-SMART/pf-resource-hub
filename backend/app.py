@@ -641,9 +641,9 @@ def admin_reset_password(current_user, user_id):
 
 @app.route('/api/users/<int:user_id>', methods=['DELETE'])
 @token_required
-@ses_admin_required
+@admin_required
 def delete_user(current_user, user_id):
-    """Delete user (SES admin only)"""
+    """Delete user (SES admin can delete all, PF admin can delete GMs only)"""
     try:
         user = User.query.get(user_id)
         
@@ -652,6 +652,10 @@ def delete_user(current_user, user_id):
         
         if user.id == current_user.id:
             return jsonify({'error': 'Cannot delete yourself'}), 400
+        
+        # PF admins can only delete GMs
+        if current_user.role == 'pf_admin' and user.role != 'gm':
+            return jsonify({'error': 'PF admins can only delete GM users'}), 403
         
         username = user.username
         db.session.delete(user)
