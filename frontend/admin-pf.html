@@ -623,22 +623,9 @@
                     <input type="tel" id="userPhone">
                 </div>
                 <div class="form-group">
-                    <label>PF Location *</label>
-                    <select id="userLocation" required>
-                        <option value="">Select Location</option>
-                        <option value="Boston Commons">Boston Commons</option>
-                        <option value="Cambridge">Cambridge</option>
-                        <option value="Somerville">Somerville</option>
-                        <option value="Brookline">Brookline</option>
-                        <option value="Newton">Newton</option>
-                        <option value="Quincy">Quincy</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label>Role *</label>
                     <select id="userRole" required>
                         <option value="gm">General Manager (GM)</option>
-                        <option value="staff">Staff</option>
                     </select>
                 </div>
                 <div class="modal-actions">
@@ -666,9 +653,26 @@
                 return;
             }
 
+            // ROLE-BASED ACCESS CONTROL - PF Admin only
             if (userData) {
                 try {
                     const user = JSON.parse(userData);
+                    const userRole = user.role;
+                    
+                    console.log('🔐 PF Admin Dashboard - Role check:', userRole);
+                    
+                    // Only pf_admin role allowed
+                    if (userRole !== 'pf_admin') {
+                        console.log('❌ Access denied. Redirecting...');
+                        if (userRole === 'ses_admin') {
+                            window.location.href = 'admin-ses.html';
+                        } else {
+                            window.location.href = 'dashboard.html';
+                        }
+                        return;
+                    }
+                    
+                    console.log('✅ Access granted for PF Admin');
                     const email = user.email || user.username || 'User';
                     document.getElementById('userEmail').textContent = email;
                     
@@ -852,7 +856,6 @@
                         document.getElementById('userPassword').value = '';
                         document.getElementById('userPassword').required = false;
                         document.getElementById('userPhone').value = user.phone || '';
-                        document.getElementById('userLocation').value = user.location || '';
                         document.getElementById('userRole').value = user.role;
                         document.getElementById('userModal').classList.add('active');
                     }
@@ -953,7 +956,6 @@
             const email = document.getElementById('userEmail2').value;
             const password = document.getElementById('userPassword').value;
             const phone = document.getElementById('userPhone').value;
-            const location = document.getElementById('userLocation').value;
             const role = document.getElementById('userRole').value;
 
             const submitBtn = document.getElementById('submitBtn');
@@ -970,7 +972,6 @@
                         first_name: firstName,
                         last_name: lastName,
                         phone,
-                        location
                     };
 
                     const response = await fetch(`${API_URL}/api/users/${userId}`, {
@@ -985,7 +986,7 @@
                     const data = await response.json();
 
                     if (response.ok) {
-                        alert(`✅ SUCCESS!\n\nUser Updated:\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}\n📍 Location: ${location}`);
+                        alert(`✅ SUCCESS!\n\nUser Updated:\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}`);
                         closeUserModal();
                         loadUsers();
                         loadActivity();
@@ -1008,7 +1009,6 @@
                         first_name: firstName,
                         last_name: lastName,
                         phone,
-                        location,
                         role
                     };
 
@@ -1024,7 +1024,7 @@
                     const data = await response.json();
 
                     if (response.ok) {
-                        alert(`✅ SUCCESS!\n\nUser Created:\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}\n📍 Location: ${location}\n🔐 Role: ${role.toUpperCase()}\n\n✉️ Welcome email sent to ${email} with:\n• Temporary password\n• Login link\n• Welcome message`);
+                        alert(`✅ SUCCESS!\n\nUser Created:\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}\n🔐 Role: ${role.toUpperCase()}\n\n✉️ Welcome email sent to ${email} with:\n• Temporary password\n• Login link\n• Welcome message`);
                         closeUserModal();
                         loadUsers();
                         loadActivity();
