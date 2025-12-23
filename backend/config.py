@@ -7,10 +7,23 @@ class Config:
     # Flask
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
     
-    # Database
-    DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:///pf_resource_hub.db')
+    # Database - Force PostgreSQL, no SQLite fallback
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    
+    # If DATABASE_URL is not set, raise an error instead of falling back to SQLite
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_URL environment variable is required!")
+    
+    # Fix for postgres:// vs postgresql:// URL scheme
+    if DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_pre_ping': True,  # Verify connections before using
+        'pool_recycle': 300,    # Recycle connections after 5 minutes
+    }
     
     # JWT
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', SECRET_KEY)
