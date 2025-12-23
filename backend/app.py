@@ -334,7 +334,7 @@ def forgot_username():
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/auth/reset-password', methods=['POST'])
+    @app.route('/api/auth/reset-password', methods=['POST'])
 def reset_password():
     """Reset password with token"""
     try:
@@ -342,8 +342,74 @@ def reset_password():
         token = data.get('token')
         new_password = data.get('password')
         
+        print(f"🔍 [RESET-PASSWORD] Request received")
+        print(f"🔍 [RESET-PASSWORD] Token received: {token[:15] if token else 'NONE'}...")
+        print(f"🔍 [RESET-PASSWORD] Password received: {'YES' if new_password else 'NO'}")
+        
         if not token or not new_password:
+            print(f"❌ [RESET-PASSWORD] Missing token or password")
             return jsonify({'error': 'Token and password required'}), 400
+        
+        # Find valid token
+        print(f"🔍 [RESET-PASSWORD] Searching for token in database...")
+        password_reset = PasswordReset.query.filter_by(token=token, used=False).first()
+        
+        if not password_reset:
+            print(f"❌ [RESET-PASSWORD] Token not found in database!")
+            
+            # Debug: Check if token exists at all (even if used)
+            any_token = PasswordReset.query.filter_by(token=token).first()
+            if any_token:
+                print(f"⚠️ [RESET-PASSWORD] Token exists but marked as USED at {any_token.used_at}")
+            else:
+                print(f"❌ [RESET-PASSWORD] Token does NOT exist in database at all!")
+                
+                # Debug: Show all tokens in database
+                all_tokens = PasswordReset.query.order_by(PasswordReset.created_at.desc()).limit(5).all()
+                print(f"🔍 [RESET-PASSWORD] Last 5 tokens in database:")
+                for t in all_tokens:
+                    print(f"   - {t.token[:15]}... (used={t.used}, expires={t.expires_at})")
+            
+            return jsonify({'error': 'Invalid or expired token'}), 400
+        
+        print(f"✅ [RESET-PASSWORD] Token found in database!")
+        print(f"🔍 [RESET-PASSWORD] Token user_id: {password_reset.user_id}")
+        print(f"🔍 [RESET-PASSWORD] Token expires_at: {password_reset.expires_at}")
+        print(f"🔍 [RESET-PASSWORD] Token used: {password_reset.used}")
+        print(f"🔍 [RESET-PASSWORD] Current time: {datetime.utcnow()}")
+        
+        # Check if valid
+        if not password_reset.is_valid():
+            print(f"❌ [RESET-PASSWORD] Token is NOT VALID (expired or used)")
+            return jsonify({'error': 'Invalid or expired token'}), 400
+        
+        print(f"✅ [RESET-PASSWORD] Token is VALID!")
+        
+        # Update password
+        user = password_reset.user
+        print(f"✅ [RESET-PASSWORD] Updating password for user: {user.email}")
+        user.set_password(new_password)
+        
+        # Mark token as used
+        password_reset.used = True
+        password_reset.used_at = datetime.utcnow()
+        
+        db.session.commit()
+        print(f"✅ [RESET-PASSWORD] Password updated successfully!")
+        
+        # Send confirmation email
+        send_password_changed_email(user.email, user.first_name)
+        
+        log_activity(user.id, 'password_reset', 'Password reset successfully')
+        
+        return jsonify({'message': 'Password reset successfully'}), 200
+        
+    except Exception as e:
+        print(f"❌ [RESET-PASSWORD] Exception: {str(e)}")
+        import traceback
+        print(f"❌ [RESET-PASSWORD] Traceback: {traceback.format_exc()}")
+        return jsonify({'error': str(e)}), 500
+
         
         # Find valid token
         password_reset = PasswordReset.query.filter_by(token=token, used=False).first()
