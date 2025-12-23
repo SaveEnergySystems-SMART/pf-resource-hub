@@ -480,11 +480,9 @@ def get_users(current_user):
     try:
         query = User.query
         
-        # PF admins can only see GMs from their location
+        # PF admins can only see GMs (all locations)
         if current_user.role == 'pf_admin':
             query = query.filter_by(role='gm')
-            if current_user.location:
-                query = query.filter_by(location=current_user.location)
         
         users = query.order_by(User.created_at.desc()).all()
         
