@@ -240,14 +240,13 @@ def logout(current_user):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
 @app.route('/api/auth/forgot-password', methods=['POST'])
 def forgot_password():
     """Request password reset"""
     try:
         data = request.get_json()
         email = data.get('email')
-        
-        print(f"🔍 [FORGOT-PASSWORD] Request received for email: {email}")
         
         if not email:
             return jsonify({'error': 'Email required'}), 400
@@ -256,17 +255,11 @@ def forgot_password():
         
         # Always return success (security best practice)
         if not user:
-            print(f"⚠️ [FORGOT-PASSWORD] User not found for email: {email}")
             return jsonify({'message': 'If email exists, reset link sent'}), 200
-        
-        print(f"✅ [FORGOT-PASSWORD] User found: {user.email} (ID: {user.id})")
         
         # Generate reset token
         token = secrets.token_urlsafe(32)
         expires_at = datetime.utcnow() + timedelta(hours=1)
-        
-        print(f"🔍 [FORGOT-PASSWORD] Creating token: {token[:15]}...")
-        print(f"🔍 [FORGOT-PASSWORD] Token expires at: {expires_at}")
         
         password_reset = PasswordReset(
             token=token,
@@ -275,38 +268,19 @@ def forgot_password():
             ip_address=request.remote_addr
         )
         db.session.add(password_reset)
-        
-        # Force immediate commit and flush
-        try:
-            db.session.flush()
-            db.session.commit()
-            print(f"✅ [FORGOT-PASSWORD] Token saved to database successfully")
-            
-            # Verify it was actually saved
-            verification = PasswordReset.query.filter_by(token=token).first()
-            if verification:
-                print(f"✅ [FORGOT-PASSWORD] Token verified in database: {verification.token[:15]}...")
-            else:
-                print(f"❌ [FORGOT-PASSWORD] WARNING: Token not found in database after commit!")
-                
-        except Exception as db_error:
-            print(f"❌ [FORGOT-PASSWORD] Database error: {str(db_error)}")
-            db.session.rollback()
-            raise
+        db.session.commit()
         
         # Send email
         reset_link = f"{app.config['FRONTEND_URL']}/reset-password.html?token={token}"
         send_password_reset_email(user.email, reset_link, user.first_name)
-        print(f"📧 [FORGOT-PASSWORD] Reset email sent to: {user.email}")
         
         log_activity(user.id, 'password_reset_requested', 'Password reset email sent')
         
         return jsonify({'message': 'If email exists, reset link sent'}), 200
         
     except Exception as e:
-        print(f"❌ [FORGOT-PASSWORD] Exception: {str(e)}")
-        db.session.rollback()
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/api/auth/forgot-username', methods=['POST'])
 def forgot_username():
@@ -342,74 +316,8 @@ def reset_password():
         token = data.get('token')
         new_password = data.get('password')
         
-        print(f"🔍 [RESET-PASSWORD] Request received")
-        print(f"🔍 [RESET-PASSWORD] Token received: {token[:15] if token else 'NONE'}...")
-        print(f"🔍 [RESET-PASSWORD] Password received: {'YES' if new_password else 'NO'}")
-        
         if not token or not new_password:
-            print(f"❌ [RESET-PASSWORD] Missing token or password")
             return jsonify({'error': 'Token and password required'}), 400
-        
-        # Find valid token
-        print(f"🔍 [RESET-PASSWORD] Searching for token in database...")
-        password_reset = PasswordReset.query.filter_by(token=token, used=False).first()
-        
-        if not password_reset:
-            print(f"❌ [RESET-PASSWORD] Token not found in database!")
-            
-            # Debug: Check if token exists at all (even if used)
-            any_token = PasswordReset.query.filter_by(token=token).first()
-            if any_token:
-                print(f"⚠️ [RESET-PASSWORD] Token exists but marked as USED at {any_token.used_at}")
-            else:
-                print(f"❌ [RESET-PASSWORD] Token does NOT exist in database at all!")
-                
-                # Debug: Show all tokens in database
-                all_tokens = PasswordReset.query.order_by(PasswordReset.created_at.desc()).limit(5).all()
-                print(f"🔍 [RESET-PASSWORD] Last 5 tokens in database:")
-                for t in all_tokens:
-                    print(f"   - {t.token[:15]}... (used={t.used}, expires={t.expires_at})")
-            
-            return jsonify({'error': 'Invalid or expired token'}), 400
-        
-        print(f"✅ [RESET-PASSWORD] Token found in database!")
-        print(f"🔍 [RESET-PASSWORD] Token user_id: {password_reset.user_id}")
-        print(f"🔍 [RESET-PASSWORD] Token expires_at: {password_reset.expires_at}")
-        print(f"🔍 [RESET-PASSWORD] Token used: {password_reset.used}")
-        print(f"🔍 [RESET-PASSWORD] Current time: {datetime.utcnow()}")
-        
-        # Check if valid
-        if not password_reset.is_valid():
-            print(f"❌ [RESET-PASSWORD] Token is NOT VALID (expired or used)")
-            return jsonify({'error': 'Invalid or expired token'}), 400
-        
-        print(f"✅ [RESET-PASSWORD] Token is VALID!")
-        
-        # Update password
-        user = password_reset.user
-        print(f"✅ [RESET-PASSWORD] Updating password for user: {user.email}")
-        user.set_password(new_password)
-        
-        # Mark token as used
-        password_reset.used = True
-        password_reset.used_at = datetime.utcnow()
-        
-        db.session.commit()
-        print(f"✅ [RESET-PASSWORD] Password updated successfully!")
-        
-        # Send confirmation email
-        send_password_changed_email(user.email, user.first_name)
-        
-        log_activity(user.id, 'password_reset', 'Password reset successfully')
-        
-        return jsonify({'message': 'Password reset successfully'}), 200
-        
-    except Exception as e:
-        print(f"❌ [RESET-PASSWORD] Exception: {str(e)}")
-        import traceback
-        print(f"❌ [RESET-PASSWORD] Traceback: {traceback.format_exc()}")
-        return jsonify({'error': str(e)}), 500
-
         
         # Find valid token
         password_reset = PasswordReset.query.filter_by(token=token, used=False).first()
@@ -480,9 +388,11 @@ def get_users(current_user):
     try:
         query = User.query
         
-        # PF admins can only see GMs (all locations)
+        # PF admins can only see GMs from their location
         if current_user.role == 'pf_admin':
             query = query.filter_by(role='gm')
+            if current_user.location:
+                query = query.filter_by(location=current_user.location)
         
         users = query.order_by(User.created_at.desc()).all()
         
@@ -536,7 +446,7 @@ def create_user(current_user):
         db.session.commit()
         
         # Send welcome email
-        send_welcome_email(user.email, user.first_name, data['password'])
+        send_welcome_email(user.email, user.username, data['password'], user.first_name, user.role)
         
         log_activity(current_user.id, 'user_created', f'Created user: {user.username}')
         
@@ -641,9 +551,9 @@ def admin_reset_password(current_user, user_id):
 
 @app.route('/api/users/<int:user_id>', methods=['DELETE'])
 @token_required
-@admin_required
+@ses_admin_required
 def delete_user(current_user, user_id):
-    """Delete user (SES admin can delete all, PF admin can delete GMs only)"""
+    """Delete user (SES admin only)"""
     try:
         user = User.query.get(user_id)
         
@@ -653,27 +563,10 @@ def delete_user(current_user, user_id):
         if user.id == current_user.id:
             return jsonify({'error': 'Cannot delete yourself'}), 400
         
-        # PF admins can only delete GMs
-        if current_user.role == 'pf_admin' and user.role != 'gm':
-            return jsonify({'error': 'PF admins can only delete GM users'}), 403
-        
         username = user.username
-        
-        # Delete related records first to avoid foreign key constraint errors
-        # Delete activity logs
-        ActivityLog.query.filter_by(user_id=user.id).delete()
-        
-        # Delete password reset tokens
-        PasswordReset.query.filter_by(user_id=user.id).delete()
-        
-        # Delete sessions
-        Session.query.filter_by(user_id=user.id).delete()
-        
-        # Now delete the user
         db.session.delete(user)
         db.session.commit()
         
-        # Log the deletion (after commit, so it doesn't get deleted)
         log_activity(current_user.id, 'user_deleted', f'Deleted user: {username}')
         
         return jsonify({'message': 'User deleted successfully'}), 200
@@ -862,6 +755,7 @@ def get_analytics(current_user):
         
         # Convert string dates to datetime if provided
         if start_date and end_date:
+            from datetime import datetime
             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
         
@@ -880,12 +774,19 @@ def get_analytics(current_user):
         except:
             pass  # Don't fail if logging fails
         
-        return jsonify({
+        response = jsonify({
             'success': True,
             'data': analytics_data,
             'dateRange': date_range,
             'timestamp': datetime.utcnow().isoformat()
-        }), 200
+        })
+        
+        # Prevent browser caching of analytics data
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        
+        return response, 200
     
     except Exception as e:
         print(f"❌ Analytics error: {str(e)}")
