@@ -755,7 +755,6 @@ def get_analytics(current_user):
         
         # Convert string dates to datetime if provided
         if start_date and end_date:
-            from datetime import datetime
             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
         
@@ -790,10 +789,37 @@ def get_analytics(current_user):
     
     except Exception as e:
         print(f"❌ Analytics error: {str(e)}")
-        return jsonify({
-            'error': 'An error occurred while fetching analytics data',
-            'details': str(e)
-        }), 500
+        import traceback
+        print(f"❌ Full traceback: {traceback.format_exc()}")
+        
+        # Determine specific error message
+        error_msg = str(e)
+        if 'credentials' in error_msg.lower() or 'authentication' in error_msg.lower():
+            user_msg = 'Google Analytics credentials not configured. Please contact administrator.'
+        elif 'property' in error_msg.lower() or '404' in error_msg:
+            user_msg = 'Google Analytics property not found. Please verify property ID.'
+        elif 'permission' in error_msg.lower() or '403' in error_msg:
+            user_msg = 'Permission denied. Service account needs Analytics Data API access.'
+        else:
+            user_msg = 'Unable to fetch analytics data. Please try again later.'
+        
+        # Use datetime from imports (already imported at top of file)
+        from datetime import datetime as dt
+        
+        response = jsonify({
+            'success': False,
+            'error': user_msg,
+            'details': str(e),
+            'timestamp': dt.utcnow().isoformat()
+        })
+        
+        # Add CORS headers to error response
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        
+        return response, 500
 
 
 # =============================================================================
