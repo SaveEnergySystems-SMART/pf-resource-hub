@@ -517,8 +517,8 @@
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <img src="images/Logo-Primary.svg" alt="Planet Fitness">
-                <img src="images/ses-logo.png" alt="SES">
+                <img src="/images/Logo-Primary.svg" alt="Planet Fitness">
+                <img src="/images/ses-logo.png" alt="SES">
                 <span class="admin-badge">SES SUPER ADMIN</span>
             </div>
             <div class="user-menu">
@@ -895,19 +895,19 @@
                 <form id="createUserForm">
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" placeholder="Enter first name" required>
+                        <input type="text" id="createUserFirstName" placeholder="Enter first name" required>
                     </div>
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" placeholder="Enter last name" required>
+                        <input type="text" id="createUserLastName" placeholder="Enter last name" required>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" placeholder="user@example.com" required>
+                        <input type="email" id="createUserEmail" placeholder="user@example.com" required>
                     </div>
                     <div class="form-group">
                         <label>Role</label>
-                        <select required>
+                        <select id="createUserRole" required>
                             <option value="">Select role...</option>
                             <option value="ses_admin">SES Admin</option>
                             <option value="pf_admin">PF Admin</option>
@@ -916,20 +916,23 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Location</label>
-                        <select required>
-                            <option value="">Select location...</option>
-                            <option value="all">All Locations (SES Admin only)</option>
-                            <option value="boston">Boston Downtown</option>
-                            <option value="cambridge">Cambridge</option>
-                            <option value="somerville">Somerville</option>
-                            <option value="brookline">Brookline</option>
-                            <option value="quincy">Quincy</option>
-                        </select>
+                        <label>Location (Optional)</label>
+                        <input type="text" id="createUserLocation" placeholder="e.g., Boston Commons, Cambridge, All Locations, etc.">
+                        <small style="color: #888; font-size: 11px; margin-top: 4px; display: block;">Enter location or leave blank (optional)</small>
                     </div>
                     <div class="form-group">
-                        <label>Temporary Password</label>
-                        <input type="password" placeholder="Enter temporary password" required>
+                        <label>Password</label>
+                        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                            <input type="text" id="createUserPassword" value="" readonly style="flex: 1; background: #f5f5f5;">
+                            <button type="button" class="btn btn-secondary" onclick="generatePasswordSES()" style="white-space: nowrap; padding: 8px 16px;">
+                                <i class="bi bi-arrow-clockwise"></i> Generate
+                            </button>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" id="customPasswordToggleSES" onchange="toggleCustomPasswordSES()" style="cursor: pointer;">
+                            <span style="font-size: 13px; color: #888;">I want to set a custom password</span>
+                        </label>
+                        <small style="color: #888; font-size: 11px; margin-top: 4px; display: block;">A secure password will be generated automatically or set your own</small>
                     </div>
                 </form>
             </div>
@@ -1000,6 +1003,12 @@
         // Modal functions
         function openModal(modalName) {
             document.getElementById(modalName + 'Modal').classList.add('show');
+            
+            // Auto-generate password when opening Create User modal
+            if (modalName === 'createUser') {
+                document.getElementById('customPasswordToggleSES').checked = false;
+                generatePasswordSES();
+            }
         }
 
         function closeModal(modalName) {
@@ -1172,6 +1181,50 @@
                 minute: '2-digit',
                 hour12: true
             });
+        }
+        
+        // Password Generation Functions for SES Admin
+        function generatePasswordSES() {
+            const length = 12;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
+            let password = "";
+            
+            // Ensure at least one of each type
+            password += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
+            password += "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)];
+            password += "0123456789"[Math.floor(Math.random() * 10)];
+            password += "!@#$%&*"[Math.floor(Math.random() * 7)];
+            
+            // Fill the rest randomly
+            for (let i = password.length; i < length; i++) {
+                password += charset[Math.floor(Math.random() * charset.length)];
+            }
+            
+            // Shuffle the password
+            password = password.split('').sort(() => Math.random() - 0.5).join('');
+            
+            document.getElementById('createUserPassword').value = password;
+        }
+        
+        function toggleCustomPasswordSES() {
+            const checkbox = document.getElementById('customPasswordToggleSES');
+            const passwordInput = document.getElementById('createUserPassword');
+            
+            if (checkbox.checked) {
+                // Enable manual password entry
+                passwordInput.readOnly = false;
+                passwordInput.type = 'text';
+                passwordInput.style.background = '#fff';
+                passwordInput.placeholder = 'Enter custom password';
+                passwordInput.value = '';
+            } else {
+                // Back to auto-generated
+                passwordInput.readOnly = true;
+                passwordInput.type = 'text';
+                passwordInput.style.background = '#f5f5f5';
+                passwordInput.placeholder = '';
+                generatePasswordSES();
+            }
         }
     </script>
 </body>
