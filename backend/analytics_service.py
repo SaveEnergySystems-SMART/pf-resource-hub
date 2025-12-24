@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 import os
 
 # Google Analytics Property ID
-GA_PROPERTY_ID = "5161391734"  # Planet Fitness Resource Hub property
+GA_PROPERTY_ID = "516934723"  # Planet Fitness Resource Hub property
 
 # Initialize the client
 def get_analytics_client():
