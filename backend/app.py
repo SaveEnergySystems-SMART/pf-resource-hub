@@ -35,7 +35,7 @@ app.config.from_object(config[env])
 CORS(app, 
      resources={r"/*": {"origins": "*"}},  # Allow all origins for now
      supports_credentials=True,
-     allow_headers=['Content-Type', 'Authorization'],
+     allow_headers=['Content-Type', 'Authorization', 'Cache-Control'],
      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 db.init_app(app)
 
