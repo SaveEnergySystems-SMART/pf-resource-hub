@@ -803,14 +803,11 @@ def get_analytics(current_user):
         else:
             user_msg = 'Unable to fetch analytics data. Please try again later.'
         
-        # Use datetime from imports (already imported at top of file)
-        from datetime import datetime as dt
-        
         response = jsonify({
             'success': False,
             'error': user_msg,
             'details': str(e),
-            'timestamp': dt.utcnow().isoformat()
+            'timestamp': datetime.utcnow().isoformat()
         })
         
         # Add CORS headers to error response
