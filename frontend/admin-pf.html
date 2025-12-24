@@ -476,9 +476,8 @@
     <!-- Header -->
     <div class="header">
         <div class="logo-section">
-          <img src="/images/Logo-Primary.svg" alt="Planet Fitness">
-
-            <img src="images/ses-logo.png" alt="Save Energy Systems">
+            <img src="/images/Logo-Primary.svg" alt="Planet Fitness">
+            <img src="/images/ses-logo.png" alt="Save Energy Systems">
         </div>
         <div class="user-section">
             <div class="user-info">
@@ -617,16 +616,23 @@
                     <input type="email" id="userEmail" required>
                 </div>
                 <div class="form-group">
-                    <label>PF Location *</label>
-                    <select id="userLocation" required>
-                        <option value="">Select Location</option>
-                        <option value="Boston Commons">Boston Commons</option>
-                        <option value="Cambridge">Cambridge</option>
-                        <option value="Somerville">Somerville</option>
-                        <option value="Brookline">Brookline</option>
-                        <option value="Newton">Newton</option>
-                        <option value="Quincy">Quincy</option>
-                    </select>
+                    <label>PF Location (Optional)</label>
+                    <input type="text" id="userLocation" placeholder="e.g., Boston Commons, Cambridge, New York, etc.">
+                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">Enter the Planet Fitness location for this user (optional)</small>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                        <input type="text" id="userPassword" value="" readonly style="flex: 1; background: #f5f5f5;">
+                        <button type="button" class="btn btn-secondary" onclick="generatePassword()" style="white-space: nowrap;">
+                            <i class="bi bi-arrow-clockwise"></i> Generate
+                        </button>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                        <input type="checkbox" id="customPasswordToggle" onchange="toggleCustomPassword()" style="cursor: pointer;">
+                        <span style="font-size: 13px; color: #666;">I want to set a custom password</span>
+                    </label>
+                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">A secure password will be generated automatically or set your own</small>
                 </div>
                 <div class="form-group">
                     <label>Role *</label>
@@ -901,6 +907,59 @@
             // 4. Return user ID
             loadUsers();
         });
+
+        // Password Generation Functions
+        function generatePassword() {
+            const length = 12;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
+            let password = "";
+            
+            // Ensure at least one of each type
+            password += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
+            password += "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)];
+            password += "0123456789"[Math.floor(Math.random() * 10)];
+            password += "!@#$%&*"[Math.floor(Math.random() * 7)];
+            
+            // Fill the rest randomly
+            for (let i = password.length; i < length; i++) {
+                password += charset[Math.floor(Math.random() * charset.length)];
+            }
+            
+            // Shuffle the password
+            password = password.split('').sort(() => Math.random() - 0.5).join('');
+            
+            document.getElementById('userPassword').value = password;
+        }
+        
+        function toggleCustomPassword() {
+            const checkbox = document.getElementById('customPasswordToggle');
+            const passwordInput = document.getElementById('userPassword');
+            
+            if (checkbox.checked) {
+                // Enable manual password entry
+                passwordInput.readOnly = false;
+                passwordInput.type = 'text';
+                passwordInput.style.background = '#fff';
+                passwordInput.placeholder = 'Enter custom password';
+                passwordInput.value = '';
+            } else {
+                // Back to auto-generated
+                passwordInput.readOnly = true;
+                passwordInput.type = 'text';
+                passwordInput.style.background = '#f5f5f5';
+                passwordInput.placeholder = '';
+                generatePassword();
+            }
+        }
+        
+        // Open modal and generate initial password
+        function openAddUserModal() {
+            document.getElementById('modalTitle').textContent = 'Add Staff Member';
+            document.getElementById('userForm').reset();
+            document.getElementById('customPasswordToggle').checked = false;
+            generatePassword(); // Auto-generate password on open
+            document.getElementById('userModal').style.display = 'flex';
+        }
 
         // Logout
         function logout() {
