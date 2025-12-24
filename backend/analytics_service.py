@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 import os
 
 # Google Analytics Property ID
-GA_PROPERTY_ID = "516934723"  # Planet Fitness Resource Hub property
+GA_PROPERTY_ID = "5161391734"  # Planet Fitness Resource Hub property
 
 # Initialize the client
 def get_analytics_client():
@@ -213,17 +213,26 @@ def get_traffic_data(date_range='30days', start_date=None, end_date=None):
         
         response = client.run_report(request)
         
-        dates = []
-        users = []
-        sessions = []
+        # Collect data with date objects for sorting
+        data_rows = []
         
         for row in response.rows:
             date_str = row.dimension_values[0].value
-            # Format: YYYYMMDD to MMM DD
             date_obj = datetime.strptime(date_str, '%Y%m%d')
-            dates.append(date_obj.strftime('%b %d'))
-            users.append(int(row.metric_values[0].value))
-            sessions.append(int(row.metric_values[1].value))
+            data_rows.append({
+                'date_obj': date_obj,
+                'date_formatted': date_obj.strftime('%b %d'),
+                'users': int(row.metric_values[0].value),
+                'sessions': int(row.metric_values[1].value)
+            })
+        
+        # Sort by date chronologically
+        data_rows.sort(key=lambda x: x['date_obj'])
+        
+        # Extract sorted data into separate arrays
+        dates = [row['date_formatted'] for row in data_rows]
+        users = [row['users'] for row in data_rows]
+        sessions = [row['sessions'] for row in data_rows]
         
         return {
             'dates': dates,
