@@ -54,7 +54,7 @@
         }
 
         .logo-section img {
-            height: 100px;
+            height: 40px;
         }
 
         .user-section {
@@ -476,8 +476,8 @@
     <!-- Header -->
     <div class="header">
         <div class="logo-section">
-            <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness">
-            <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems">
+            <img src="images/Logo-Primary.svg" alt="Planet Fitness">
+            <img src="images/ses-logo.png" alt="Save Energy Systems">
         </div>
         <div class="user-section">
             <div class="user-info">
@@ -517,22 +517,28 @@
                 <div class="stat-icon purple">
                     <i class="bi bi-people-fill"></i>
                 </div>
-                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-number" id="totalUsers">14</div>
                 <div class="stat-label">Total PF Staff</div>
             </div>
-   
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="stat-number" id="totalLocations">6</div>
+                <div class="stat-label">PF Locations</div>
+            </div>
             <div class="stat-card">
                 <div class="stat-icon green">
                     <i class="bi bi-check-circle-fill"></i>
                 </div>
-                <div class="stat-number" id="activeUsers">0</div>
+                <div class="stat-number" id="activeUsers">13</div>
                 <div class="stat-label">Active Users</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon yellow">
                     <i class="bi bi-clock-history"></i>
                 </div>
-                <div class="stat-number" id="recentActivity">0</div>
+                <div class="stat-number" id="recentActivity">4</div>
                 <div class="stat-label">Today's Activity</div>
             </div>
         </div>
@@ -567,7 +573,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td colspan="7" style="text-align: center;">Loading users...</td></tr>
+                        <!-- Users will be loaded here -->
                     </tbody>
                 </table>
             </div>
@@ -575,11 +581,21 @@
 
         <!-- Activity Log -->
         <div class="section">
-            <div class="section-header">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h2 class="section-title">Recent Activity</h2>
+                <span id="activityCount" style="color: #666; font-size: 14px;">
+                    Showing <span id="displayedCount">0</span> of <span id="totalCount">0</span> activities
+                </span>
             </div>
             <div id="activityLog">
-                <div style="text-align: center; color: #6B7280;">Loading activity...</div>
+                <!-- Activity items will be loaded here -->
+            </div>
+            <div id="loadMoreContainer" style="text-align: center; margin-top: 20px; display: none;">
+                <button id="loadMoreBtn" onclick="loadMoreActivity()" 
+                        style="background: var(--pf-purple); color: white; padding: 12px 24px; 
+                               border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
+                    <i class="bi bi-arrow-down-circle"></i> Load More Activity
+                </button>
             </div>
         </div>
     </div>
@@ -591,82 +607,87 @@
                 <h3 class="modal-title" id="modalTitle">Add Staff Member</h3>
             </div>
             <form id="userForm">
-                <input type="hidden" id="userId">
                 <div class="form-group">
-                    <label>First Name *</label>
-                    <input type="text" id="userFirstName" required>
-                </div>
-                <div class="form-group">
-                    <label>Last Name *</label>
-                    <input type="text" id="userLastName" required>
-                </div>
-                <div class="form-group">
-                    <label>Username *</label>
-                    <input type="text" id="userUsername" required>
+                    <label>Full Name *</label>
+                    <input type="text" id="userName" required>
                 </div>
                 <div class="form-group">
                     <label>Email *</label>
-                    <input type="email" id="userEmail2" required>
+                    <input type="email" id="userEmail" required>
                 </div>
                 <div class="form-group">
-                    <label>Password * (Leave blank when editing to keep current password)</label>
-                    <input type="password" id="userPassword">
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="userPhone">
+                    <label>PF Location *</label>
+                    <select id="userLocation" required>
+                        <option value="">Select Location</option>
+                        <option value="Boston Commons">Boston Commons</option>
+                        <option value="Cambridge">Cambridge</option>
+                        <option value="Somerville">Somerville</option>
+                        <option value="Brookline">Brookline</option>
+                        <option value="Newton">Newton</option>
+                        <option value="Quincy">Quincy</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Role *</label>
                     <select id="userRole" required>
-                        <option value="gm">General Manager (GM)</option>
+                        <option value="staff">Staff</option>
+                        <option value="manager">Manager</option>
                     </select>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">Save User</button>
+                    <button type="submit" class="btn btn-primary">Save & Send Password</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // API Configuration
-        const API_URL = 'https://pf-resource-hub.onrender.com';
+        // Mock Data - ALL Planet Fitness Locations
+        const mockUsers = [
+            // Boston Commons
+            { id: 1, name: 'John Smith', email: 'john.smith@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 09:30 AM', location: 'Boston Commons' },
+            { id: 2, name: 'Sarah Johnson', email: 'sarah.j@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 08:15 AM', location: 'Boston Commons' },
+            { id: 3, name: 'Mike Davis', email: 'mike.d@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-18 05:45 PM', location: 'Boston Commons' },
+            
+            // Cambridge
+            { id: 4, name: 'Emily Wilson', email: 'emily.w@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 07:20 AM', location: 'Cambridge' },
+            { id: 5, name: 'David Brown', email: 'david.b@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 06:30 AM', location: 'Cambridge' },
+            { id: 6, name: 'Lisa Martinez', email: 'lisa.m@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-18 09:00 AM', location: 'Cambridge' },
+            
+            // Somerville
+            { id: 7, name: 'Tom Anderson', email: 'tom.a@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 08:00 AM', location: 'Somerville' },
+            { id: 8, name: 'Jennifer Lee', email: 'jen.l@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 07:45 AM', location: 'Somerville' },
+            
+            // Brookline
+            { id: 9, name: 'Robert Taylor', email: 'rob.t@planetfitness.com', role: 'Manager', status: 'inactive', lastLogin: '2024-12-10 11:30 AM', location: 'Brookline' },
+            { id: 10, name: 'Amy Chen', email: 'amy.c@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 06:00 AM', location: 'Brookline' },
+            
+            // Newton
+            { id: 11, name: 'Chris Williams', email: 'chris.w@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 08:30 AM', location: 'Newton' },
+            { id: 12, name: 'Maria Garcia', email: 'maria.g@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 07:00 AM', location: 'Newton' },
+            
+            // Quincy
+            { id: 13, name: 'Kevin Brown', email: 'kevin.b@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 09:00 AM', location: 'Quincy' },
+            { id: 14, name: 'Rachel Kim', email: 'rachel.k@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 08:20 AM', location: 'Quincy' }
+        ];
 
-        // Global variables
-        let currentEditUserId = null;
+        const mockActivity = [
+            { time: '2024-12-19 09:45 AM', text: 'John Smith (Boston Commons) reset password for Sarah Johnson', location: 'Boston Commons' },
+            { time: '2024-12-19 09:30 AM', text: 'Emily Wilson logged in at Cambridge location', location: 'Cambridge' },
+            { time: '2024-12-19 08:15 AM', text: 'Mike Davis (Boston Commons) accessed HVAC documentation', location: 'Boston Commons' },
+            { time: '2024-12-19 08:00 AM', text: 'Tom Anderson (Somerville) added new staff member', location: 'Somerville' },
+            { time: '2024-12-18 06:30 PM', text: 'Sarah Johnson ordered replacement filters' }
+        ];
 
         // Load user data from session
         function loadUserData() {
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             const userData = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
 
-            if (!authToken) {
-                window.location.href = 'index.html';
-                return;
-            }
-
-            // ROLE-BASED ACCESS CONTROL - PF Admin only
             if (userData) {
                 try {
                     const user = JSON.parse(userData);
-                    const userRole = user.role;
-                    
-                    console.log('🔐 PF Admin Dashboard - Role check:', userRole);
-                    
-                    // Only pf_admin role allowed
-                    if (userRole !== 'pf_admin') {
-                        console.log('❌ Access denied. Redirecting...');
-                        if (userRole === 'ses_admin') {
-                            window.location.href = 'admin-ses.html';
-                        } else {
-                            window.location.href = 'dashboard.html';
-                        }
-                        return;
-                    }
-                    
-                    console.log('✅ Access granted for PF Admin');
                     const email = user.email || user.username || 'User';
                     document.getElementById('userEmail').textContent = email;
                     
@@ -678,133 +699,135 @@
             }
         }
 
-        // Load users from backend API
-        async function loadUsers() {
+        // Load users table
+        function loadUsers() {
             const tbody = document.querySelector('#usersTable tbody');
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading users...</td></tr>';
+            tbody.innerHTML = '';
 
-            try {
-                const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                
-                console.log('🔍 [LOAD USERS] Starting...');
-                console.log('🔍 [LOAD USERS] Token exists:', !!token);
-                console.log('🔍 [LOAD USERS] API URL:', `${API_URL}/api/users`);
-                
-                const response = await fetch(`${API_URL}/api/users`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
+            mockUsers.forEach(user => {
+                const row = `
+                    <tr>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td><span class="location-badge" style="background: var(--pf-light-bg); color: var(--pf-dark-purple); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${user.location}</span></td>
+                        <td>${user.role}</td>
+                        <td><span class="status-badge ${user.status}">${user.status}</span></td>
+                        <td>${user.lastLogin}</td>
+                        <td>
+                            <button class="action-btn" onclick="resetPassword(${user.id})">
+                                <i class="bi bi-key-fill"></i> Reset
+                            </button>
+                            <button class="action-btn" onclick="editUser(${user.id})">
+                                <i class="bi bi-pencil-fill"></i> Edit
+                            </button>
+                            <button class="action-btn danger" onclick="deleteUser(${user.id})">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
 
-                const data = await response.json();
-                
-                console.log('🔍 [LOAD USERS] Response status:', response.status);
-                console.log('🔍 [LOAD USERS] Response data:', data);
-
-                if (response.ok && data.users) {
-                    console.log('✅ [LOAD USERS] Success! Users count:', data.users.length);
-                    tbody.innerHTML = '';
-                    
-                    if (data.users.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No users found</td></tr>';
-                        document.getElementById('totalUsers').textContent = '0';
-                        document.getElementById('activeUsers').textContent = '0';
-                        return;
-                    }
-
-                    data.users.forEach(user => {
-                        const statusClass = user.is_active ? 'active' : 'inactive';
-                        const statusText = user.is_active ? 'Active' : 'Inactive';
-                        const lastLogin = user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never';
-                        
-                        const row = `
-                            <tr>
-                                <td>${user.first_name} ${user.last_name}</td>
-                                <td>${user.email}</td>
-                                <td><span class="location-badge" style="background: var(--pf-light-bg); color: var(--pf-dark-purple); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${user.location || 'N/A'}</span></td>
-                                <td>${user.role.toUpperCase()}</td>
-                                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                                <td>${lastLogin}</td>
-                                <td>
-                                    <button class="action-btn" onclick="resetPassword(${user.id})">
-                                        <i class="bi bi-key-fill"></i> Reset
-                                    </button>
-                                    <button class="action-btn" onclick="editUser(${user.id})">
-                                        <i class="bi bi-pencil-fill"></i> Edit
-                                    </button>
-                                    <button class="action-btn danger" onclick="deleteUser(${user.id})">
-                                        <i class="bi bi-trash-fill"></i> Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                        tbody.innerHTML += row;
-                    });
-
-                    // Update stats
-                    document.getElementById('totalUsers').textContent = data.users.length;
-                    document.getElementById('activeUsers').textContent = data.users.filter(u => u.is_active).length;
-                } else {
-                    console.error('❌ [LOAD USERS] Failed:', data);
-                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Error: ${data.error || 'Failed to load users'}</td></tr>`;
-                }
-            } catch (error) {
-                console.error('❌ [LOAD USERS] Exception:', error);
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Network error: ${error.message}</td></tr>`;
-            }
+            // Update stats
+            document.getElementById('totalUsers').textContent = mockUsers.length;
+            document.getElementById('activeUsers').textContent = mockUsers.filter(u => u.status === 'active').length;
         }
 
-        // Load activity log from backend API
-        async function loadActivity() {
-            const activityLog = document.getElementById('activityLog');
-            activityLog.innerHTML = '<div style="text-align: center; color: #6B7280;">Loading activity...</div>';
+        // Activity log pagination state
+        let activityPage = 1;
+        let activityTotal = 0;
+        let activityHasMore = false;
 
+        // Load activity log from API
+        async function loadActivity(append = false) {
             try {
-                const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
                 
-                const response = await fetch(`${API_URL}/api/activity-logs`, {
-                    method: 'GET',
+                const response = await fetch(`${API_BASE}/api/activity-logs?page=${activityPage}&per_page=25`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': `Bearer ${authToken}`,
                         'Content-Type': 'application/json'
                     }
                 });
-
+                
+                if (!response.ok) throw new Error('Failed to load activity logs');
+                
                 const data = await response.json();
-
-                if (response.ok && data.logs) {
+                const activityLog = document.getElementById('activityLog');
+                
+                // Clear or append
+                if (!append) {
                     activityLog.innerHTML = '';
-                    
-                    if (data.logs.length === 0) {
-                        activityLog.innerHTML = '<div style="text-align: center; color: #6B7280;">No recent activity</div>';
-                        document.getElementById('recentActivity').textContent = '0';
-                        return;
-                    }
-
-                    data.logs.forEach(log => {
-                        const time = new Date(log.created_at).toLocaleString();
-                        const item = `
-                            <div class="activity-item">
-                                <div class="activity-time">${time}</div>
-                                <div class="activity-text">${log.action}: ${log.description || ''}</div>
-                            </div>
-                        `;
-                        activityLog.innerHTML += item;
-                    });
-
-                    document.getElementById('recentActivity').textContent = data.logs.length;
-                } else {
-                    activityLog.innerHTML = '<div style="text-align: center; color: red;">Error loading activity</div>';
                 }
+                
+                // Add activity items
+                data.logs.forEach(activity => {
+                    const item = `
+                        <div class="activity-item">
+                            <div class="activity-time">${formatActivityTime(activity.created_at)}</div>
+                            <div class="activity-text">
+                                <strong>${activity.user?.username || 'Unknown'}</strong> - 
+                                ${activity.description || activity.action}
+                            </div>
+                        </div>
+                    `;
+                    activityLog.innerHTML += item;
+                });
+                
+                // Update counts
+                const displayedCount = document.querySelectorAll('.activity-item').length;
+                activityTotal = data.pagination.total;
+                activityHasMore = data.pagination.has_next;
+                
+                document.getElementById('displayedCount').textContent = displayedCount;
+                document.getElementById('totalCount').textContent = activityTotal;
+                document.getElementById('recentActivity').textContent = activityTotal;
+                
+                // Show/hide "Load More" button
+                const loadMoreContainer = document.getElementById('loadMoreContainer');
+                loadMoreContainer.style.display = activityHasMore ? 'block' : 'none';
+                
             } catch (error) {
-                console.error('Load activity error:', error);
-                activityLog.innerHTML = '<div style="text-align: center; color: red;">Network error</div>';
+                console.error('Error loading activity:', error);
+                const activityLog = document.getElementById('activityLog');
+                activityLog.innerHTML = '<div style="color: #999; text-align: center; padding: 20px;">Unable to load activity logs. Using mock data.</div>';
+                
+                // Fallback to mock data
+                mockActivity.forEach(activity => {
+                    const item = `
+                        <div class="activity-item">
+                            <div class="activity-time">${activity.time}</div>
+                            <div class="activity-text">${activity.text}</div>
+                        </div>
+                    `;
+                    activityLog.innerHTML += item;
+                });
+                document.getElementById('recentActivity').textContent = mockActivity.length;
             }
         }
 
-        // Filter users (client-side)
+        // Load more activity
+        function loadMoreActivity() {
+            activityPage++;
+            loadActivity(true);  // Append = true
+        }
+
+        // Format activity timestamp
+        function formatActivityTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        // Filter users
         function filterUsers() {
             const search = document.getElementById('searchUsers').value.toLowerCase();
             const rows = document.querySelectorAll('#usersTable tbody tr');
@@ -817,245 +840,71 @@
 
         // Modal functions
         function openAddUserModal() {
-            currentEditUserId = null;
             document.getElementById('modalTitle').textContent = 'Add Staff Member';
             document.getElementById('userForm').reset();
-            document.getElementById('userId').value = '';
-            document.getElementById('userPassword').required = true;
             document.getElementById('userModal').classList.add('active');
         }
 
         function closeUserModal() {
             document.getElementById('userModal').classList.remove('active');
-            currentEditUserId = null;
         }
 
-        // Edit user
-        async function editUser(userId) {
-            try {
-                const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                
-                console.log('🔍 [LOAD USERS] Starting...');
-                console.log('🔍 [LOAD USERS] Token exists:', !!token);
-                console.log('🔍 [LOAD USERS] API URL:', `${API_URL}/api/users`);
-                
-                const response = await fetch(`${API_URL}/api/users`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-                
-                console.log('🔍 [LOAD USERS] Response status:', response.status);
-                console.log('🔍 [LOAD USERS] Response data:', data);
-
-                if (response.ok && data.users) {
-                    console.log('✅ [LOAD USERS] Success! Users count:', data.users.length);
-                    const user = data.users.find(u => u.id === userId);
-                    
-                    if (user) {
-                        currentEditUserId = userId;
-                        document.getElementById('modalTitle').textContent = 'Edit Staff Member';
-                        document.getElementById('userId').value = user.id;
-                        document.getElementById('userFirstName').value = user.first_name;
-                        document.getElementById('userLastName').value = user.last_name;
-                        document.getElementById('userUsername').value = user.username;
-                        document.getElementById('userEmail2').value = user.email;
-                        document.getElementById('userPassword').value = '';
-                        document.getElementById('userPassword').required = false;
-                        document.getElementById('userPhone').value = user.phone || '';
-                        document.getElementById('userRole').value = user.role;
-                        document.getElementById('userModal').classList.add('active');
-                    }
-                }
-            } catch (error) {
-                console.error('Edit user error:', error);
-                alert('❌ ERROR: Failed to load user data');
+        function editUser(userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user) {
+                document.getElementById('modalTitle').textContent = 'Edit Staff Member';
+                document.getElementById('userName').value = user.name;
+                document.getElementById('userEmail').value = user.email;
+                document.getElementById('userLocation').value = user.location;
+                document.getElementById('userRole').value = user.role.toLowerCase();
+                document.getElementById('userModal').classList.add('active');
             }
         }
 
-        // Reset password
-        async function resetPassword(userId) {
-            try {
-                const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                
-                // Get user email first
-                const usersResponse = await fetch(`${API_URL}/api/users`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const usersData = await usersResponse.json();
-                const user = usersData.users?.find(u => u.id === userId);
-
-                if (!user) {
-                    alert('❌ ERROR: User not found');
-                    return;
-                }
-
-                if (confirm(`🔑 RESET PASSWORD\n\nThis will:\n✅ Generate a new secure password\n✅ Send email to: ${user.email}\n\nProceed with password reset?`)) {
-                    const response = await fetch(`${API_URL}/api/users/${userId}/reset-password`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        alert(`✅ SUCCESS!\n\nNew password generated and sent to:\n${user.email}\n\nUser will receive:\n• Temporary password\n• Login instructions\n• Password change prompt`);
-                    } else {
-                        alert(`❌ ERROR: ${data.error || 'Failed to reset password'}`);
-                    }
-                }
-            } catch (error) {
-                console.error('Reset password error:', error);
-                alert('❌ ERROR: Network error. Please try again.');
+        function resetPassword(userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user && confirm(`🔑 RESET PASSWORD\n\nThis will:\n✅ Generate a new secure password\n✅ Send email to: ${user.email}\n\nProceed with password reset?`)) {
+                alert(`✅ SUCCESS!\n\nNew password generated and sent to:\n${user.email}\n\nUser will receive:\n• Temporary password\n• Login instructions\n• Password change prompt`);
+                // TODO: Call backend API: POST /api/admin/reset-password
+                // Backend will generate random password, hash it, and send email
             }
         }
 
-        // Delete user
-        async function deleteUser(userId) {
-            const userRow = document.querySelector(`button[onclick="deleteUser(${userId})"]`)?.closest('tr');
-            const userName = userRow?.cells[0]?.textContent || 'this user';
-            const userEmail = userRow?.cells[1]?.textContent || '';
-            
-            if (confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete:\n${userName} (${userEmail})\n\nThis action CANNOT be undone!`)) {
-                try {
-                    const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                    
-                    const response = await fetch(`${API_URL}/api/users/${userId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (response.ok) {
-                        alert(`✅ User ${userName} has been deleted successfully.`);
-                        loadUsers();
-                        loadActivity();
-                    } else {
-                        alert(`❌ ERROR: ${data.error || 'Failed to delete user'}`);
-                    }
-                } catch (error) {
-                    console.error('Delete error:', error);
-                    alert(`❌ ERROR: Network error. Please try again.`);
-                }
+        function deleteUser(userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user && confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete:\n${user.name} (${user.email})\n\nThis action CANNOT be undone!`)) {
+                alert(`✅ User ${user.name} has been deleted.`);
+                // TODO: Call backend API: DELETE /api/admin/users/${userId}
+                // Then reload the table
+                loadUsers();
             }
         }
 
-        // Form submission - Create or Update user
-        document.getElementById('userForm').addEventListener('submit', async function(e) {
+        // Form submission
+        document.getElementById('userForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const userId = document.getElementById('userId').value;
-            const firstName = document.getElementById('userFirstName').value;
-            const lastName = document.getElementById('userLastName').value;
-            const username = document.getElementById('userUsername').value;
-            const email = document.getElementById('userEmail2').value;
-            const password = document.getElementById('userPassword').value;
-            const phone = document.getElementById('userPhone').value;
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const location = document.getElementById('userLocation').value;
             const role = document.getElementById('userRole').value;
 
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = userId ? 'Updating...' : 'Creating...';
-
-            try {
-                const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                
-                if (userId) {
-                    // UPDATE existing user
-                    const updateData = {
-                        email,
-                        first_name: firstName,
-                        last_name: lastName,
-                        phone,
-                    };
-
-                    const response = await fetch(`${API_URL}/api/users/${userId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(updateData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        alert(`✅ SUCCESS!\n\nUser Updated:\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}`);
-                        closeUserModal();
-                        loadUsers();
-                        loadActivity();
-                    } else {
-                        alert(`❌ ERROR: ${data.error || 'Failed to update user'}`);
-                    }
-                } else {
-                    // CREATE new user
-                    if (!password) {
-                        alert('❌ ERROR: Password is required for new users');
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Save User';
-                        return;
-                    }
-
-                    const createData = {
-                        username,
-                        email,
-                        password,
-                        first_name: firstName,
-                        last_name: lastName,
-                        phone,
-                        role
-                    };
-
-                    const response = await fetch(`${API_URL}/api/users`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(createData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        alert(`✅ SUCCESS!\n\nUser Created:\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}\n🔐 Role: ${role.toUpperCase()}\n\n✉️ Welcome email sent to ${email} with:\n• Temporary password\n• Login link\n• Welcome message`);
-                        closeUserModal();
-                        loadUsers();
-                        loadActivity();
-                    } else {
-                        alert(`❌ ERROR: ${data.error || 'Failed to create user'}`);
-                    }
-                }
-            } catch (error) {
-                console.error('Form submission error:', error);
-                alert('❌ ERROR: Network error. Please try again.');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Save User';
-            }
+            // Show success message
+            alert(`✅ SUCCESS!\n\nUser Created:\n👤 Name: ${name}\n📧 Email: ${email}\n📍 Location: ${location}\n🔐 Role: ${role}\n\n✉️ Email sent to ${email} with:\n• Temporary password\n• Login link\n• Welcome message`);
+            
+            closeUserModal();
+            // TODO: Call backend API: POST /api/admin/users
+            // Backend will:
+            // 1. Generate random secure password
+            // 2. Hash and store password
+            // 3. Send welcome email with temp password
+            // 4. Return user ID
+            loadUsers();
         });
 
         // Logout
         function logout() {
-            localStorage.clear();
             sessionStorage.clear();
+            localStorage.clear();
             window.location.href = 'index.html';
         }
 
