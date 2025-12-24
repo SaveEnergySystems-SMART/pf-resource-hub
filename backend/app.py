@@ -584,8 +584,12 @@ def delete_user(current_user, user_id):
 @token_required
 @admin_required
 def get_activity_logs(current_user):
-    """Get activity logs (filtered by role)"""
+    """Get activity logs (filtered by role) with pagination"""
     try:
+        # Get pagination parameters
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 25, type=int)
+        
         query = ActivityLog.query
         
         # PF admins can only see logs from their users
@@ -593,10 +597,99 @@ def get_activity_logs(current_user):
             user_ids = [u.id for u in User.query.filter_by(role='gm', location=current_user.location).all()]
             query = query.filter(ActivityLog.user_id.in_(user_ids))
         
-        logs = query.order_by(ActivityLog.created_at.desc()).limit(100).all()
+        # Apply pagination
+        paginated = query.order_by(ActivityLog.created_at.desc()).paginate(
+            page=page, 
+            per_page=per_page, 
+            error_out=False
+        )
         
         return jsonify({
-            'logs': [log.to_dict() for log in logs]
+            'logs': [log.to_dict() for log in paginated.items],
+            'pagination': {
+                'page': page,
+                'per_page': per_page,
+                'total': paginated.total,
+                'pages': paginated.pages,
+                'has_next': paginated.has_next,
+                'has_prev': paginated.has_prev
+            }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/analytics/user-journeys', methods=['GET'])
+@token_required
+@admin_required
+def get_user_journeys(current_user):
+    """Get user login analytics and journeys (filtered by role)"""
+    try:
+        # Date range parameters
+        days = request.args.get('days', 30, type=int)
+        start_date = datetime.utcnow() - timedelta(days=days)
+        
+        # Base query for users
+        if current_user.role == 'pf_admin':
+            # PF admin: only see GMs and staff from their locations
+            users = User.query.filter(
+                User.role.in_(['gm', 'staff']),
+                User.location == current_user.location
+            ).all()
+        else:
+            # SES admin: see all users
+            users = User.query.all()
+        
+        user_journeys = []
+        
+        for user in users:
+            # Get login count
+            login_logs = ActivityLog.query.filter(
+                ActivityLog.user_id == user.id,
+                ActivityLog.action == 'login',
+                ActivityLog.created_at >= start_date
+            ).count()
+            
+            # Get all activity for this user
+            activities = ActivityLog.query.filter(
+                ActivityLog.user_id == user.id,
+                ActivityLog.created_at >= start_date
+            ).order_by(ActivityLog.created_at.desc()).limit(50).all()
+            
+            # Calculate journey metrics
+            journey = {
+                'user_id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'role': user.role,
+                'location': user.location,
+                'last_login': user.last_login.isoformat() if user.last_login else None,
+                'login_count': login_logs,
+                'total_activities': len(activities),
+                'recent_actions': [
+                    {
+                        'action': a.action,
+                        'description': a.description,
+                        'timestamp': a.created_at.isoformat()
+                    }
+                    for a in activities[:10]  # Last 10 actions
+                ]
+            }
+            
+            user_journeys.append(journey)
+        
+        # Sort by login count (most active first)
+        user_journeys.sort(key=lambda x: x['login_count'], reverse=True)
+        
+        return jsonify({
+            'journeys': user_journeys,
+            'summary': {
+                'total_users': len(user_journeys),
+                'active_users': len([j for j in user_journeys if j['login_count'] > 0]),
+                'total_logins': sum(j['login_count'] for j in user_journeys),
+                'date_range_days': days
+            }
         }), 200
         
     except Exception as e:
