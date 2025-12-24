@@ -632,6 +632,11 @@
             </h1>
             <p style="color: #6B7280; font-size: 14px; margin-top: 8px;">
                 <span id="currentDateRange">Last 30 Days</span> • Property: G-N3GWJBMD4C
+                <br>
+                <span style="color: #EF4444; font-size: 12px;">
+                    <i class="bi bi-info-circle"></i>
+                    Note: Google Analytics data has a 24-48 hour processing delay. Most recent data may not yet be available.
+                </span>
             </p>
         </div>
 
@@ -1018,6 +1023,7 @@
         });
 
         function setDateRange(range) {
+            console.log(`🔄 Date range changed from "${currentDateRange}" to "${range}"`);
             currentDateRange = range;
             
             // Update active tab
@@ -1042,6 +1048,7 @@
             
             document.getElementById('currentDateRange').textContent = rangeNames[range];
             
+            console.log(`✅ Loading new data for range: ${range}`);
             // Reload data
             loadAnalyticsData();
         }
@@ -1101,17 +1108,25 @@
             const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
-                // Show loading state
-                document.getElementById('totalUsers').textContent = '...';
-                document.getElementById('pageViews').textContent = '...';
-                document.getElementById('sessions').textContent = '...';
-                document.getElementById('avgDuration').textContent = '...';
+                // Show loading state with spinner
+                const loadingSpinner = '<i class="bi bi-arrow-clockwise" style="animation: spin 1s linear infinite;"></i>';
+                document.getElementById('totalUsers').innerHTML = loadingSpinner;
+                document.getElementById('pageViews').innerHTML = loadingSpinner;
+                document.getElementById('sessions').innerHTML = loadingSpinner;
+                document.getElementById('avgDuration').innerHTML = loadingSpinner;
+                
+                // Add cache busting - Append timestamp to prevent caching
+                const cacheBuster = new Date().getTime();
+                const url = `${apiUrl}/api/analytics?range=${currentDateRange}&_=${cacheBuster}`;
+                
+                console.log(`📊 Loading overview stats for range: ${currentDateRange}`);
                 
                 // Fetch REAL data from backend
-                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                const response = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
                     }
                 });
                 
@@ -1174,8 +1189,14 @@
             const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
+                // Add cache busting
+                const cacheBuster = new Date().getTime();
+                const url = `${apiUrl}/api/analytics?range=${currentDateRange}&_=${cacheBuster}`;
+                
+                console.log(`📈 Loading traffic chart for range: ${currentDateRange}`);
+                
                 // Fetch REAL traffic data from backend
-                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                const response = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -1193,8 +1214,10 @@
                 const userData = data.data.traffic.users;
                 const sessionData = data.data.traffic.sessions;
                 
+                // Properly destroy existing chart
                 if (trafficChart) {
                     trafficChart.destroy();
+                    trafficChart = null;
                 }
                 
                 trafficChart = new Chart(ctx, {
@@ -1319,7 +1342,13 @@
             const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
-                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                // Add cache busting
+                const cacheBuster = new Date().getTime();
+                const url = `${apiUrl}/api/analytics?range=${currentDateRange}&_=${cacheBuster}`;
+                
+                console.log(`📄 Loading top pages for range: ${currentDateRange}`);
+                
+                const response = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -1352,7 +1381,13 @@
             const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
             
             try {
-                const response = await fetch(`${apiUrl}/api/analytics?range=${currentDateRange}`, {
+                // Add cache busting
+                const cacheBuster = new Date().getTime();
+                const url = `${apiUrl}/api/analytics?range=${currentDateRange}&_=${cacheBuster}`;
+                
+                console.log(`🌍 Loading geographic data for range: ${currentDateRange}`);
+                
+                const response = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
