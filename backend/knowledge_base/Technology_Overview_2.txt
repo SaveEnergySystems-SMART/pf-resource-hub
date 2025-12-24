@@ -1,0 +1,342 @@
+SMARTPM PLUS™ TECHNOLOGY OVERVIEW
+COMPLETE AI-DRIVEN PREDICTIVE MAINTENANCE & ENERGY MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT IS SMARTPM PLUS™?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SmartPM Plus™ is a complete AI-driven predictive maintenance and energy 
+management solution that works alongside your existing PM program. It combines 
+advanced DLC (Demand Limiting Controller) technology with 24/7 managed services 
+to deliver comprehensive HVAC oversight, predictive maintenance, and immediate 
+energy savings.
+
+KEY DIFFERENTIATORS:
+• Works WITH existing PM programs (not a replacement)
+• Complete managed service (not just hardware)
+• Predictive insights catch failures before they happen
+• 24/7 monitoring with Virtual Facility Management (vFM™)
+• Full asset tracking through SmartAssetCare™
+• 20-30% energy savings from Day 1
+• $0 upfront cost (True OPEX model)
+
+CORE TECHNOLOGY PLATFORM 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ SmartPM Plus™:
+
+REAL-TIME MONITORING:
+• 24/7/365 system surveillance
+• Real-time energy tracking (kWh monitoring)
+• Multi-zone management
+• Historical data analysis
+• Anomaly detection alerts
+• System performance alerts
+• Predictive maintenance scheduling
+
+AI-POWERED OPTIMIZATION:
+• Automated HVAC control
+• Weather-responsive operation
+• Occupancy-based control
+• Time-of-day optimization
+• Peak demand shaving
+• Load balancing across units
+• Fresh air management
+
+ADVANCED DIAGNOSTICS:
+• Remote diagnostics and troubleshooting
+• Instant issue identification
+• Maintenance scheduling automation
+• Equipment health monitoring
+• Performance trend analysis
+• Failure prediction algorithms
+
+WHAT'S INCLUDED PER RTU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HARDWARE (Per Rooftop Unit):
+• Smart Thermostat with AI capabilities
+• Zone Sensor with Humidity monitoring
+• Supply Air Sensor
+• Wireless communication module
+
+SERVICES INCLUDED:
+• Quarterly PM Service (full maintenance)
+• Professional installation (4-6 hours per site)
+• On-site and remote training
+• 5-year warranty (standard coverage)
+
+COMPLETE MANAGED SERVICES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vFM™ - 24/7 VIRTUAL FACILITY MANAGEMENT:
+• Around-the-clock monitoring by expert team
+• Proactive issue detection and alerts
+• Vendor coordination and service call management
+• Ticket creation and tracking
+• 90%+ resolution within 48 hours
+• Emergency response and escalation
+• Reduced 2 AM emergency calls
+
+SMARTASSETCARE™ - FULL ASSET TRACKING:
+• Complete equipment inventory management
+• Equipment age, history, and health tracking
+• Service history documentation
+• Capital planning data
+• Replacement forecasting
+• Warranty tracking
+• Compliance documentation
+
+SOFTWARE PLATFORM:
+• Desktop application (full-featured dashboard)
+• Mobile apps (iOS and Android)
+• Real-time alerts (email and SMS)
+• Custom reporting and analytics
+• Multi-site management capabilities
+• API access for third-party integration
+
+SYSTEM INTEGRATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HVAC COMPATIBILITY:
+• All major HVAC brands supported
+• Compatible with existing systems
+• No equipment replacement required
+• Works with legacy and modern units
+
+CONNECTIVITY:
+• Wireless communication (Cellular and Wi-Fi)
+• Cloud-based platform (secure data storage)
+• Remote access from anywhere
+• Redundant connectivity for reliability
+
+DATA & SECURITY:
+• Encrypted data transmission
+• Secure cloud storage
+• Regular security updates
+• Compliance with industry standards
+• Data backup and recovery
+
+PROVEN RESULTS & STATISTICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NATIONAL DEPLOYMENT:
+• 600+ locations nationwide
+• 1,000+ sites deployed
+• Trusted by major commercial facilities
+• Multi-year proven track record
+
+ENERGY SAVINGS:
+• 20-30% HVAC energy reduction from Day 1
+• 30% average energy reduction (proven)
+• $2.5M+ in verified client savings
+• Immediate ROI (savings start immediately)
+
+OPERATIONAL IMPROVEMENTS:
+• 40% reduction in emergency repair calls
+• 90%+ ticket resolution within 48 hours
+• Fewer 2 AM emergency calls
+• Predictive maintenance replaces reactive repairs
+• 25-30% cost savings on maintenance approach
+
+INSTALLATION & DEPLOYMENT:
+• 4-6 hours installation per site
+• Same-day wireless installation
+• No HVAC downtime required
+• Minimal disruption to operations
+
+FINANCIAL MODEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ZERO UPFRONT COST:
+• $0 capital expense (No CAPEX)
+• No equipment purchase required
+• Professional installation included
+• All hardware provided at no cost
+
+BUDGET-NEUTRAL IMPLEMENTATION:
+• Uses existing PM budget line item
+• Not a new spending category
+• Replaces or supplements current PM spend
+• No new budget approval required
+
+OPEX MODEL:
+• Quarterly invoicing (true OPEX)
+• Predictable operating expense
+• Easy budget planning
+• Flexible payment structure
+
+PARTNERSHIP TERMS:
+• 36-month partnership agreement
+• 12-month performance exit clause
+• Cancel anytime after 12 months if value not delivered
+• No long-term lock-in penalty
+
+RISK MITIGATION:
+• No upfront investment to lose
+• Performance guarantee (12-month exit)
+• Immediate energy savings offset costs
+• Low-risk, high-value proposition
+
+HOW IT WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1: INSTALLATION
+• We install sensors on each RTU (no cost to you)
+• Smart thermostat, zone sensor, supply sensor
+• Wireless installation (4-6 hours)
+• Professional training provided
+• No HVAC downtime
+
+STEP 2: INTEGRATION
+• System connects to cloud platform
+• Mobile and desktop apps activated
+• Alerts and notifications configured
+• Team onboarding and training
+• Keep your current vendor OR we take over PM
+
+STEP 3: MONITORING
+• 24/7 oversight through vFM™
+• AI analyzes equipment performance
+• Predictive alerts before failures
+• Our team triages issues
+• Vendor coordination handled for you
+
+STEP 4: RESULTS
+• 20-30% energy savings from Day 1
+• Fewer emergency calls
+• Predictive maintenance prevents failures
+• Full visibility into equipment health
+• Data-driven decision making
+
+BENEFITS BY AUDIENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FOR CFOs / FINANCE:
+• No CAPEX - Pure OPEX model
+• Uses existing PM budget (no new line item)
+• Immediate ROI (savings from Day 1)
+• 12-month performance exit (low risk)
+• Quarterly invoicing (predictable)
+• Energy savings offset costs
+• Reduced emergency repair expenses
+
+FOR FACILITY MANAGERS:
+• Fewer 2 AM emergency calls
+• Predictive maintenance (catch failures early)
+• Vendor coordination and accountability
+• Full equipment visibility (age, history, health)
+• Data to justify decisions to leadership
+• 24/7 monitoring team support
+• Reduced workload and stress
+
+FOR EXECUTIVES / DECISION MAKERS:
+• Proven energy savings (20-30%)
+• Reduced emergency repair costs (up to 40%)
+• Same-day wireless installation
+• Minimal disruption to operations
+• Scalable nationwide solution
+• $2.5M+ verified savings across clients
+• 600+ locations trust our solution
+
+FOR GENERAL MANAGERS:
+• "We monitor, you breathe"
+• Less work, more control
+• Problems caught before complaints
+• Equipment runs better, lasts longer
+• Professional support team
+• Peace of mind 24/7
+
+COMPARISON: TRADITIONAL VS SMARTPM PLUS™
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TRADITIONAL PM:
+• Upfront Cost: Equipment + Installation
+• Budget Impact: New line item
+• Energy Savings: None
+• Visibility: Reactive (wait for failures)
+• Risk: Locked in contract
+• Maintenance: Scheduled only
+• Support: Business hours only
+
+SMARTPM PLUS™:
+• Upfront Cost: $0
+• Budget Impact: Uses existing PM budget
+• Energy Savings: 20-30% from Day 1
+• Visibility: Predictive + 24/7 monitoring
+• Risk: 12-month exit clause
+• Maintenance: Predictive + Scheduled
+• Support: 24/7 vFM™ team
+
+COMMON QUESTIONS & ANSWERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Q: What is SmartPM Plus™?
+A: SmartPM Plus™ is an AI-driven predictive maintenance and energy management 
+solution that works alongside your existing PM program. It provides 24/7 
+monitoring, predictive insights, and delivers 20-30% energy savings from Day 1.
+
+Q: How much does it cost?
+A: $0 upfront. SmartPM Plus™ uses your existing PM budget - it's not a new 
+line item. Quarterly OPEX invoicing. 36-month partnership with 12-month exit 
+clause if value isn't delivered.
+
+Q: Do I need to replace my current PM vendor?
+A: No! SmartPM Plus™ works WITH your existing PM program. You can keep your 
+current vendor and we add intelligence, OR we can take over PM services - your choice.
+
+Q: What energy savings can I expect?
+A: 20-30% HVAC energy savings starting Day 1. Proven across 600+ locations 
+nationwide with $2.5M+ in verified client savings.
+
+Q: What if it doesn't work for my facility?
+A: 36-month partnership with 12-month exit clause. If energy savings or FM 
+value aren't delivered within 12 months, you can cancel - no questions asked.
+
+Q: How long does installation take?
+A: 4-6 hours per site. Same-day wireless installation with no HVAC downtime 
+and minimal disruption to your operations.
+
+Q: What's included in the service?
+A: Per RTU: Smart thermostat, zone sensor, supply sensor, quarterly PM service. 
+Plus: vFM™ (24/7 monitoring), SmartAssetCare™ (asset tracking), desktop & 
+mobile apps, dedicated support team.
+
+Q: How is this different from traditional PM?
+A: SmartPM Plus™ is predictive (not reactive). We catch failures before they 
+happen, provide 24/7 monitoring, and deliver immediate energy savings. 
+Traditional PM waits for breakdowns and provides no energy optimization.
+
+CONTACT INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SALES & INQUIRIES:
+Paul Harris
+Vice President of Sales
+Phone: (617) 894-9026
+Email: pharris@saveenergysystems.com
+
+CORPORATE HEADQUARTERS:
+Save Energy Systems (SES)
+Phone: (617) 564-4800
+Email: info@saveenergysystems.com
+Website: saveenergysystems.com
+
+TECHNICAL SUPPORT:
+24/7 Support Line: (617) 564-4800
+Email: support@saveenergysystems.com
+
+PLATFORM ACCESS:
+Main Dashboard: https://dashboard.saveenergysystems.com/
+Customer Portal: http://portal.saveenergysystems.com/cms_sys/index.php/Psession/index
+
+NEXT STEPS:
+• Request platform demo
+• Schedule facility assessment
+• Request detailed proposal
+• Contact Paul Harris: (617) 894-9026
+
+TAGLINE & POSITIONING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"be smart, take control"
+"AI-Driven Energy and Facility Management Systems"
+
+BRAND HIERARCHY:
+Company: Save Energy Systems (SES)
+Product: SmartPM Plus™
+Technology: DLC (Demand Limiting Controller) Platform
+Services: vFM™ + SmartAssetCare™
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Document Version: 2.0
+Last Updated: December 24, 2025
+Purpose: Comprehensive SmartPM Plus™ information for AI knowledge base
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
