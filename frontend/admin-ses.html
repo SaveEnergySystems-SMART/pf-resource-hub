@@ -679,7 +679,7 @@
                                     <div class="user-avatar">AS</div>
                                     <div class="user-details">
                                         <h4>Adriana Soler</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="accddfc3c0c9deecdfcddac9c9c2c9decbd5dfd5dfd8c9c1df82cfc3c1">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed8c9e8281889fad9e8c9b888883889f8a949e949e9988809ec38e8280">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -701,7 +701,7 @@
                                     <div class="user-avatar">AC</div>
                                     <div class="user-details">
                                         <h4>Adriana Creative</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f1e1b0d161e111e0c10131a0d1c0d1a1e0b16091a3f18121e1613511c1012">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e38287918a828d82908c8f869180918682978a9586a3848e828a8fcd808c8e">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -753,12 +753,19 @@
                     </tbody>
                 </table>
             </div>
-            <div id="loadMoreContainerSES" style="text-align: center; margin-top: 20px; display: none;">
-                <button id="loadMoreBtnSES" onclick="loadMoreActivitySES()" 
-                        style="background: #9600FA; color: white; padding: 12px 24px; 
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                <button onclick="downloadActivityReportSES()" 
+                        style="background: #10B981; color: white; padding: 12px 24px; 
                                border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
-                    <i class="bi bi-arrow-down-circle"></i> Load More Activity
+                    <i class="bi bi-download"></i> Download Report
                 </button>
+                <div id="loadMoreContainerSES" style="display: none;">
+                    <button id="loadMoreBtnSES" onclick="loadMoreActivitySES()" 
+                            style="background: #9600FA; color: white; padding: 12px 24px; 
+                                   border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
+                        <i class="bi bi-arrow-down-circle"></i> Load More Activity
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1025,6 +1032,38 @@
             }
         }
 
+        // DELETE USER - API INTEGRATED
+        async function deleteUserSES(userId, username) {
+            if (!confirm(`⚠️ DELETE USER\n\nUser: ${username}\n\nThis will:\n❌ PERMANENTLY delete the user\n❌ Remove all user data\n❌ THIS ACTION CANNOT BE UNDONE\n\nProceed?`)) {
+                return;
+            }
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to delete user');
+                }
+                
+                alert(`✅ SUCCESS!\n\nUser ${username} has been permanently deleted.`);
+                loadUsersSES(); // Reload users table
+                
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                alert(`❌ ERROR\n\nFailed to delete user:\n${error.message}`);
+            }
+        }
+        
         // ACTIVATE USER - API INTEGRATED
         async function activateUser(userId, username) {
             if (!confirm(`✅ ACTIVATE USER\n\nUser: ${username}\n\nThis will:\n✅ Restore login access\n✅ Restore all permissions\n✅ Send activation email\n\nProceed?`)) {
@@ -1234,10 +1273,22 @@
                 
                 // Add activity rows
                 data.logs.forEach(activity => {
+                    // Better user display - check multiple fields
+                    let userDisplay = 'System';
+                    if (activity.user) {
+                        if (activity.user.first_name && activity.user.last_name) {
+                            userDisplay = `${activity.user.first_name} ${activity.user.last_name}`;
+                        } else if (activity.user.username) {
+                            userDisplay = activity.user.username;
+                        } else if (activity.user.email) {
+                            userDisplay = activity.user.email;
+                        }
+                    }
+                    
                     const row = `
                         <tr>
                             <td>${formatActivityTimeSES(activity.created_at)}</td>
-                            <td>${activity.user?.username || activity.user?.email || 'Unknown'}</td>
+                            <td>${userDisplay}</td>
                             <td>${activity.description || activity.action}</td>
                             <td>${activity.user?.location || 'N/A'}</td>
                             <td>${activity.ip_address || 'N/A'}</td>
@@ -1269,6 +1320,86 @@
         function loadMoreActivitySES() {
             activityPageSES++;
             loadActivitySES(true);  // Append = true
+        }
+        
+        // Download Activity Report
+        async function downloadActivityReportSES() {
+            const startDate = prompt('Enter start date (YYYY-MM-DD):', '2024-01-01');
+            if (!startDate) return;
+            
+            const endDate = prompt('Enter end date (YYYY-MM-DD):', new Date().toISOString().split('T')[0]);
+            if (!endDate) return;
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                // Fetch all activity logs within date range
+                let allLogs = [];
+                let page = 1;
+                let hasMore = true;
+                
+                while (hasMore) {
+                    const response = await fetch(`${API_BASE}/api/activity-logs?page=${page}&per_page=100`, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to load activity logs');
+                    
+                    const data = await response.json();
+                    
+                    // Filter by date range
+                    const filtered = data.logs.filter(log => {
+                        const logDate = new Date(log.created_at).toISOString().split('T')[0];
+                        return logDate >= startDate && logDate <= endDate;
+                    });
+                    
+                    allLogs = allLogs.concat(filtered);
+                    hasMore = data.pagination.has_next;
+                    page++;
+                    
+                    // Safety limit
+                    if (page > 50) break;
+                }
+                
+                // Create CSV content
+                let csv = 'Timestamp,User,Action,Location,IP Address\n';
+                
+                allLogs.forEach(log => {
+                    let userDisplay = 'System';
+                    if (log.user) {
+                        if (log.user.first_name && log.user.last_name) {
+                            userDisplay = `${log.user.first_name} ${log.user.last_name}`;
+                        } else if (log.user.username) {
+                            userDisplay = log.user.username;
+                        } else if (log.user.email) {
+                            userDisplay = log.user.email;
+                        }
+                    }
+                    
+                    csv += `"${formatActivityTimeSES(log.created_at)}","${userDisplay}","${log.description || log.action}","${log.user?.location || 'N/A'}","${log.ip_address || 'N/A'}"\n`;
+                });
+                
+                // Download CSV
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `activity-report-${startDate}-to-${endDate}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                alert(`✅ SUCCESS!\n\nDownloaded ${allLogs.length} activity logs from ${startDate} to ${endDate}`);
+                
+            } catch (error) {
+                console.error('Error downloading report:', error);
+                alert(`❌ ERROR\n\nFailed to download report:\n${error.message}`);
+            }
         }
 
         // Format activity timestamp
@@ -1394,6 +1525,9 @@
                                     </button>
                                     <button class="action-btn" title="Reset Password" onclick="resetPassword(${user.id}, '${user.username}')">
                                         <i class="bi bi-key"></i>
+                                    </button>
+                                    <button class="action-btn" title="Delete User" onclick="deleteUserSES(${user.id}, '${user.username}')">
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                     ${user.is_active ? 
                                         `<button class="action-btn" title="Deactivate" onclick="deactivateUser(${user.id}, '${user.username}')">
