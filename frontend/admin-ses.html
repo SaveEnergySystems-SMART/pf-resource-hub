@@ -679,7 +679,7 @@
                                     <div class="user-avatar">AS</div>
                                     <div class="user-details">
                                         <h4>Adriana Soler</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed8c9e8281889fad9e8c9b888883889f8a949e949e9988809ec38e8280">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7c1d0f1310190e3c0f1d0a191912190e1b050f050f0819110f521f1311">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -701,7 +701,7 @@
                                     <div class="user-avatar">AC</div>
                                     <div class="user-details">
                                         <h4>Adriana Creative</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e38287918a828d82908c8f869180918682978a9586a3848e828a8fcd808c8e">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f0e0b1d060e010e1c00030a1d0c1d0a0e1b06190a2f08020e0603410c0002">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -1483,17 +1483,21 @@
                     const initials = (user.first_name?.charAt(0) || '') + (user.last_name?.charAt(0) || '');
                     const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username;
                     
-                    // Role badge class
+                    // Role badge class - normalize role for comparison
+                    const normalizedRole = (user.role || '').toLowerCase().replace(/\s+/g, '_');
                     let roleBadgeClass = 'badge-staff';
                     let roleDisplay = user.role;
-                    if (user.role === 'ses_admin') {
+                    
+                    if (normalizedRole === 'ses_admin') {
                         roleBadgeClass = 'badge-admin';
                         roleDisplay = 'SES Admin';
-                    } else if (user.role === 'pf_admin') {
+                    } else if (normalizedRole === 'pf_admin') {
                         roleBadgeClass = 'badge-admin';
                         roleDisplay = 'PF Admin';
-                    } else if (user.role === 'gm') {
+                    } else if (normalizedRole === 'gm' || normalizedRole === 'pf_gm' || normalizedRole === 'general_manager') {
                         roleDisplay = 'GM';
+                    } else if (normalizedRole === 'staff' || normalizedRole === 'pf_staff') {
+                        roleDisplay = 'Staff';
                     }
                     
                     // Status badge
