@@ -643,7 +643,7 @@
                     <label>Role *</label>
                     <select id="userRole" required>
                         <option value="staff">Staff</option>
-                        <option value="manager">Manager</option>
+                        <option value="gm">General Manager (GM)</option>
                     </select>
                 </div>
                 <div class="modal-actions">
@@ -960,8 +960,9 @@
                 saveBtn.innerHTML = 'Save & Send Password';
                 
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to create user');
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    console.error('Backend error response:', errorData);
+                    throw new Error(errorData.error || errorData.message || JSON.stringify(errorData) || 'Failed to create user');
                 }
                 
                 const data = await response.json();
