@@ -259,9 +259,14 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: var(--pf-dark-purple);
             transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
 
         /* Table */
@@ -613,7 +618,7 @@
                 </div>
                 <div class="form-group">
                     <label>Email *</label>
-                    <input type="email" id="userEmail" required>
+                    <input type="email" id="userEmail2" required>
                 </div>
                 <div class="form-group">
                     <label>PF Location (Optional)</label>
@@ -643,7 +648,7 @@
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save & Send Password</button>
+                    <button type="submit" class="btn btn-primary" id="saveUserBtn">Save & Send Password</button>
                 </div>
             </form>
         </div>
@@ -849,6 +854,8 @@
         function openAddUserModal() {
             document.getElementById('modalTitle').textContent = 'Add Staff Member';
             document.getElementById('userForm').reset();
+            document.getElementById('customPasswordToggle').checked = false;
+            generatePassword(); // Auto-generate password on open
             document.getElementById('userModal').classList.add('active');
         }
 
@@ -861,7 +868,7 @@
             if (user) {
                 document.getElementById('modalTitle').textContent = 'Edit Staff Member';
                 document.getElementById('userName').value = user.name;
-                document.getElementById('userEmail').value = user.email;
+                document.getElementById('userEmail2').value = user.email;
                 document.getElementById('userLocation').value = user.location;
                 document.getElementById('userRole').value = user.role.toLowerCase();
                 document.getElementById('userModal').classList.add('active');
@@ -887,25 +894,93 @@
             }
         }
 
-        // Form submission
-        document.getElementById('userForm').addEventListener('submit', function(e) {
+        // FORM SUBMISSION - FIXED WITH REAL API CALL
+        document.getElementById('userForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const name = document.getElementById('userName').value;
-            const email = document.getElementById('userEmail').value;
-            const location = document.getElementById('userLocation').value;
-            const role = document.getElementById('userRole').value;
-
-            // Show success message
-            alert(`✅ SUCCESS!\n\nUser Created:\n👤 Name: ${name}\n📧 Email: ${email}\n📍 Location: ${location}\n🔐 Role: ${role}\n\n✉️ Email sent to ${email} with:\n• Temporary password\n• Login link\n• Welcome message`);
             
-            closeUserModal();
-            // TODO: Call backend API: POST /api/admin/users
-            // Backend will:
-            // 1. Generate random secure password
-            // 2. Hash and store password
-            // 3. Send welcome email with temp password
-            // 4. Return user ID
-            loadUsers();
+            const saveBtn = document.getElementById('saveUserBtn');
+            
+            // Get form values
+            const fullName = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail2').value.trim();
+            const location = document.getElementById('userLocation').value.trim();
+            const role = document.getElementById('userRole').value;
+            const password = document.getElementById('userPassword').value;
+            
+            // Validate required fields
+            if (!fullName || !email || !role || !password) {
+                alert('❌ ERROR\n\nPlease fill in all required fields:\n• Full Name\n• Email\n• Role\n• Password');
+                return;
+            }
+            
+            // Split full name into first and last name
+            const nameParts = fullName.split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts.slice(1).join(' ') || firstName;
+            
+            // Derive username from email (part before @)
+            const username = email.split('@')[0];
+            
+            // Get auth token
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            
+            if (!authToken) {
+                alert('❌ ERROR\n\nNo authentication token found. Please log in again.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Disable button during request
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating User...';
+            
+            try {
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                // API Call to create user
+                const response = await fetch(`${API_BASE}/api/users`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        password: password,
+                        first_name: firstName,
+                        last_name: lastName,
+                        role: role,
+                        location: location || null
+                    })
+                });
+                
+                // Re-enable button
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save & Send Password';
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to create user');
+                }
+                
+                const data = await response.json();
+                
+                // Success message with detailed info
+                alert(`✅ SUCCESS!\n\nUser Created Successfully:\n\n👤 Name: ${fullName}\n📧 Email: ${email}\n🔑 Username: ${username}\n🎭 Role: ${role}\n📍 Location: ${location || 'Not specified'}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link (https://saveenergysystems.com/pf-resource-hub/)\n• Getting started guide\n\nUser ID: ${data.user_id || 'N/A'}`);
+                
+                // Close modal and reload page
+                closeUserModal();
+                window.location.reload();
+                
+            } catch (error) {
+                // Re-enable button
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save & Send Password';
+                
+                console.error('Error creating user:', error);
+                alert(`❌ ERROR\n\nFailed to create user:\n${error.message}\n\nPlease check the console for details and try again.`);
+            }
         });
 
         // Password Generation Functions
@@ -950,15 +1025,6 @@
                 passwordInput.placeholder = '';
                 generatePassword();
             }
-        }
-        
-        // Open modal and generate initial password
-        function openAddUserModal() {
-            document.getElementById('modalTitle').textContent = 'Add Staff Member';
-            document.getElementById('userForm').reset();
-            document.getElementById('customPasswordToggle').checked = false;
-            generatePassword(); // Auto-generate password on open
-            document.getElementById('userModal').style.display = 'flex';
         }
 
         // Logout
