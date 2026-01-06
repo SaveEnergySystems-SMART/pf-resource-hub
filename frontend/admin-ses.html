@@ -1561,13 +1561,39 @@
                     tbody.innerHTML += row;
                 });
                 
-                // Update stats
+                // Update stats with REAL data
                 const totalUsers = data.users.length;
                 const activeUsers = data.users.filter(u => u.is_active).length;
                 
-                // Update stat cards if they exist
+                // Count unique locations
+                const uniqueLocations = new Set();
+                data.users.forEach(user => {
+                    if (user.location && user.location.trim() !== '') {
+                        uniqueLocations.add(user.location.trim());
+                    }
+                });
+                
+                // Count admins (SES Admin + PF Admin)
+                const adminCount = data.users.filter(u => {
+                    const role = (u.role || '').toLowerCase().replace(/\s+/g, '_');
+                    return role === 'ses_admin' || role === 'pf_admin';
+                }).length;
+                
+                // Count users active today (last_login within last 24 hours)
+                const now = new Date();
+                const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const activeToday = data.users.filter(u => {
+                    if (!u.last_login) return false;
+                    const lastLogin = new Date(u.last_login);
+                    return lastLogin > yesterday;
+                }).length;
+                
+                // Update stat cards with real data
                 const statsElements = document.querySelectorAll('.stat-card-value');
-                if (statsElements[0]) statsElements[0].textContent = totalUsers;
+                if (statsElements[0]) statsElements[0].textContent = totalUsers;  // Total Users
+                if (statsElements[1]) statsElements[1].textContent = uniqueLocations.size;  // PF Locations
+                if (statsElements[2]) statsElements[2].textContent = adminCount;  // Admins
+                if (statsElements[3]) statsElements[3].textContent = activeToday;  // Active Today
                 
             } catch (error) {
                 console.error('Error loading users:', error);
