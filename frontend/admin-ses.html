@@ -679,7 +679,7 @@
                                     <div class="user-avatar">AS</div>
                                     <div class="user-details">
                                         <h4>Adriana Soler</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7c1d0f1310190e3c0f1d0a191912190e1b050f050f0819110f521f1311">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d4c5e4241485f6d5e4c5b484843485f4a545e545e5948405e034e4240">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -701,7 +701,7 @@
                                     <div class="user-avatar">AC</div>
                                     <div class="user-details">
                                         <h4>Adriana Creative</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f0e0b1d060e010e1c00030a1d0c1d0a0e1b06190a2f08020e0603410c0002">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="533237213a323d32203c3f362130213632273a253613343e323a3f7d303c3e">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -931,8 +931,20 @@
                 const newEmail = prompt('Email:', user.email || '');
                 const newLocation = prompt('Location:', user.location || '');
                 
-                if (newFirstName === null || newLastName === null || newEmail === null) {
+                // Ask for role change
+                const currentRole = user.role || 'staff';
+                const roleOptions = 'Options:\n1. ses_admin (SES Admin)\n2. pf_admin (PF Admin)\n3. gm (General Manager)\n4. staff (Staff)\n\nCurrent: ' + currentRole;
+                const newRole = prompt('Role:\n\n' + roleOptions, currentRole);
+                
+                if (newFirstName === null || newLastName === null || newEmail === null || newRole === null) {
                     return; // User cancelled
+                }
+                
+                // Validate role
+                const validRoles = ['ses_admin', 'pf_admin', 'gm', 'staff'];
+                if (!validRoles.includes(newRole.toLowerCase())) {
+                    alert('❌ ERROR\n\nInvalid role. Must be one of:\n• ses_admin\n• pf_admin\n• gm\n• staff');
+                    return;
                 }
                 
                 // Update user
@@ -946,7 +958,8 @@
                         first_name: newFirstName,
                         last_name: newLastName,
                         email: newEmail,
-                        location: newLocation
+                        location: newLocation,
+                        role: newRole.toLowerCase()
                     })
                 });
                 
