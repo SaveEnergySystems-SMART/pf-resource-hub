@@ -228,10 +228,15 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: var(--pf-dark-purple);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(124, 58, 173, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
 
         .btn-secondary {
@@ -649,7 +654,7 @@
                                     <div class="user-avatar">AS</div>
                                     <div class="user-details">
                                         <h4>Adriana Soler</h4>
-                                        <p>asoler@saveenergysystems.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="09687a66656c7b497a687f6c6c676c7b6e707a707a7d6c647a276a6664">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -674,7 +679,7 @@
                                     <div class="user-avatar">AC</div>
                                     <div class="user-details">
                                         <h4>Adriana Creative</h4>
-                                        <p>adrianasolercreative@gmail.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="167772647f77787765797a736475647377627f607356717b777f7a3875797b">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -699,7 +704,7 @@
                                     <div class="user-avatar">JD</div>
                                     <div class="user-details">
                                         <h4>John Davis</h4>
-                                        <p>john.davis@planetfitness.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7913161117571d180f100a39091518171c0d1f100d171c0a0a571a1614">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -727,7 +732,7 @@
                                     <div class="user-avatar">SM</div>
                                     <div class="user-details">
                                         <h4>Sarah Martinez</h4>
-                                        <p>sarah.m@planetfitness.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="84f7e5f6e5ecaae9c4f4e8e5eae1f0e2edf0eae1f7f7aae7ebe9">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -755,7 +760,7 @@
                                     <div class="user-avatar">MT</div>
                                     <div class="user-details">
                                         <h4>Mike Thompson</h4>
-                                        <p>mike.t@planetfitness.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="660b0f0d03481226160a07080312000f12080315154805090b">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -800,7 +805,7 @@
                                     <div class="user-avatar">AS</div>
                                     <div class="user-details">
                                         <h4>Adriana Soler</h4>
-                                        <p>asoler@saveenergysystems.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb8a9884878e99ab988a9d8e8e858e998c929892989f8e8698c5888486">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -822,7 +827,7 @@
                                     <div class="user-avatar">AC</div>
                                     <div class="user-details">
                                         <h4>Adriana Creative</h4>
-                                        <p>adrianasolercreative@gmail.com</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2d3d6c0dbd3dcd3c1ddded7c0d1c0d7d3c6dbc4d7f2d5dfd3dbde9cd1dddf">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -938,7 +943,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('createUser')">Cancel</button>
-                <button class="btn btn-primary" onclick="createUser()">
+                <button class="btn btn-primary" id="createUserBtn" onclick="createUser()">
                     <i class="bi bi-plus-circle"></i>
                     Create User
                 </button>
@@ -984,7 +989,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Tab switching
         function switchTab(tabName) {
             // Hide all tabs
@@ -1038,11 +1043,87 @@
             }
         }
 
-        function createUser() {
-            const name = 'New User'; // Get from form
-            const email = 'user@example.com'; // Get from form
-            alert(`✅ SUCCESS!\n\nUser Created:\n👤 Name: ${name}\n📧 Email: ${email}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link\n• Getting started guide\n\nTODO: Call API: POST /api/admin/users`);
-            closeModal('createUser');
+        // CREATE USER FUNCTION - FIXED WITH REAL API CALL
+        async function createUser() {
+            const createBtn = document.getElementById('createUserBtn');
+            
+            // Get form values
+            const firstName = document.getElementById('createUserFirstName').value.trim();
+            const lastName = document.getElementById('createUserLastName').value.trim();
+            const email = document.getElementById('createUserEmail').value.trim();
+            const role = document.getElementById('createUserRole').value;
+            const location = document.getElementById('createUserLocation').value.trim();
+            const password = document.getElementById('createUserPassword').value;
+            
+            // Validate required fields
+            if (!firstName || !lastName || !email || !role || !password) {
+                alert('❌ ERROR\n\nPlease fill in all required fields:\n• First Name\n• Last Name\n• Email\n• Role\n• Password');
+                return;
+            }
+            
+            // Derive username from email (part before @)
+            const username = email.split('@')[0];
+            
+            // Get auth token
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            
+            if (!authToken) {
+                alert('❌ ERROR\n\nNo authentication token found. Please log in again.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Disable button during request
+            createBtn.disabled = true;
+            createBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating User...';
+            
+            try {
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                // API Call to create user
+                const response = await fetch(`${API_BASE}/api/users`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        password: password,
+                        first_name: firstName,
+                        last_name: lastName,
+                        role: role,
+                        location: location || null
+                    })
+                });
+                
+                // Re-enable button
+                createBtn.disabled = false;
+                createBtn.innerHTML = '<i class="bi bi-plus-circle"></i> Create User';
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to create user');
+                }
+                
+                const data = await response.json();
+                
+                // Success message with detailed info
+                alert(`✅ SUCCESS!\n\nUser Created Successfully:\n\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}\n🔑 Username: ${username}\n🎭 Role: ${role}\n📍 Location: ${location || 'Not specified'}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link (https://saveenergysystems.com/pf-resource-hub/)\n• Getting started guide\n\nUser ID: ${data.user_id || 'N/A'}`);
+                
+                // Close modal and reload page
+                closeModal('createUser');
+                window.location.reload();
+                
+            } catch (error) {
+                // Re-enable button
+                createBtn.disabled = false;
+                createBtn.innerHTML = '<i class="bi bi-plus-circle"></i> Create User';
+                
+                console.error('Error creating user:', error);
+                alert(`❌ ERROR\n\nFailed to create user:\n${error.message}\n\nPlease check the console for details and try again.`);
+            }
         }
 
         function sendAnnouncement() {
