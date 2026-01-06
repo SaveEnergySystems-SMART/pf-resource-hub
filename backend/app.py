@@ -417,8 +417,8 @@ def create_user(current_user):
                 return jsonify({'error': f'{field} is required'}), 400
         
         # Validate role permissions
-        if current_user.role == 'pf_admin' and data['role'] not in ['gm', 'staff']:
-            return jsonify({'error': 'PF admins can only create GM and Staff accounts'}), 403
+        if current_user.role == 'pf_admin' and data['role'] not in ['gm', 'staff', 'pf_admin']:
+            return jsonify({'error': 'PF admins can only create GM, Staff, and PF Admin accounts'}), 403
         
         # Check if username or email already exists
         if User.query.filter_by(username=data['username']).first():
@@ -469,8 +469,8 @@ def update_user(current_user, user_id):
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        # PF admins can only update GMs and Staff
-        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff']:
+        # PF admins can update GMs, Staff, and other PF Admins
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff', 'pf_admin']:
             return jsonify({'error': 'Permission denied'}), 403
         
         data = request.get_json()
@@ -486,6 +486,12 @@ def update_user(current_user, user_id):
             user.phone = data['phone']
         if 'location' in data:
             user.location = data['location']
+        
+        # PF admins can change role (gm, staff, pf_admin only)
+        if 'role' in data:
+            if current_user.role == 'pf_admin' and data['role'] not in ['gm', 'staff', 'pf_admin']:
+                return jsonify({'error': 'PF admins can only set roles to GM, Staff, or PF Admin'}), 403
+            user.role = data['role']
         
         # Only SES admins can change active status
         if 'is_active' in data and current_user.role == 'ses_admin':
@@ -516,8 +522,8 @@ def admin_reset_password(current_user, user_id):
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        # PF admins can only reset GM and Staff passwords
-        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff']:
+        # PF admins can reset passwords for GM, Staff, and other PF Admins
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff', 'pf_admin']:
             return jsonify({'error': 'Permission denied'}), 403
         
         # Generate temporary password
@@ -549,9 +555,9 @@ def admin_reset_password(current_user, user_id):
 
 @app.route('/api/users/<int:user_id>', methods=['DELETE'])
 @token_required
-@ses_admin_required
+@admin_required
 def delete_user(current_user, user_id):
-    """Delete user (SES admin only)"""
+    """Delete user (admins only)"""
     try:
         user = User.query.get(user_id)
         
@@ -560,6 +566,10 @@ def delete_user(current_user, user_id):
         
         if user.id == current_user.id:
             return jsonify({'error': 'Cannot delete yourself'}), 400
+        
+        # PF admins can only delete GMs and Staff
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff']:
+            return jsonify({'error': 'Permission denied'}), 403
         
         username = user.username
         db.session.delete(user)
