@@ -1,1370 +1,931 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PF Admin Dashboard - SES & PF Resource Hub</title>
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N3GWJBMD4C');
-    </script>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --pf-dark-purple: #1A0933;
-            --pf-bright-purple: #7B2FE4;
-            --pf-yellow: #FFC107;
-            --pf-light-bg: #F5F3FF;
-            --pf-white: #FFFFFF;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--pf-light-bg) 0%, #E9D5FF 100%);
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            background: var(--pf-white);
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .logo-section img {
-            height: 40px;
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--pf-bright-purple);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .user-email {
-            color: #374151;
-            font-weight: 500;
-        }
-
-        .logout-btn {
-            background: var(--pf-bright-purple);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .logout-btn:hover {
-            background: var(--pf-dark-purple);
-            transform: translateY(-2px);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 40px;
-        }
-
-        /* Dashboard Header */
-        .dashboard-header {
-            background: var(--pf-white);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 32px;
-        }
-
-        .dashboard-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--pf-dark-purple);
-            margin-bottom: 8px;
-        }
-
-        .dashboard-subtitle {
-            color: #6B7280;
-            font-size: 16px;
-        }
-
-        .location-badge {
-            display: inline-block;
-            background: var(--pf-yellow);
-            color: var(--pf-dark-purple);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 12px;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .stat-card {
-            background: var(--pf-white);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            font-size: 24px;
-        }
-
-        .stat-icon.purple { background: #EDE9FE; color: var(--pf-bright-purple); }
-        .stat-icon.yellow { background: #FEF3C7; color: #D97706; }
-        .stat-icon.green { background: #D1FAE5; color: #059669; }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--pf-dark-purple);
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            color: #6B7280;
-            font-size: 14px;
-        }
-
-        /* Section */
-        .section {
-            background: var(--pf-white);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 32px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--pf-dark-purple);
-        }
-
-        /* Search and Actions */
-        .controls {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 16px 12px 44px;
-            border: 2px solid #E5E7EB;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--pf-bright-purple);
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9CA3AF;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--pf-bright-purple);
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--pf-dark-purple);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        /* Table */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 16px;
-            background: var(--pf-light-bg);
-            color: var(--pf-dark-purple);
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-
-        td {
-            padding: 16px;
-            border-bottom: 1px solid #E5E7EB;
-        }
-
-        tr:hover {
-            background: #F9FAFB;
-        }
-
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-badge.active {
-            background: #D1FAE5;
-            color: #059669;
-        }
-
-        .status-badge.inactive {
-            background: #FEE2E2;
-            color: #DC2626;
-        }
-
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--pf-bright-purple);
-            cursor: pointer;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .action-btn:hover {
-            background: var(--pf-light-bg);
-        }
-
-        .action-btn.danger {
-            color: #DC2626;
-        }
-
-        .action-btn.danger:hover {
-            background: #FEE2E2;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 32px;
-            border-radius: 16px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            margin-bottom: 24px;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--pf-dark-purple);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #E5E7EB;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--pf-bright-purple);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .btn-secondary {
-            background: #E5E7EB;
-            color: #374151;
-        }
-
-        .btn-secondary:hover {
-            background: #D1D5DB;
-        }
-
-        /* Activity Log */
-        .activity-item {
-            padding: 16px;
-            border-left: 3px solid var(--pf-bright-purple);
-            margin-bottom: 16px;
-            background: var(--pf-light-bg);
-            border-radius: 8px;
-        }
-
-        .activity-time {
-            font-size: 12px;
-            color: #6B7280;
-            margin-bottom: 4px;
-        }
-
-        .activity-text {
-            color: #374151;
-            font-size: 14px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                padding: 16px 20px;
-            }
-
-            .logo-section {
-                gap: 12px;
-            }
-
-            .logo-section img {
-                height: 32px;
-            }
-
-            .container {
-                padding: 0 20px;
-            }
-
-            .dashboard-title {
-                font-size: 24px;
-            }
-
-            .controls {
-                flex-direction: column;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-
-            .table-container {
-                overflow-x: scroll;
-            }
-
-            table {
-                min-width: 600px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <div class="logo-section">
-   <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness Logo" class="pf-logo">
-    <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems Logo" class="ses-logo">
-        </div>
-        <div class="user-section">
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">P</div>
-                <span class="user-email" id="userEmail">Loading...</span>
-            </div>
-            <button class="logout-btn" onclick="logout()">
-                <i class="bi bi-box-arrow-right"></i> Logout
-            </button>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Back Button -->
-        <div style="margin-bottom: 20px;">
-            <a href="dashboard.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--pf-bright-purple); text-decoration: none; font-weight: 600; transition: all 0.2s;">
-                <i class="bi bi-arrow-left-circle-fill" style="font-size: 20px;"></i>
-                Back to Main Dashboard
-            </a>
-        </div>
-
-        <!-- Dashboard Header -->
-        <div class="dashboard-header">
-            <h1 class="dashboard-title">PF Super Admin Dashboard</h1>
-            <p class="dashboard-subtitle">Head of Planet Fitness - Manage all PF staff and locations</p>
-            <div style="margin-top: 16px;">
-                <span style="background: #FFC107; color: #1A0933; padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 14px;">
-                    👑 HEAD OF PF - Full Access
-                </span>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon purple">
-                    <i class="bi bi-people-fill"></i>
-                </div>
-                <div class="stat-number" id="totalUsers">14</div>
-                <div class="stat-label">Total PF Staff</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="bi bi-geo-alt-fill"></i>
-                </div>
-                <div class="stat-number" id="totalLocations">6</div>
-                <div class="stat-label">PF Locations</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="bi bi-check-circle-fill"></i>
-                </div>
-                <div class="stat-number" id="activeUsers">13</div>
-                <div class="stat-label">Active Users</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon yellow">
-                    <i class="bi bi-clock-history"></i>
-                </div>
-                <div class="stat-number" id="recentActivity">4</div>
-                <div class="stat-label">Today's Activity</div>
-            </div>
-        </div>
-
-        <!-- User Management -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Staff Management</h2>
-            </div>
+# Planet Fitness Resource Hub - Backend API
+# Complete Flask application with authentication, user management, and admin dashboards
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+import jwt
+import secrets
+from datetime import datetime, timedelta
+from functools import wraps
+import os
+
+# Import config and models
+from config import config, Config
+from models import db, User, PasswordReset, ActivityLog, Session
+from email_service import (
+    send_welcome_email,
+    send_password_reset_email,
+    send_username_reminder_email,
+    send_password_changed_email,
+    send_admin_password_reset_email,
+    send_account_deactivated_email
+)
+from openai_service import get_ai_response
+from analytics_service import get_all_analytics_data
+
+# Initialize Flask app
+app = Flask(__name__)
+
+# Load configuration
+env = os.environ.get('FLASK_ENV', 'development')
+app.config.from_object(config[env])
+
+# Initialize extensions
+CORS(app, 
+     resources={r"/*": {"origins": "*"}},  # Allow all origins for now
+     supports_credentials=True,
+     allow_headers=['Content-Type', 'Authorization', 'Cache-Control'],
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
+db.init_app(app)
+
+# =============================================================================
+# AUTO-INITIALIZE DATABASE ON STARTUP
+# =============================================================================
+
+def ensure_database_initialized():
+    """Ensure database is initialized (runs on app startup, even with Gunicorn)"""
+    try:
+        with app.app_context():
+            # Try to query users table
+            User.query.first()
+            print("✅ Database already initialized")
+    except Exception as e:
+        print(f"⚠️ Database not initialized, creating tables: {e}")
+        with app.app_context():
+            db.create_all()
             
-            <div class="controls">
-                <div class="search-box">
-                    <i class="bi bi-search"></i>
-                    <input type="text" id="searchUsers" placeholder="Search staff..." onkeyup="filterUsers()">
-                </div>
-                <button class="btn btn-primary" onclick="openAddUserModal()">
-                    <i class="bi bi-person-plus-fill"></i> Add Staff Member
-                </button>
-            </div>
-
-            <div class="table-container">
-                <table id="usersTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Location</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Last Login</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBodyPF">
-                        <tr>
-                            <td colspan="7" style="text-align: center; padding: 40px; color: #999;">
-                                Loading users...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Activity Log -->
-        <div class="section">
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 class="section-title">Recent Activity</h2>
-                <span id="activityCount" style="color: #666; font-size: 14px;">
-                    Showing <span id="displayedCount">0</span> of <span id="totalCount">0</span> activities
-                </span>
-            </div>
-            <div id="activityLog">
-                <!-- Activity items will be loaded here -->
-            </div>
-            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
-                <button onclick="downloadActivityReport()" 
-                        style="background: #10B981; color: white; padding: 12px 24px; 
-                               border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
-                    <i class="bi bi-download"></i> Download Report
-                </button>
-                <div id="loadMoreContainer" style="display: none;">
-                    <button id="loadMoreBtn" onclick="loadMoreActivity()" 
-                            style="background: var(--pf-purple); color: white; padding: 12px 24px; 
-                                   border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
-                        <i class="bi bi-arrow-down-circle"></i> Load More Activity
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add/Edit User Modal -->
-    <div class="modal" id="userModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Add Staff Member</h3>
-            </div>
-            <form id="userForm">
-                <div class="form-group">
-                    <label>Full Name *</label>
-                    <input type="text" id="userName" required>
-                </div>
-                <div class="form-group">
-                    <label>Email *</label>
-                    <input type="email" id="userEmail2" required>
-                </div>
-                <div class="form-group">
-                    <label>PF Location (Optional)</label>
-                    <input type="text" id="userLocation" placeholder="e.g., Boston Commons, Cambridge, New York, etc.">
-                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">Enter the Planet Fitness location for this user (optional)</small>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
-                        <input type="text" id="userPassword" value="" readonly style="flex: 1; background: #f5f5f5;">
-                        <button type="button" class="btn btn-secondary" onclick="generatePassword()" style="white-space: nowrap;">
-                            <i class="bi bi-arrow-clockwise"></i> Generate
-                        </button>
-                    </div>
-                    <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
-                        <input type="checkbox" id="customPasswordToggle" onchange="toggleCustomPassword()" style="cursor: pointer;">
-                        <span style="font-size: 13px; color: #666;">I want to set a custom password</span>
-                    </label>
-                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">A secure password will be generated automatically or set your own</small>
-                </div>
-                <div class="form-group">
-                    <label>Role *</label>
-                    <select id="userRole" required>
-                        <option value="gm">General Manager (GM)</option>
-                        <option value="staff">Staff</option>
-                    </select>
-                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">As a PF Admin, you can create General Managers and Staff</small>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="saveUserBtn">Save & Send Password</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // Mock Data - ALL Planet Fitness Locations
-        const mockUsers = [
-            // Boston Commons
-            { id: 1, name: 'John Smith', email: 'john.smith@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 09:30 AM', location: 'Boston Commons' },
-            { id: 2, name: 'Sarah Johnson', email: 'sarah.j@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 08:15 AM', location: 'Boston Commons' },
-            { id: 3, name: 'Mike Davis', email: 'mike.d@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-18 05:45 PM', location: 'Boston Commons' },
+            # Create default admin users
+            ses_admin = User.query.filter_by(email=Config.SES_SUPER_ADMIN_EMAIL).first()
+            if not ses_admin:
+                ses_admin = User(
+                    username='asoler',
+                    email=Config.SES_SUPER_ADMIN_EMAIL,
+                    first_name='Adriana',
+                    last_name='Soler',
+                    role='ses_admin',
+                    is_active=True
+                )
+                ses_admin.set_password('SES-Admin-2025!')
+                db.session.add(ses_admin)
+                print(f"✅ Created SES Super Admin: {ses_admin.email}")
             
-            // Cambridge
-            { id: 4, name: 'Emily Wilson', email: 'emily.w@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 07:20 AM', location: 'Cambridge' },
-            { id: 5, name: 'David Brown', email: 'david.b@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 06:30 AM', location: 'Cambridge' },
-            { id: 6, name: 'Lisa Martinez', email: 'lisa.m@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-18 09:00 AM', location: 'Cambridge' },
+            pf_admin = User.query.filter_by(email=Config.PF_ADMIN_TEST_EMAIL).first()
+            if not pf_admin:
+                pf_admin = User(
+                    username='pfadmin',
+                    email=Config.PF_ADMIN_TEST_EMAIL,
+                    first_name='Adriana',
+                    last_name='Test Admin',
+                    role='pf_admin',
+                    location='Boston Region',
+                    is_active=True,
+                    created_by_id=ses_admin.id if ses_admin else None
+                )
+                pf_admin.set_password('PF-Admin-2025!')
+                db.session.add(pf_admin)
+                print(f"✅ Created PF Test Admin: {pf_admin.email}")
             
-            // Somerville
-            { id: 7, name: 'Tom Anderson', email: 'tom.a@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 08:00 AM', location: 'Somerville' },
-            { id: 8, name: 'Jennifer Lee', email: 'jen.l@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 07:45 AM', location: 'Somerville' },
-            
-            // Brookline
-            { id: 9, name: 'Robert Taylor', email: 'rob.t@planetfitness.com', role: 'Manager', status: 'inactive', lastLogin: '2024-12-10 11:30 AM', location: 'Brookline' },
-            { id: 10, name: 'Amy Chen', email: 'amy.c@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 06:00 AM', location: 'Brookline' },
-            
-            // Newton
-            { id: 11, name: 'Chris Williams', email: 'chris.w@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 08:30 AM', location: 'Newton' },
-            { id: 12, name: 'Maria Garcia', email: 'maria.g@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 07:00 AM', location: 'Newton' },
-            
-            // Quincy
-            { id: 13, name: 'Kevin Brown', email: 'kevin.b@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 09:00 AM', location: 'Quincy' },
-            { id: 14, name: 'Rachel Kim', email: 'rachel.k@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 08:20 AM', location: 'Quincy' }
-        ];
+            db.session.commit()
+            print("✅ Database initialized successfully!")
 
-        const mockActivity = [
-            { time: '2024-12-19 09:45 AM', text: 'John Smith (Boston Commons) reset password for Sarah Johnson', location: 'Boston Commons' },
-            { time: '2024-12-19 09:30 AM', text: 'Emily Wilson logged in at Cambridge location', location: 'Cambridge' },
-            { time: '2024-12-19 08:15 AM', text: 'Mike Davis (Boston Commons) accessed HVAC documentation', location: 'Boston Commons' },
-            { time: '2024-12-19 08:00 AM', text: 'Tom Anderson (Somerville) added new staff member', location: 'Somerville' },
-            { time: '2024-12-18 06:30 PM', text: 'Sarah Johnson ordered replacement filters' }
-        ];
+# Run database initialization check on module load
+ensure_database_initialized()
 
-        // Check authentication and authorization
-        function checkAuth() {
-            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-            const userData = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+# =============================================================================
+# AUTHENTICATION DECORATORS
+# =============================================================================
 
-            // Redirect if not logged in
-            if (!authToken || !userData) {
-                alert('Please log in to access this page');
-                window.location.href = 'index.html';
-                return false;
-            }
-
-            try {
-                const user = JSON.parse(userData);
-                
-                // Allow both PF Admins and SES Admins to access this dashboard
-                if (user.role !== 'pf_admin' && user.role !== 'ses_admin') {
-                    alert('Access denied. Only PF Admins and SES Admins can access this dashboard.');
-                    window.location.href = 'index.html';
-                    return false;
-                }
-                
-                return true;
-            } catch (e) {
-                console.error('Error parsing user data:', e);
-                window.location.href = 'index.html';
-                return false;
-            }
-        }
-
-        // Load user data from session
-        function loadUserData() {
-            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-            const userData = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
-
-            if (userData) {
-                try {
-                    const user = JSON.parse(userData);
-                    const email = user.email || user.username || 'User';
-                    document.getElementById('userEmail').textContent = email;
-                    
-                    const initial = email.charAt(0).toUpperCase();
-                    document.getElementById('userAvatar').textContent = initial;
-                } catch (e) {
-                    console.error('Error parsing user data:', e);
-                }
-            }
-        }
-
-        // Load users table from API
-        async function loadUsers() {
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                const response = await fetch(`${API_BASE}/api/users`, {
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Failed to load users');
-                
-                const data = await response.json();
-                const tbody = document.getElementById('usersTableBodyPF');
-                
-                // Debug: Log all users and their roles
-                console.log('=== PF ADMIN DASHBOARD: All Users from API ===');
-                console.log('Total users from API:', data.users.length);
-                data.users.forEach(user => {
-                    console.log(`- ${user.email}: role="${user.role}" is_active=${user.is_active}`);
-                });
-                console.log('=== End of user list ===');
-                
-                tbody.innerHTML = '';
-                
-                // Add user rows - PF Admin can only manage GM and Staff, NOT other admins
-                let visibleUserCount = 0;
-                let activeUserCount = 0;
-                
-                data.users.forEach(user => {
-                    // Normalize role for comparison (handle different formats)
-                    const normalizedRole = (user.role || '').toLowerCase().replace(/\s+/g, '_');
-                    
-                    // PF Admin should NOT see or manage SES Admins or other PF Admins
-                    if (normalizedRole === 'ses_admin' || normalizedRole === 'pf_admin') {
-                        return; // Skip admin users
-                    }
-                    
-                    // Count visible users
-                    visibleUserCount++;
-                    if (user.is_active) activeUserCount++;
-                    
-                    const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username;
-                    
-                    // Role display - support multiple formats (gm, GM, pf_gm, etc.)
-                    let roleDisplay = 'Staff';
-                    if (normalizedRole === 'gm' || normalizedRole === 'pf_gm' || normalizedRole === 'general_manager') {
-                        roleDisplay = 'Manager';
-                    } else if (normalizedRole === 'staff' || normalizedRole === 'pf_staff') {
-                        roleDisplay = 'Staff';
-                    } else {
-                        roleDisplay = user.role || 'Staff';
-                    }
-                    
-                    // Status badge
-                    const statusClass = user.is_active ? 'active' : 'inactive';
-                    const statusText = user.is_active ? 'active' : 'inactive';
-                    
-                    // Last login
-                    const lastLogin = user.last_login ? formatActivityTime(user.last_login) : 'Never';
-                    
-                    const row = `
-                        <tr>
-                            <td>${fullName}</td>
-                            <td>${user.email}</td>
-                            <td><span class="location-badge" style="background: var(--pf-light-bg); color: var(--pf-dark-purple); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${user.location || 'N/A'}</span></td>
-                            <td>${roleDisplay}</td>
-                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                            <td>${lastLogin}</td>
-                            <td>
-                                <button class="action-btn" onclick="resetPassword(${user.id})" title="Reset Password">
-                                    <i class="bi bi-key-fill"></i> Reset
-                                </button>
-                                <button class="action-btn" onclick="editUser(${user.id})" title="Edit User">
-                                    <i class="bi bi-pencil-fill"></i> Edit
-                                </button>
-                                <button class="action-btn danger" onclick="deleteUser(${user.id})" title="Delete User">
-                                    <i class="bi bi-trash-fill"></i> Delete
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                });
-
-                // Update stats with visible user counts (not total from API)
-                document.getElementById('totalUsers').textContent = visibleUserCount;
-                document.getElementById('activeUsers').textContent = activeUserCount;
-                
-                // If no users are visible, show helpful message
-                if (visibleUserCount === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #999;">No staff members found. Create your first staff member using the "Add Staff Member" button above.</td></tr>';
-                }
-                
-            } catch (error) {
-                console.error('Error loading users:', error);
-                document.getElementById('usersTableBodyPF').innerHTML = 
-                    '<tr><td colspan="7" style="text-align: center; color: #ff4444; padding: 40px;">Unable to load users. Please refresh the page.</td></tr>';
-            }
-        }
-
-        // Activity log pagination state
-        let activityPage = 1;
-        let activityTotal = 0;
-        let activityHasMore = false;
-
-        // Load activity log from API
-        async function loadActivity(append = false) {
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                const response = await fetch(`${API_BASE}/api/activity-logs?page=${activityPage}&per_page=25`, {
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Failed to load activity logs');
-                
-                const data = await response.json();
-                const activityLog = document.getElementById('activityLog');
-                
-                // Clear or append
-                if (!append) {
-                    activityLog.innerHTML = '';
-                }
-                
-                // Add activity items
-                data.logs.forEach(activity => {
-                    // Better user display - check multiple fields
-                    let userDisplay = 'System';
-                    if (activity.user) {
-                        if (activity.user.first_name && activity.user.last_name) {
-                            userDisplay = `${activity.user.first_name} ${activity.user.last_name}`;
-                        } else if (activity.user.username) {
-                            userDisplay = activity.user.username;
-                        } else if (activity.user.email) {
-                            userDisplay = activity.user.email;
-                        }
-                    }
-                    
-                    const item = `
-                        <div class="activity-item">
-                            <div class="activity-time">${formatActivityTime(activity.created_at)}</div>
-                            <div class="activity-text">
-                                <strong>${userDisplay}</strong> - 
-                                ${activity.description || activity.action}
-                            </div>
-                        </div>
-                    `;
-                    activityLog.innerHTML += item;
-                });
-                
-                // Update counts
-                const displayedCount = document.querySelectorAll('.activity-item').length;
-                activityTotal = data.pagination.total;
-                activityHasMore = data.pagination.has_next;
-                
-                document.getElementById('displayedCount').textContent = displayedCount;
-                document.getElementById('totalCount').textContent = activityTotal;
-                document.getElementById('recentActivity').textContent = activityTotal;
-                
-                // Show/hide "Load More" button
-                const loadMoreContainer = document.getElementById('loadMoreContainer');
-                loadMoreContainer.style.display = activityHasMore ? 'block' : 'none';
-                
-            } catch (error) {
-                console.error('Error loading activity:', error);
-                const activityLog = document.getElementById('activityLog');
-                activityLog.innerHTML = '<div style="color: #999; text-align: center; padding: 20px;">Unable to load activity logs. Using mock data.</div>';
-                
-                // Fallback to mock data
-                mockActivity.forEach(activity => {
-                    const item = `
-                        <div class="activity-item">
-                            <div class="activity-time">${activity.time}</div>
-                            <div class="activity-text">${activity.text}</div>
-                        </div>
-                    `;
-                    activityLog.innerHTML += item;
-                });
-                document.getElementById('recentActivity').textContent = mockActivity.length;
-            }
-        }
-
-        // Load more activity
-        function loadMoreActivity() {
-            activityPage++;
-            loadActivity(true);  // Append = true
-        }
+def token_required(f):
+    """Require valid JWT token"""
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
         
-        // Download Activity Report
-        async function downloadActivityReport() {
-            const startDate = prompt('Enter start date (YYYY-MM-DD):', '2024-01-01');
-            if (!startDate) return;
-            
-            const endDate = prompt('Enter end date (YYYY-MM-DD):', new Date().toISOString().split('T')[0]);
-            if (!endDate) return;
-            
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                // Fetch all activity logs within date range
-                let allLogs = [];
-                let page = 1;
-                let hasMore = true;
-                
-                while (hasMore) {
-                    const response = await fetch(`${API_BASE}/api/activity-logs?page=${page}&per_page=100`, {
-                        headers: {
-                            'Authorization': `Bearer ${authToken}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    
-                    if (!response.ok) throw new Error('Failed to load activity logs');
-                    
-                    const data = await response.json();
-                    
-                    // Filter by date range
-                    const filtered = data.logs.filter(log => {
-                        const logDate = new Date(log.created_at).toISOString().split('T')[0];
-                        return logDate >= startDate && logDate <= endDate;
-                    });
-                    
-                    allLogs = allLogs.concat(filtered);
-                    hasMore = data.pagination.has_next;
-                    page++;
-                    
-                    // Safety limit
-                    if (page > 50) break;
-                }
-                
-                // Create CSV content
-                let csv = 'Timestamp,User,Action,Location,IP Address\\n';
-                
-                allLogs.forEach(log => {
-                    let userDisplay = 'System';
-                    if (log.user) {
-                        if (log.user.first_name && log.user.last_name) {
-                            userDisplay = `${log.user.first_name} ${log.user.last_name}`;
-                        } else if (log.user.username) {
-                            userDisplay = log.user.username;
-                        } else if (log.user.email) {
-                            userDisplay = log.user.email;
-                        }
-                    }
-                    
-                    csv += `\"${formatActivityTime(log.created_at)}\",\"${userDisplay}\",\"${log.description || log.action}\",\"${log.user?.location || 'N/A'}\",\"${log.ip_address || 'N/A'}\"\\n`;
-                });
-                
-                // Download CSV
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `activity-report-${startDate}-to-${endDate}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-                
-                alert(`✅ SUCCESS!\\n\\nDownloaded ${allLogs.length} activity logs from ${startDate} to ${endDate}`);
-                
-            } catch (error) {
-                console.error('Error downloading report:', error);
-                alert(`❌ ERROR\\n\\nFailed to download report:\\n${error.message}`);
-            }
-        }
-
-        // Format activity timestamp
-        function formatActivityTime(timestamp) {
-            const date = new Date(timestamp);
-            return date.toLocaleString('en-US', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-        }
-
-        // Filter users
-        function filterUsers() {
-            const search = document.getElementById('searchUsers').value.toLowerCase();
-            const rows = document.querySelectorAll('#usersTable tbody tr');
-
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(search) ? '' : 'none';
-            });
-        }
-
-        // Modal functions
-        function openAddUserModal() {
-            document.getElementById('modalTitle').textContent = 'Add Staff Member';
-            document.getElementById('userForm').reset();
-            document.getElementById('customPasswordToggle').checked = false;
-            generatePassword(); // Auto-generate password on open
-            document.getElementById('userModal').classList.add('active');
-        }
-
-        function closeUserModal() {
-            document.getElementById('userModal').classList.remove('active');
-        }
-
-        async function editUser(userId) {
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                // Fetch user data
-                const response = await fetch(`${API_BASE}/api/users`, {
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Failed to load user data');
-                
-                const data = await response.json();
-                const user = data.users.find(u => u.id === userId);
-                
-                if (!user) {
-                    alert('❌ ERROR\n\nUser not found.');
-                    return;
-                }
-                
-                // Simple edit prompt (you can create a proper modal later)
-                const newFirstName = prompt('First Name:', user.first_name || '');
-                const newLastName = prompt('Last Name:', user.last_name || '');
-                const newEmail = prompt('Email:', user.email || '');
-                const newLocation = prompt('Location:', user.location || '');
-                
-                if (newFirstName === null || newLastName === null || newEmail === null) {
-                    return; // User cancelled
-                }
-                
-                // Update user
-                const updateResponse = await fetch(`${API_BASE}/api/users/${userId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        first_name: newFirstName,
-                        last_name: newLastName,
-                        email: newEmail,
-                        location: newLocation
-                    })
-                });
-                
-                if (!updateResponse.ok) {
-                    const errorData = await updateResponse.json().catch(() => ({ error: 'Unknown error' }));
-                    throw new Error(errorData.error || 'Failed to update user');
-                }
-                
-                alert(`✅ SUCCESS!\n\nUser updated successfully!`);
-                loadUsers(); // Reload users table
-                
-            } catch (error) {
-                console.error('Error editing user:', error);
-                alert(`❌ ERROR\n\nFailed to update user:\n${error.message}`);
-            }
-        }
-
-        async function resetPassword(userId) {
-            if (!confirm(`🔑 RESET PASSWORD\n\nThis will:\n✅ Generate a new secure password\n✅ Send email to the user\n✅ Require password change on next login\n\nProceed with password reset?`)) {
-                return;
-            }
-            
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                const response = await fetch(`${API_BASE}/api/users/${userId}/reset-password`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-                    throw new Error(errorData.error || 'Failed to reset password');
-                }
-                
-                const data = await response.json();
-                
-                alert(`✅ SUCCESS!\n\nPassword has been reset!\n\n📧 User will receive:\n• Temporary password\n• Login instructions\n• Password change prompt`);
-                
-            } catch (error) {
-                console.error('Error resetting password:', error);
-                alert(`❌ ERROR\n\nFailed to reset password:\n${error.message}`);
-            }
-        }
-
-        async function deleteUser(userId) {
-            if (!confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete this user?\n\n⚠️ THIS ACTION CANNOT BE UNDONE!\n\nThe user will be permanently removed from the system.`)) {
-                return;
-            }
-            
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                const response = await fetch(`${API_BASE}/api/users/${userId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-                    throw new Error(errorData.error || 'Failed to delete user');
-                }
-                
-                alert(`✅ SUCCESS!\n\nUser has been deleted.`);
-                
-                // Reload users table
-                loadUsers();
-                
-            } catch (error) {
-                console.error('Error deleting user:', error);
-                alert(`❌ ERROR\n\nFailed to delete user:\n${error.message}`);
-            }
-        }
-
-        // FORM SUBMISSION - FIXED WITH REAL API CALL
-        document.getElementById('userForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const saveBtn = document.getElementById('saveUserBtn');
-            
-            // Get form values
-            const fullName = document.getElementById('userName').value.trim();
-            const email = document.getElementById('userEmail2').value.trim();
-            const location = document.getElementById('userLocation').value.trim();
-            const role = document.getElementById('userRole').value;
-            const password = document.getElementById('userPassword').value;
-            
-            // Debug log
-            console.log('Form values:', { fullName, email, location, role, password });
-            
-            // Validate required fields
-            if (!fullName || !email || !role || !password) {
-                alert('❌ ERROR\n\nPlease fill in all required fields:\n• Full Name: ' + (fullName ? '✅' : '❌') + '\n• Email: ' + (email ? '✅' : '❌') + '\n• Role: ' + (role ? '✅' : '❌') + '\n• Password: ' + (password ? '❌ MISSING' : '✅'));
-                return;
-            }
-            
-            // Split full name into first and last name
-            const nameParts = fullName.split(' ');
-            const firstName = nameParts[0];
-            const lastName = nameParts.slice(1).join(' ') || firstName;
-            
-            // Validate first and last name
-            if (!firstName || firstName.length < 1) {
-                alert('❌ ERROR\n\nPlease enter a valid full name (e.g., "John Smith")');
-                return;
-            }
-            
-            // Derive username from email (part before @)
-            const username = email.split('@')[0];
-            
-            console.log('Parsed data:', { username, firstName, lastName, role, password: '***' });
-            
-            // Get auth token
-            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-            
-            if (!authToken) {
-                alert('❌ ERROR\n\nNo authentication token found. Please log in again.');
-                window.location.href = 'index.html';
-                return;
-            }
-            
-            // Disable button during request
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating User...';
-            
-            try {
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                // Prepare request payload
-                const requestPayload = {
-                    username: username,
-                    email: email,
-                    password: password,
-                    first_name: firstName,
-                    last_name: lastName,
-                    role: role,
-                    location: location || null
-                };
-                
-                console.log('Sending request to:', `${API_BASE}/api/users`);
-                console.log('Request payload:', { ...requestPayload, password: '***' });
-                
-                // API Call to create user
-                const response = await fetch(`${API_BASE}/api/users`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestPayload)
-                });
-                
-                console.log('Response status:', response.status);
-                console.log('Response headers:', [...response.headers.entries()]);
-                
-                // Re-enable button
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = 'Save & Send Password';
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-                    console.error('Backend error response:', errorData);
-                    throw new Error(errorData.error || errorData.message || JSON.stringify(errorData) || 'Failed to create user');
-                }
-                
-                const data = await response.json();
-                
-                // Success message with detailed info
-                alert(`✅ SUCCESS!\n\nUser Created Successfully:\n\n👤 Name: ${fullName}\n📧 Email: ${email}\n🔑 Username: ${username}\n🎭 Role: ${role}\n📍 Location: ${location || 'Not specified'}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link (https://saveenergysystems.com/pf-resource-hub/)\n• Getting started guide\n\nUser ID: ${data.user_id || 'N/A'}`);
-                
-                // Close modal and reload users
-                closeUserModal();
-                loadUsers();
-                
-            } catch (error) {
-                // Re-enable button
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = 'Save & Send Password';
-                
-                console.error('Error creating user:', error);
-                alert(`❌ ERROR\n\nFailed to create user:\n${error.message}\n\nPlease check the console for details and try again.`);
-            }
-        });
-
-        // Password Generation Functions
-        function generatePassword() {
-            const length = 12;
-            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
-            let password = "";
-            
-            // Ensure at least one of each type
-            password += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
-            password += "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)];
-            password += "0123456789"[Math.floor(Math.random() * 10)];
-            password += "!@#$%&*"[Math.floor(Math.random() * 7)];
-            
-            // Fill the rest randomly
-            for (let i = password.length; i < length; i++) {
-                password += charset[Math.floor(Math.random() * charset.length)];
-            }
-            
-            // Shuffle the password
-            password = password.split('').sort(() => Math.random() - 0.5).join('');
-            
-            document.getElementById('userPassword').value = password;
-        }
+        if not token:
+            return jsonify({'error': 'Token is missing'}), 401
         
-        function toggleCustomPassword() {
-            const checkbox = document.getElementById('customPasswordToggle');
-            const passwordInput = document.getElementById('userPassword');
+        try:
+            if token.startswith('Bearer '):
+                token = token[7:]
             
-            if (checkbox.checked) {
-                // Enable manual password entry
-                passwordInput.readOnly = false;
-                passwordInput.type = 'text';
-                passwordInput.style.background = '#fff';
-                passwordInput.placeholder = 'Enter custom password';
-                passwordInput.value = '';
-            } else {
-                // Back to auto-generated
-                passwordInput.readOnly = true;
-                passwordInput.type = 'text';
-                passwordInput.style.background = '#f5f5f5';
-                passwordInput.placeholder = '';
-                generatePassword();
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+            current_user = User.query.filter_by(id=data['user_id']).first()
+            
+            if not current_user or not current_user.is_active:
+                return jsonify({'error': 'User not found or inactive'}), 401
+            
+            # Update last activity
+            current_user.last_login = datetime.utcnow()
+            db.session.commit()
+            
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token has expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        except Exception as e:
+            return jsonify({'error': str(e)}), 401
+        
+        return f(current_user, *args, **kwargs)
+    
+    return decorated
+
+
+def admin_required(f):
+    """Require admin role (ses_admin or pf_admin)"""
+    @wraps(f)
+    def decorated(current_user, *args, **kwargs):
+        if current_user.role not in ['ses_admin', 'pf_admin']:
+            return jsonify({'error': 'Admin access required'}), 403
+        return f(current_user, *args, **kwargs)
+    return decorated
+
+
+def ses_admin_required(f):
+    """Require SES admin role"""
+    @wraps(f)
+    def decorated(current_user, *args, **kwargs):
+        if current_user.role != 'ses_admin':
+            return jsonify({'error': 'SES admin access required'}), 403
+        return f(current_user, *args, **kwargs)
+    return decorated
+
+
+# =============================================================================
+# HELPER FUNCTIONS
+# =============================================================================
+
+def log_activity(user_id, action, description=None, metadata=None):
+    """Log user activity"""
+    try:
+        log = ActivityLog(
+            user_id=user_id,
+            action=action,
+            description=description,
+            ip_address=request.remote_addr,
+            user_agent=request.headers.get('User-Agent'),
+            metadata=metadata
+        )
+        db.session.add(log)
+        db.session.commit()
+    except Exception as e:
+        print(f"Error logging activity: {e}")
+
+
+def generate_jwt_token(user):
+    """Generate JWT token for user"""
+    payload = {
+        'user_id': user.id,
+        'username': user.username,
+        'role': user.role,
+        'exp': datetime.utcnow() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+    }
+    return jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
+
+
+# =============================================================================
+# AUTHENTICATION ENDPOINTS
+# =============================================================================
+
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    """User login"""
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        if not username or not password:
+            return jsonify({'error': 'Username and password required'}), 400
+        
+        # Find user by username or email
+        user = User.query.filter(
+            (User.username == username) | (User.email == username)
+        ).first()
+        
+        if not user or not user.check_password(password):
+            log_activity(user.id if user else None, 'login_failed', f'Invalid credentials for {username}')
+            return jsonify({'error': 'Invalid username or password'}), 401
+        
+        if not user.is_active:
+            log_activity(user.id, 'login_failed', 'Account deactivated')
+            return jsonify({'error': 'Account is deactivated'}), 401
+        
+        # Generate token
+        token = generate_jwt_token(user)
+        
+        # Update last login
+        user.last_login = datetime.utcnow()
+        db.session.commit()
+        
+        # Log successful login
+        log_activity(user.id, 'login', f'Successful login')
+        
+        return jsonify({
+            'token': token,
+            'user': user.to_dict()
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/auth/logout', methods=['POST'])
+@token_required
+def logout(current_user):
+    """User logout"""
+    try:
+        log_activity(current_user.id, 'logout', 'User logged out')
+        return jsonify({'message': 'Logged out successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/auth/forgot-password', methods=['POST'])
+def forgot_password():
+    """Request password reset"""
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        
+        if not email:
+            return jsonify({'error': 'Email required'}), 400
+        
+        user = User.query.filter_by(email=email).first()
+        
+        # Always return success (security best practice)
+        if not user:
+            return jsonify({'message': 'If email exists, reset link sent'}), 200
+        
+        # Generate reset token
+        token = secrets.token_urlsafe(32)
+        expires_at = datetime.utcnow() + timedelta(hours=1)
+        
+        password_reset = PasswordReset(
+            token=token,
+            user_id=user.id,
+            expires_at=expires_at,
+            ip_address=request.remote_addr
+        )
+        db.session.add(password_reset)
+        db.session.commit()
+        
+        # Send email
+        reset_link = f"{app.config['FRONTEND_URL']}/reset-password.html?token={token}"
+        send_password_reset_email(user.email, reset_link, user.first_name)
+        
+        log_activity(user.id, 'password_reset_requested', 'Password reset email sent')
+        
+        return jsonify({'message': 'If email exists, reset link sent'}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/auth/forgot-username', methods=['POST'])
+def forgot_username():
+    """Request username reminder"""
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        
+        if not email:
+            return jsonify({'error': 'Email required'}), 400
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if not user:
+            return jsonify({'message': 'If email exists, username sent'}), 200
+        
+        # Send email
+        send_username_reminder_email(user.email, user.username, user.first_name)
+        
+        log_activity(user.id, 'username_reminder_requested', 'Username reminder email sent')
+        
+        return jsonify({'message': 'If email exists, username sent'}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/auth/reset-password', methods=['POST'])
+def reset_password():
+    """Reset password with token"""
+    try:
+        data = request.get_json()
+        token = data.get('token')
+        new_password = data.get('password')
+        
+        if not token or not new_password:
+            return jsonify({'error': 'Token and password required'}), 400
+        
+        # Find valid token
+        password_reset = PasswordReset.query.filter_by(token=token, used=False).first()
+        
+        if not password_reset or not password_reset.is_valid():
+            return jsonify({'error': 'Invalid or expired token'}), 400
+        
+        # Update password
+        user = password_reset.user
+        user.set_password(new_password)
+        
+        # Mark token as used
+        password_reset.used = True
+        password_reset.used_at = datetime.utcnow()
+        
+        db.session.commit()
+        
+        # Send confirmation email
+        send_password_changed_email(user.email, user.first_name)
+        
+        log_activity(user.id, 'password_reset', 'Password reset successfully')
+        
+        return jsonify({'message': 'Password reset successfully'}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/auth/change-password', methods=['POST'])
+@token_required
+def change_password(current_user):
+    """Change password for authenticated user"""
+    try:
+        data = request.get_json()
+        old_password = data.get('old_password')
+        new_password = data.get('new_password')
+        
+        if not old_password or not new_password:
+            return jsonify({'error': 'Old and new password required'}), 400
+        
+        if not current_user.check_password(old_password):
+            return jsonify({'error': 'Current password incorrect'}), 401
+        
+        # Update password
+        current_user.set_password(new_password)
+        db.session.commit()
+        
+        # Send confirmation email
+        send_password_changed_email(current_user.email, current_user.first_name)
+        
+        log_activity(current_user.id, 'password_changed', 'Password changed by user')
+        
+        return jsonify({'message': 'Password changed successfully'}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# =============================================================================
+# USER MANAGEMENT ENDPOINTS
+# =============================================================================
+
+@app.route('/api/users', methods=['GET'])
+@token_required
+@admin_required
+def get_users(current_user):
+    """Get list of users (filtered by role)"""
+    try:
+        query = User.query
+        
+        # PF admins can see ALL GMs and Staff (location is just for tracking)
+        if current_user.role == 'pf_admin':
+            query = query.filter(User.role.in_(['gm', 'staff']))
+        
+        users = query.order_by(User.created_at.desc()).all()
+        
+        return jsonify({
+            'users': [user.to_dict() for user in users]
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/users', methods=['POST'])
+@token_required
+@admin_required
+def create_user(current_user):
+    """Create new user"""
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['username', 'email', 'password', 'first_name', 'last_name', 'role']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'error': f'{field} is required'}), 400
+        
+        # Validate role permissions
+        if current_user.role == 'pf_admin' and data['role'] not in ['gm', 'staff', 'pf_admin']:
+            return jsonify({'error': 'PF admins can only create GM, Staff, and PF Admin accounts'}), 403
+        
+        # Check if username or email already exists
+        if User.query.filter_by(username=data['username']).first():
+            return jsonify({'error': 'Username already exists'}), 400
+        
+        if User.query.filter_by(email=data['email']).first():
+            return jsonify({'error': 'Email already exists'}), 400
+        
+        # Create user
+        user = User(
+            username=data['username'],
+            email=data['email'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            role=data['role'],
+            phone=data.get('phone', ''),
+            location=data.get('location', ''),
+            created_by_id=current_user.id
+        )
+        user.set_password(data['password'])
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        # Send welcome email (use first_name for personalization, fallback to username)
+        send_welcome_email(user.email, user.first_name or user.username, data['password'])
+        
+        log_activity(current_user.id, 'user_created', f'Created user: {user.username}')
+        
+        return jsonify({
+            'message': 'User created successfully',
+            'user': user.to_dict()
+        }), 201
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+@token_required
+@admin_required
+def update_user(current_user, user_id):
+    """Update user information"""
+    try:
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        # PF admins can update GMs, Staff, and other PF Admins
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff', 'pf_admin']:
+            return jsonify({'error': 'Permission denied'}), 403
+        
+        data = request.get_json()
+        
+        # Update allowed fields
+        if 'email' in data:
+            user.email = data['email']
+        if 'first_name' in data:
+            user.first_name = data['first_name']
+        if 'last_name' in data:
+            user.last_name = data['last_name']
+        if 'phone' in data:
+            user.phone = data['phone']
+        if 'location' in data:
+            user.location = data['location']
+        
+        # PF admins can change role (gm, staff, pf_admin only)
+        if 'role' in data:
+            if current_user.role == 'pf_admin' and data['role'] not in ['gm', 'staff', 'pf_admin']:
+                return jsonify({'error': 'PF admins can only set roles to GM, Staff, or PF Admin'}), 403
+            user.role = data['role']
+        
+        # Only SES admins can change active status
+        if 'is_active' in data and current_user.role == 'ses_admin':
+            user.is_active = data['is_active']
+        
+        db.session.commit()
+        
+        log_activity(current_user.id, 'user_updated', f'Updated user: {user.username}')
+        
+        return jsonify({
+            'message': 'User updated successfully',
+            'user': user.to_dict()
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/users/<int:user_id>/reset-password', methods=['POST'])
+@token_required
+@admin_required
+def admin_reset_password(current_user, user_id):
+    """Admin resets user password"""
+    try:
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        # PF admins can reset passwords for GM, Staff, and other PF Admins
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff', 'pf_admin']:
+            return jsonify({'error': 'Permission denied'}), 403
+        
+        # Generate temporary password
+        temp_password = secrets.token_urlsafe(12)
+        user.set_password(temp_password)
+        db.session.commit()
+        
+        # Send email
+        admin_name = f"{current_user.first_name} {current_user.last_name}"
+        send_admin_password_reset_email(
+            user.email,
+            user.username,
+            temp_password,
+            user.first_name,
+            admin_name
+        )
+        
+        log_activity(current_user.id, 'admin_password_reset', f'Reset password for: {user.username}')
+        
+        return jsonify({
+            'message': 'Password reset successfully',
+            'temp_password': temp_password
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+@token_required
+@admin_required
+def delete_user(current_user, user_id):
+    """Delete user (admins only)"""
+    try:
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        if user.id == current_user.id:
+            return jsonify({'error': 'Cannot delete yourself'}), 400
+        
+        # PF admins can only delete GMs and Staff
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff']:
+            return jsonify({'error': 'Permission denied'}), 403
+        
+        username = user.username
+        db.session.delete(user)
+        db.session.commit()
+        
+        log_activity(current_user.id, 'user_deleted', f'Deleted user: {username}')
+        
+        return jsonify({'message': 'User deleted successfully'}), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+# =============================================================================
+# ACTIVITY LOGS
+# =============================================================================
+
+@app.route('/api/activity-logs', methods=['GET'])
+@token_required
+@admin_required
+def get_activity_logs(current_user):
+    """Get activity logs (filtered by role) with pagination"""
+    try:
+        # Get pagination parameters
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 25, type=int)
+        
+        query = ActivityLog.query
+        
+        # PF admins can see logs from ALL GMs and Staff (location is just for tracking)
+        if current_user.role == 'pf_admin':
+            users = User.query.filter(User.role.in_(['gm', 'staff'])).all()
+            user_ids = [u.id for u in users]
+            query = query.filter(ActivityLog.user_id.in_(user_ids))
+        
+        # Apply pagination
+        paginated = query.order_by(ActivityLog.created_at.desc()).paginate(
+            page=page, 
+            per_page=per_page, 
+            error_out=False
+        )
+        
+        return jsonify({
+            'logs': [log.to_dict() for log in paginated.items],
+            'pagination': {
+                'page': page,
+                'per_page': per_page,
+                'total': paginated.total,
+                'pages': paginated.pages,
+                'has_next': paginated.has_next,
+                'has_prev': paginated.has_prev
             }
-        }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-        // Logout
-        function logout() {
-            sessionStorage.clear();
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
 
-        // Initialize on page load
-        window.onload = function() {
-            // Check authentication first
-            if (!checkAuth()) {
-                return; // Stop execution if auth fails
+@app.route('/api/analytics/user-journeys', methods=['GET'])
+@token_required
+@admin_required
+def get_user_journeys(current_user):
+    """Get user login analytics and journeys (filtered by role)"""
+    try:
+        # Date range parameters
+        days = request.args.get('days', 30, type=int)
+        start_date = datetime.utcnow() - timedelta(days=days)
+        
+        # Base query for users
+        if current_user.role == 'pf_admin':
+            # PF admin: see ALL GMs and Staff (location is just for tracking)
+            users = User.query.filter(User.role.in_(['gm', 'staff'])).all()
+        else:
+            # SES admin: see all users
+            users = User.query.all()
+        
+        user_journeys = []
+        
+        for user in users:
+            # Get login count
+            login_logs = ActivityLog.query.filter(
+                ActivityLog.user_id == user.id,
+                ActivityLog.action == 'login',
+                ActivityLog.created_at >= start_date
+            ).count()
+            
+            # Get all activity for this user
+            activities = ActivityLog.query.filter(
+                ActivityLog.user_id == user.id,
+                ActivityLog.created_at >= start_date
+            ).order_by(ActivityLog.created_at.desc()).limit(50).all()
+            
+            # Calculate journey metrics
+            journey = {
+                'user_id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'role': user.role,
+                'location': user.location,
+                'last_login': user.last_login.isoformat() if user.last_login else None,
+                'login_count': login_logs,
+                'total_activities': len(activities),
+                'recent_actions': [
+                    {
+                        'action': a.action,
+                        'description': a.description,
+                        'timestamp': a.created_at.isoformat()
+                    }
+                    for a in activities[:10]  # Last 10 actions
+                ]
             }
             
-            loadUserData();
-            loadUsers();
-            loadActivity();
-        };
-    </script>
-</body>
-</html>
+            user_journeys.append(journey)
+        
+        # Sort by login count (most active first)
+        user_journeys.sort(key=lambda x: x['login_count'], reverse=True)
+        
+        return jsonify({
+            'journeys': user_journeys,
+            'summary': {
+                'total_users': len(user_journeys),
+                'active_users': len([j for j in user_journeys if j['login_count'] > 0]),
+                'total_logins': sum(j['login_count'] for j in user_journeys),
+                'date_range_days': days
+            }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# =============================================================================
+# HEALTH CHECK
+# =============================================================================
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    return jsonify({
+        'status': 'healthy',
+        'service': 'PF Resource Hub API',
+        'version': '1.0.0',
+        'timestamp': datetime.utcnow().isoformat()
+    }), 200
+
+
+@app.route('/')
+def index():
+    """API root endpoint"""
+    return jsonify({
+        'message': 'Planet Fitness Resource Hub API',
+        'version': '1.0.0',
+        'endpoints': {
+            'auth': '/api/auth/*',
+            'users': '/api/users',
+            'activity_logs': '/api/activity-logs',
+            'health': '/api/health'
+        }
+    }), 200
+
+
+# =============================================================================
+# DATABASE INITIALIZATION
+# =============================================================================
+
+def init_database():
+    """Initialize database with default admin accounts"""
+    with app.app_context():
+        # Create tables
+        db.create_all()
+        
+        # Check if SES admin exists
+        ses_admin = User.query.filter_by(email=Config.SES_SUPER_ADMIN_EMAIL).first()
+        if not ses_admin:
+            ses_admin = User(
+                username='asoler',
+                email=Config.SES_SUPER_ADMIN_EMAIL,
+                first_name='Adriana',
+                last_name='Soler',
+                role='ses_admin',
+                is_active=True
+            )
+            ses_admin.set_password('SES-Admin-2025!')  # Change this!
+            db.session.add(ses_admin)
+            print(f"✅ Created SES Super Admin: {ses_admin.email}")
+        
+        # Check if PF test admin exists
+        pf_admin = User.query.filter_by(email=Config.PF_ADMIN_TEST_EMAIL).first()
+        if not pf_admin:
+            pf_admin = User(
+                username='pfadmin',
+                email=Config.PF_ADMIN_TEST_EMAIL,
+                first_name='Adriana',
+                last_name='Test Admin',
+                role='pf_admin',
+                location='Boston Region',
+                is_active=True,
+                created_by_id=ses_admin.id
+            )
+            pf_admin.set_password('PF-Admin-2025!')  # Change this!
+            db.session.add(pf_admin)
+            print(f"✅ Created PF Test Admin: {pf_admin.email}")
+        
+        db.session.commit()
+        print("✅ Database initialized successfully!")
+
+
+# =============================================================================
+# AI CHAT ENDPOINT
+# =============================================================================
+
+@app.route('/api/chat', methods=['POST'])
+@token_required
+def chat(current_user):
+    """
+    AI Chat endpoint for HVAC troubleshooting
+    Requires authentication token
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or 'message' not in data:
+            return jsonify({'error': 'Message is required'}), 400
+        
+        user_message = data['message'].strip()
+        
+        if not user_message:
+            return jsonify({'error': 'Message cannot be empty'}), 400
+        
+        # Get conversation history (optional)
+        conversation_history = data.get('conversation_history', [])
+        
+        # Get AI response
+        ai_response = get_ai_response(user_message, conversation_history)
+        
+        # Log activity
+        try:
+            activity = ActivityLog(
+                user_id=current_user.id,
+                action='ai_chat',
+                description=f"Asked AI: {user_message[:50]}..."
+            )
+            db.session.add(activity)
+            db.session.commit()
+        except:
+            pass  # Don't fail if logging fails
+        
+        return jsonify({
+            'success': True,
+            'message': ai_response,
+            'timestamp': datetime.utcnow().isoformat()
+        }), 200
+    
+    except Exception as e:
+        print(f"❌ Chat error: {str(e)}")
+        return jsonify({
+            'error': 'An error occurred while processing your request',
+            'details': str(e)
+        }), 500
+
+
+# =============================================================================
+# ANALYTICS API
+# =============================================================================
+
+@app.route('/api/analytics', methods=['GET'])
+@token_required
+def get_analytics(current_user):
+    """Get Google Analytics data for the dashboard"""
+    try:
+        # Check if user is admin
+        if current_user.role not in ['admin', 'ses_admin', 'pf_admin']:
+            return jsonify({
+                'error': 'Access denied. Admin access required.'
+            }), 403
+        
+        # Get query parameters
+        date_range = request.args.get('range', '30days')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
+        
+        # Convert string dates to datetime if provided
+        if start_date and end_date:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        
+        # Fetch analytics data
+        analytics_data = get_all_analytics_data(date_range, start_date, end_date)
+        
+        # Log activity
+        try:
+            activity = ActivityLog(
+                user_id=current_user.id,
+                action='view_analytics',
+                details=f'Viewed analytics dashboard - Range: {date_range}'
+            )
+            db.session.add(activity)
+            db.session.commit()
+        except:
+            pass  # Don't fail if logging fails
+        
+        response = jsonify({
+            'success': True,
+            'data': analytics_data,
+            'dateRange': date_range,
+            'timestamp': datetime.utcnow().isoformat()
+        })
+        
+        # Prevent browser caching of analytics data
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        
+        return response, 200
+    
+    except Exception as e:
+        print(f"❌ Analytics error: {str(e)}")
+        import traceback
+        print(f"❌ Full traceback: {traceback.format_exc()}")
+        
+        # Determine specific error message
+        error_msg = str(e)
+        if 'credentials' in error_msg.lower() or 'authentication' in error_msg.lower():
+            user_msg = 'Google Analytics credentials not configured. Please contact administrator.'
+        elif 'property' in error_msg.lower() or '404' in error_msg:
+            user_msg = 'Google Analytics property not found. Please verify property ID.'
+        elif 'permission' in error_msg.lower() or '403' in error_msg:
+            user_msg = 'Permission denied. Service account needs Analytics Data API access.'
+        else:
+            user_msg = 'Unable to fetch analytics data. Please try again later.'
+        
+        response = jsonify({
+            'success': False,
+            'error': user_msg,
+            'details': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        })
+        
+        # Add CORS headers to error response
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        
+        return response, 500
+
+
+# =============================================================================
+# RUN APPLICATION
+# =============================================================================
+
+if __name__ == '__main__':
+    # Initialize database on first run
+    init_database()
+    
+    # Run Flask app
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
