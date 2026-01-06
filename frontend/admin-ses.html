@@ -679,7 +679,7 @@
                                     <div class="user-avatar">AS</div>
                                     <div class="user-details">
                                         <h4>Adriana Soler</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cdacbea2a1a8bf8dbeacbba8a8a3a8bfaab4beb4beb9a8a0bee3aea2a0">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="accddfc3c0c9deecdfcddac9c9c2c9decbd5dfd5dfd8c9c1df82cfc3c1">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -701,7 +701,7 @@
                                     <div class="user-avatar">AC</div>
                                     <div class="user-details">
                                         <h4>Adriana Creative</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7c6c3d5cec6c9c6d4c8cbc2d5c4d5c2c6d3ced1c2e7c0cac6cecb89c4c8ca">[email&#160;protected]</a></p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f1e1b0d161e111e0c10131a0d1c0d1a1e0b16091a3f18121e1613511c1012">[email&#160;protected]</a></p>
                                     </div>
                                 </div>
                             </td>
@@ -894,26 +894,169 @@
             document.getElementById(modalName + 'Modal').classList.remove('show');
         }
 
-        // User actions
-        function editUser(username) {
-            alert(`Edit user: ${username}\n\nThis will connect to the backend API to update user details.`);
-        }
-
-        function resetPassword(username) {
-            if (confirm(`🔑 RESET PASSWORD\n\nUser: ${username}\n\nThis will:\n✅ Generate a new secure password\n✅ Send email with temporary password\n✅ Require password change on next login\n\nProceed?`)) {
-                alert(`✅ SUCCESS!\n\nNew password sent to: ${username}\n\n📧 Email includes:\n• Temporary password\n• Login link\n• Security instructions\n\nTODO: Call API: POST /api/admin/reset-password`);
+        // EDIT USER - API INTEGRATED
+        async function editUser(userId) {
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                // Fetch user data
+                const response = await fetch(`${API_BASE}/api/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load user data');
+                
+                const data = await response.json();
+                const user = data.users.find(u => u.id === userId);
+                
+                if (!user) {
+                    alert('❌ ERROR\n\nUser not found.');
+                    return;
+                }
+                
+                // Simple edit prompt (you can create a proper modal later)
+                const newFirstName = prompt('First Name:', user.first_name || '');
+                const newLastName = prompt('Last Name:', user.last_name || '');
+                const newEmail = prompt('Email:', user.email || '');
+                const newLocation = prompt('Location:', user.location || '');
+                
+                if (newFirstName === null || newLastName === null || newEmail === null) {
+                    return; // User cancelled
+                }
+                
+                // Update user
+                const updateResponse = await fetch(`${API_BASE}/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name: newFirstName,
+                        last_name: newLastName,
+                        email: newEmail,
+                        location: newLocation
+                    })
+                });
+                
+                if (!updateResponse.ok) {
+                    const errorData = await updateResponse.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to update user');
+                }
+                
+                alert(`✅ SUCCESS!\n\nUser updated successfully!`);
+                loadUsersSES(); // Reload users table
+                
+            } catch (error) {
+                console.error('Error editing user:', error);
+                alert(`❌ ERROR\n\nFailed to update user:\n${error.message}`);
             }
         }
 
-        function deactivateUser(username) {
-            if (confirm(`⚠️ DEACTIVATE USER\n\nUser: ${username}\n\nThis will:\n❌ Prevent login access\n❌ Revoke all permissions\n✅ Preserve user data\n\nUser can be reactivated later.\n\nProceed?`)) {
-                alert(`✅ User ${username} deactivated\n\nTODO: Call API: POST /api/admin/deactivate/${username}`);
+        // RESET PASSWORD - API INTEGRATED
+        async function resetPassword(userId, username) {
+            if (!confirm(`🔑 RESET PASSWORD\n\nUser: ${username}\n\nThis will:\n✅ Generate a new secure password\n✅ Send email with temporary password\n✅ Require password change on next login\n\nProceed?`)) {
+                return;
+            }
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users/${userId}/reset-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to reset password');
+                }
+                
+                const data = await response.json();
+                
+                alert(`✅ SUCCESS!\n\nPassword has been reset for ${username}!\n\n📧 User will receive:\n• Temporary password\n• Login instructions\n• Password change prompt\n\nNew temporary password: ${data.temp_password || 'Sent via email'}`);
+                
+            } catch (error) {
+                console.error('Error resetting password:', error);
+                alert(`❌ ERROR\n\nFailed to reset password:\n${error.message}`);
             }
         }
 
-        function activateUser(username) {
-            if (confirm(`✅ ACTIVATE USER\n\nUser: ${username}\n\nThis will:\n✅ Restore login access\n✅ Restore all permissions\n✅ Send activation email\n\nProceed?`)) {
-                alert(`✅ User ${username} activated\n\n📧 Activation email sent\n\nTODO: Call API: POST /api/admin/activate/${username}`);
+        // DEACTIVATE USER - API INTEGRATED
+        async function deactivateUser(userId, username) {
+            if (!confirm(`⚠️ DEACTIVATE USER\n\nUser: ${username}\n\nThis will:\n❌ Prevent login access\n❌ Revoke all permissions\n✅ Preserve user data\n\nUser can be reactivated later.\n\nProceed?`)) {
+                return;
+            }
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        is_active: false
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to deactivate user');
+                }
+                
+                alert(`✅ SUCCESS!\n\nUser ${username} has been deactivated.`);
+                loadUsersSES(); // Reload users table
+                
+            } catch (error) {
+                console.error('Error deactivating user:', error);
+                alert(`❌ ERROR\n\nFailed to deactivate user:\n${error.message}`);
+            }
+        }
+
+        // ACTIVATE USER - API INTEGRATED
+        async function activateUser(userId, username) {
+            if (!confirm(`✅ ACTIVATE USER\n\nUser: ${username}\n\nThis will:\n✅ Restore login access\n✅ Restore all permissions\n✅ Send activation email\n\nProceed?`)) {
+                return;
+            }
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        is_active: true
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to activate user');
+                }
+                
+                alert(`✅ SUCCESS!\n\nUser ${username} has been activated.`);
+                loadUsersSES(); // Reload users table
+                
+            } catch (error) {
+                console.error('Error activating user:', error);
+                alert(`❌ ERROR\n\nFailed to activate user:\n${error.message}`);
             }
         }
 
