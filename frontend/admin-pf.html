@@ -770,19 +770,44 @@
                 const data = await response.json();
                 const tbody = document.getElementById('usersTableBodyPF');
                 
+                // Debug: Log all users and their roles
+                console.log('=== PF ADMIN DASHBOARD: All Users from API ===');
+                console.log('Total users from API:', data.users.length);
+                data.users.forEach(user => {
+                    console.log(`- ${user.email}: role="${user.role}" is_active=${user.is_active}`);
+                });
+                console.log('=== End of user list ===');
+                
                 tbody.innerHTML = '';
                 
                 // Add user rows - PF Admin can only manage GM and Staff, NOT other admins
+                let visibleUserCount = 0;
+                let activeUserCount = 0;
+                
                 data.users.forEach(user => {
+                    // Normalize role for comparison (handle different formats)
+                    const normalizedRole = (user.role || '').toLowerCase().replace(/\s+/g, '_');
+                    
                     // PF Admin should NOT see or manage SES Admins or other PF Admins
-                    if (user.role === 'ses_admin' || user.role === 'pf_admin') {
+                    if (normalizedRole === 'ses_admin' || normalizedRole === 'pf_admin') {
                         return; // Skip admin users
                     }
+                    
+                    // Count visible users
+                    visibleUserCount++;
+                    if (user.is_active) activeUserCount++;
+                    
                     const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username;
                     
-                    // Role display
-                    let roleDisplay = user.role === 'gm' ? 'Manager' : (user.role || 'Staff');
-                    if (roleDisplay === 'staff') roleDisplay = 'Staff';
+                    // Role display - support multiple formats (gm, GM, pf_gm, etc.)
+                    let roleDisplay = 'Staff';
+                    if (normalizedRole === 'gm' || normalizedRole === 'pf_gm' || normalizedRole === 'general_manager') {
+                        roleDisplay = 'Manager';
+                    } else if (normalizedRole === 'staff' || normalizedRole === 'pf_staff') {
+                        roleDisplay = 'Staff';
+                    } else {
+                        roleDisplay = user.role || 'Staff';
+                    }
                     
                     // Status badge
                     const statusClass = user.is_active ? 'active' : 'inactive';
@@ -815,9 +840,14 @@
                     tbody.innerHTML += row;
                 });
 
-                // Update stats
-                document.getElementById('totalUsers').textContent = data.users.length;
-                document.getElementById('activeUsers').textContent = data.users.filter(u => u.is_active).length;
+                // Update stats with visible user counts (not total from API)
+                document.getElementById('totalUsers').textContent = visibleUserCount;
+                document.getElementById('activeUsers').textContent = activeUserCount;
+                
+                // If no users are visible, show helpful message
+                if (visibleUserCount === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #999;">No staff members found. Create your first staff member using the "Add Staff Member" button above.</td></tr>';
+                }
                 
             } catch (error) {
                 console.error('Error loading users:', error);
