@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SES Super Admin Dashboard - PF Resource Hub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <title>PF Admin Dashboard - SES & PF Resource Hub</title>
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3GWJBMD4C"></script>
@@ -15,11 +14,14 @@
         gtag('config', 'G-N3GWJBMD4C');
     </script>
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
     <style>
         :root {
             --pf-dark-purple: #1A0933;
-            --pf-bright-purple: #7C3AAD;
-            --pf-yellow: #FFC600;
+            --pf-bright-purple: #7B2FE4;
+            --pf-yellow: #FFC107;
+            --pf-light-bg: #F5F3FF;
             --pf-white: #FFFFFF;
         }
 
@@ -30,157 +32,191 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #F9FAFB;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--pf-light-bg) 0%, #E9D5FF 100%);
             min-height: 100vh;
         }
 
         /* Header */
-        header {
-            background: white;
-            border-bottom: 2px solid #E5E7EB;
-            padding: 16px 24px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
+        .header {
+            background: var(--pf-white);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 24px;
         }
 
         .logo-section img {
             height: 40px;
         }
 
-        .admin-badge {
-            background: var(--pf-yellow);
-            color: var(--pf-dark-purple);
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .user-menu {
+        .user-section {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
-        .back-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: 2px solid var(--pf-bright-purple);
-            border-radius: 8px;
-            color: var(--pf-bright-purple);
-            font-weight: 600;
-            cursor: pointer;
+        .user-info {
             display: flex;
             align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            gap: 12px;
         }
 
-        .back-btn:hover {
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background: var(--pf-bright-purple);
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
         }
 
-        /* Main Content */
+        .user-email {
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: var(--pf-bright-purple);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--pf-dark-purple);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
         .container {
             max-width: 1400px;
-            margin: 0 auto;
-            padding: 32px 24px;
+            margin: 40px auto;
+            padding: 0 40px;
         }
 
-        .page-header {
+        /* Dashboard Header */
+        .dashboard-header {
+            background: var(--pf-white);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             margin-bottom: 32px;
         }
 
-        .page-header h1 {
+        .dashboard-title {
             font-size: 32px;
+            font-weight: 700;
             color: var(--pf-dark-purple);
             margin-bottom: 8px;
         }
 
-        .page-header p {
+        .dashboard-subtitle {
             color: #6B7280;
             font-size: 16px;
+        }
+
+        .location-badge {
+            display: inline-block;
+            background: var(--pf-yellow);
+            color: var(--pf-dark-purple);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 12px;
         }
 
         /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 24px;
             margin-bottom: 32px;
         }
 
         .stat-card {
-            background: white;
+            background: var(--pf-white);
             padding: 24px;
-            border-radius: 12px;
-            border: 1px solid #E5E7EB;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .stat-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .stat-card-icon {
+        .stat-icon {
             width: 48px;
             height: 48px;
-            background: #F3E8FF;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--pf-bright-purple);
+            margin-bottom: 16px;
             font-size: 24px;
         }
 
-        .stat-card-value {
+        .stat-icon.purple { background: #EDE9FE; color: var(--pf-bright-purple); }
+        .stat-icon.yellow { background: #FEF3C7; color: #D97706; }
+        .stat-icon.green { background: #D1FAE5; color: #059669; }
+
+        .stat-number {
             font-size: 32px;
+            font-weight: 700;
+            color: var(--pf-dark-purple);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        /* Section */
+        .section {
+            background: var(--pf-white);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
             font-weight: 700;
             color: var(--pf-dark-purple);
         }
 
-        .stat-card-label {
-            font-size: 14px;
-            color: #6B7280;
-        }
-
-        /* Action Bar */
-        .action-bar {
-            background: white;
-            padding: 20px 24px;
-            border-radius: 12px;
-            border: 1px solid #E5E7EB;
-            margin-bottom: 24px;
+        /* Search and Actions */
+        .controls {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
             gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
         .search-box {
             flex: 1;
-            min-width: 300px;
+            min-width: 250px;
             position: relative;
         }
 
@@ -190,6 +226,7 @@
             border: 2px solid #E5E7EB;
             border-radius: 8px;
             font-size: 14px;
+            transition: all 0.2s ease;
         }
 
         .search-box input:focus {
@@ -205,22 +242,16 @@
             color: #9CA3AF;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
         .btn {
             padding: 12px 24px;
+            border: none;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 14px;
             cursor: pointer;
-            border: none;
-            display: flex;
+            transition: all 0.2s ease;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s;
         }
 
         .btn-primary {
@@ -231,7 +262,6 @@
         .btn-primary:hover:not(:disabled) {
             background: var(--pf-dark-purple);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(124, 58, 173, 0.3);
         }
 
         .btn-primary:disabled {
@@ -239,51 +269,9 @@
             cursor: not-allowed;
         }
 
-        .btn-secondary {
-            background: white;
-            color: var(--pf-bright-purple);
-            border: 2px solid var(--pf-bright-purple);
-        }
-
-        .btn-secondary:hover {
-            background: #F3E8FF;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            border-bottom: 2px solid #E5E7EB;
-            margin-bottom: 24px;
-        }
-
-        .tab {
-            padding: 12px 24px;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: #6B7280;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tab.active {
-            color: var(--pf-bright-purple);
-            border-bottom-color: var(--pf-bright-purple);
-        }
-
-        .tab:hover {
-            color: var(--pf-bright-purple);
-        }
-
         /* Table */
         .table-container {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid #E5E7EB;
-            overflow: hidden;
+            overflow-x: auto;
         }
 
         table {
@@ -291,111 +279,63 @@
             border-collapse: collapse;
         }
 
-        thead {
-            background: #F9FAFB;
-            border-bottom: 2px solid #E5E7EB;
-        }
-
         th {
-            padding: 16px 20px;
             text-align: left;
+            padding: 16px;
+            background: var(--pf-light-bg);
+            color: var(--pf-dark-purple);
             font-weight: 600;
-            font-size: 13px;
-            color: #6B7280;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         td {
-            padding: 16px 20px;
-            border-bottom: 1px solid #F3F4F6;
+            padding: 16px;
+            border-bottom: 1px solid #E5E7EB;
         }
 
-        tbody tr:hover {
+        tr:hover {
             background: #F9FAFB;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--pf-bright-purple);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .user-details h4 {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--pf-dark-purple);
-            margin-bottom: 2px;
-        }
-
-        .user-details p {
-            font-size: 13px;
-            color: #6B7280;
-        }
-
-        .badge {
+        .status-badge {
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
         }
 
-        .badge-admin {
-            background: #FEF3C7;
-            color: #92400E;
-        }
-
-        .badge-staff {
-            background: #DBEAFE;
-            color: #1E40AF;
-        }
-
-        .badge-active {
+        .status-badge.active {
             background: #D1FAE5;
-            color: #065F46;
+            color: #059669;
         }
 
-        .badge-inactive {
+        .status-badge.inactive {
             background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .action-menu {
-            display: flex;
-            gap: 8px;
+            color: #DC2626;
         }
 
         .action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            border: 1px solid #E5E7EB;
-            background: white;
-            color: #6B7280;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: none;
+            border: none;
+            color: var(--pf-bright-purple);
             cursor: pointer;
-            transition: all 0.2s;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
 
         .action-btn:hover {
-            background: var(--pf-bright-purple);
-            color: white;
-            border-color: var(--pf-bright-purple);
+            background: var(--pf-light-bg);
+        }
+
+        .action-btn.danger {
+            color: #DC2626;
+        }
+
+        .action-btn.danger:hover {
+            background: #FEE2E2;
         }
 
         /* Modal */
@@ -404,45 +344,36 @@
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 1000;
             align-items: center;
             justify-content: center;
         }
 
-        .modal.show {
+        .modal.active {
             display: flex;
         }
 
         .modal-content {
             background: white;
+            padding: 32px;
             border-radius: 16px;
-            max-width: 600px;
+            max-width: 500px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
         }
 
         .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid #E5E7EB;
+            margin-bottom: 24px;
         }
 
-        .modal-header h2 {
+        .modal-title {
             font-size: 24px;
+            font-weight: 700;
             color: var(--pf-dark-purple);
-            margin-bottom: 4px;
-        }
-
-        .modal-header p {
-            color: #6B7280;
-            font-size: 14px;
-        }
-
-        .modal-body {
-            padding: 24px;
         }
 
         .form-group {
@@ -451,10 +382,9 @@
 
         .form-group label {
             display: block;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--pf-dark-purple);
             margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
         }
 
         .form-group input,
@@ -472,70 +402,100 @@
             border-color: var(--pf-bright-purple);
         }
 
-        .modal-footer {
-            padding: 24px;
-            border-top: 1px solid #E5E7EB;
+        .modal-actions {
             display: flex;
-            justify-content: flex-end;
             gap: 12px;
+            margin-top: 24px;
         }
 
-        .tab-content {
-            display: none;
+        .btn-secondary {
+            background: #E5E7EB;
+            color: #374151;
         }
 
-        .tab-content.active {
-            display: block;
+        .btn-secondary:hover {
+            background: #D1D5DB;
         }
 
+        /* Activity Log */
+        .activity-item {
+            padding: 16px;
+            border-left: 3px solid var(--pf-bright-purple);
+            margin-bottom: 16px;
+            background: var(--pf-light-bg);
+            border-radius: 8px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #6B7280;
+            margin-bottom: 4px;
+        }
+
+        .activity-text {
+            color: #374151;
+            font-size: 14px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .header {
+                padding: 16px 20px;
             }
 
-            .action-bar {
+            .logo-section {
+                gap: 12px;
+            }
+
+            .logo-section img {
+                height: 32px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .dashboard-title {
+                font-size: 24px;
+            }
+
+            .controls {
                 flex-direction: column;
-                align-items: stretch;
             }
 
             .search-box {
                 width: 100%;
-                min-width: auto;
             }
 
-            .action-buttons {
-                flex-direction: column;
+            .table-container {
+                overflow-x: scroll;
             }
 
             table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 12px;
+                min-width: 600px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="logo-section">
-              <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness Logo" class="pf-logo">
+    <div class="header">
+        <div class="logo-section">
+   <img src="https://saveenergysystems.com/wp-content/uploads/2025/12/Logo-Primary.png" alt="Planet Fitness Logo" class="pf-logo">
     <img src="https://saveenergysystems.com/wp-content/uploads/2025/10/SES-_0015_logo-1.png" alt="Save Energy Systems Logo" class="ses-logo">
-                <span class="admin-badge">SES SUPER ADMIN</span>
-            </div>
-            <div class="user-menu">
-                <a href="dashboard.html" class="back-btn">
-                    <i class="bi bi-arrow-left"></i>
-                    <span>Back to Dashboard</span>
-                </a>
-            </div>
         </div>
-    </header>
+        <div class="user-section">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">P</div>
+                <span class="user-email" id="userEmail">Loading...</span>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </div>
+    </div>
 
-    <!-- Main Content -->
+    <!-- Main Container -->
     <div class="container">
         <!-- Back Button -->
         <div style="margin-bottom: 20px;">
@@ -545,343 +505,99 @@
             </a>
         </div>
 
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1><i class="bi bi-shield-fill-check" style="color: var(--pf-yellow);"></i> SES Super Admin Dashboard</h1>
-            <p>Manage all users, locations, and system settings across the entire SES & PF Resource Hub</p>
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">PF Super Admin Dashboard</h1>
+            <p class="dashboard-subtitle">Head of Planet Fitness - Manage all PF staff and locations</p>
+            <div style="margin-top: 16px;">
+                <span style="background: #FFC107; color: #1A0933; padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 14px;">
+                    👑 HEAD OF PF - Full Access
+                </span>
+            </div>
         </div>
 
         <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-card-header">
-                    <div>
-                        <div class="stat-card-value">156</div>
-                        <div class="stat-card-label">Total Users</div>
-                    </div>
-                    <div class="stat-card-icon">
-                        <i class="bi bi-people-fill"></i>
-                    </div>
+                <div class="stat-icon purple">
+                    <i class="bi bi-people-fill"></i>
                 </div>
+                <div class="stat-number" id="totalUsers">14</div>
+                <div class="stat-label">Total PF Staff</div>
             </div>
-
             <div class="stat-card">
-                <div class="stat-card-header">
-                    <div>
-                        <div class="stat-card-value">24</div>
-                        <div class="stat-card-label">PF Locations</div>
-                    </div>
-                    <div class="stat-card-icon">
-                        <i class="bi bi-geo-alt-fill"></i>
-                    </div>
+                <div class="stat-icon green">
+                    <i class="bi bi-geo-alt-fill"></i>
                 </div>
+                <div class="stat-number" id="totalLocations">6</div>
+                <div class="stat-label">PF Locations</div>
             </div>
-
             <div class="stat-card">
-                <div class="stat-card-header">
-                    <div>
-                        <div class="stat-card-value">12</div>
-                        <div class="stat-card-label">Admins</div>
-                    </div>
-                    <div class="stat-card-icon">
-                        <i class="bi bi-shield-check"></i>
-                    </div>
+                <div class="stat-icon green">
+                    <i class="bi bi-check-circle-fill"></i>
                 </div>
+                <div class="stat-number" id="activeUsers">13</div>
+                <div class="stat-label">Active Users</div>
             </div>
-
             <div class="stat-card">
-                <div class="stat-card-header">
-                    <div>
-                        <div class="stat-card-value">8</div>
-                        <div class="stat-card-label">Active Today</div>
-                    </div>
-                    <div class="stat-card-icon">
-                        <i class="bi bi-activity"></i>
-                    </div>
+                <div class="stat-icon yellow">
+                    <i class="bi bi-clock-history"></i>
                 </div>
+                <div class="stat-number" id="recentActivity">4</div>
+                <div class="stat-label">Today's Activity</div>
             </div>
         </div>
 
-        <!-- Action Bar -->
-        <div class="action-bar">
-            <div class="search-box">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Search users by name, email, or location..." id="searchInput">
+        <!-- User Management -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Staff Management</h2>
             </div>
-            <div class="action-buttons">
-                <button class="btn btn-primary" onclick="openModal('createUser')">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Add User</span>
-                </button>
-                <button class="btn btn-secondary" onclick="openModal('announcement')">
-                    <i class="bi bi-megaphone"></i>
-                    <span>Send Announcement</span>
+            
+            <div class="controls">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="searchUsers" placeholder="Search staff..." onkeyup="filterUsers()">
+                </div>
+                <button class="btn btn-primary" onclick="openAddUserModal()">
+                    <i class="bi bi-person-plus-fill"></i> Add Staff Member
                 </button>
             </div>
-        </div>
 
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('users')">
-                <i class="bi bi-people"></i> All Users
-            </button>
-            <button class="tab" onclick="switchTab('admins')">
-                <i class="bi bi-shield-check"></i> Admins
-            </button>
-            <button class="tab" onclick="switchTab('logs')">
-                <i class="bi bi-clock-history"></i> Activity Logs
-            </button>
-        </div>
-
-        <!-- Users Tab -->
-        <div id="users-tab" class="tab-content active">
             <div class="table-container">
-                <table>
+                <table id="usersTable">
                     <thead>
                         <tr>
-                            <th>User</th>
-                            <th>Role</th>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Location</th>
+                            <th>Role</th>
                             <th>Status</th>
                             <th>Last Login</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">AS</div>
-                                    <div class="user-details">
-                                        <h4>Adriana Soler</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="09687a66656c7b497a687f6c6c676c7b6e707a707a7d6c647a276a6664">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-admin">SES Admin</span></td>
-                            <td>All Locations</td>
-                            <td><span class="badge badge-active">Active</span></td>
-                            <td>Today, 2:45 PM</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="Edit" onclick="editUser('asoler')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="action-btn" title="Reset Password" onclick="resetPassword('asoler')">
-                                        <i class="bi bi-key"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">AC</div>
-                                    <div class="user-details">
-                                        <h4>Adriana Creative</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="167772647f77787765797a736475647377627f607356717b777f7a3875797b">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-admin">PF Admin</span></td>
-                            <td>Boston Downtown</td>
-                            <td><span class="badge badge-active">Active</span></td>
-                            <td>Today, 1:30 PM</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="Edit" onclick="editUser('pfadmin')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="action-btn" title="Reset Password" onclick="resetPassword('pfadmin')">
-                                        <i class="bi bi-key"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">JD</div>
-                                    <div class="user-details">
-                                        <h4>John Davis</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7913161117571d180f100a39091518171c0d1f100d171c0a0a571a1614">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-staff">GM</span></td>
-                            <td>Cambridge</td>
-                            <td><span class="badge badge-active">Active</span></td>
-                            <td>Yesterday, 4:15 PM</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="Edit" onclick="editUser('jdavis')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="action-btn" title="Reset Password" onclick="resetPassword('jdavis')">
-                                        <i class="bi bi-key"></i>
-                                    </button>
-                                    <button class="action-btn" title="Deactivate" onclick="deactivateUser('jdavis')">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">SM</div>
-                                    <div class="user-details">
-                                        <h4>Sarah Martinez</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="84f7e5f6e5ecaae9c4f4e8e5eae1f0e2edf0eae1f7f7aae7ebe9">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-staff">Staff</span></td>
-                            <td>Somerville</td>
-                            <td><span class="badge badge-active">Active</span></td>
-                            <td>Dec 15, 2024</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="Edit" onclick="editUser('smartinez')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="action-btn" title="Reset Password" onclick="resetPassword('smartinez')">
-                                        <i class="bi bi-key"></i>
-                                    </button>
-                                    <button class="action-btn" title="Deactivate" onclick="deactivateUser('smartinez')">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">MT</div>
-                                    <div class="user-details">
-                                        <h4>Mike Thompson</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="660b0f0d03481226160a07080312000f12080315154805090b">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-staff">GM</span></td>
-                            <td>Brookline</td>
-                            <td><span class="badge badge-inactive">Inactive</span></td>
-                            <td>Dec 10, 2024</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="Edit" onclick="editUser('mthompson')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="action-btn" title="Activate" onclick="activateUser('mthompson')">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        <!-- Users will be loaded here -->
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Admins Tab -->
-        <div id="admins-tab" class="tab-content">
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Admin</th>
-                            <th>Role</th>
-                            <th>Permissions</th>
-                            <th>Locations</th>
-                            <th>Last Active</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">AS</div>
-                                    <div class="user-details">
-                                        <h4>Adriana Soler</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb8a9884878e99ab988a9d8e8e858e998c929892989f8e8698c5888486">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-admin">SES Super Admin</span></td>
-                            <td>Full Access</td>
-                            <td>All (24)</td>
-                            <td>Today, 2:45 PM</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="View Details" onclick="viewAdmin('asoler')">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-avatar">AC</div>
-                                    <div class="user-details">
-                                        <h4>Adriana Creative</h4>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2d3d6c0dbd3dcd3c1ddded7c0d1c0d7d3c6dbc4d7f2d5dfd3dbde9cd1dddf">[email&#160;protected]</a></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge badge-admin">PF Admin</span></td>
-                            <td>Location Management</td>
-                            <td>Boston Downtown</td>
-                            <td>Today, 1:30 PM</td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn" title="Edit" onclick="editAdmin('pfadmin')">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="action-btn" title="View Details" onclick="viewAdmin('pfadmin')">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Activity Logs Tab -->
-        <div id="logs-tab" class="tab-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="margin: 0;">Recent Activity</h3>
-                <span id="activityCountSES" style="color: #666; font-size: 14px;">
-                    Showing <span id="displayedCountSES">0</span> of <span id="totalCountSES">0</span> activities
+        <!-- Activity Log -->
+        <div class="section">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 class="section-title">Recent Activity</h2>
+                <span id="activityCount" style="color: #666; font-size: 14px;">
+                    Showing <span id="displayedCount">0</span> of <span id="totalCount">0</span> activities
                 </span>
             </div>
-            <div class="table-container">
-                <table id="activityLogsTable">
-                    <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>User</th>
-                            <th>Action</th>
-                            <th>Location</th>
-                            <th>IP Address</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activityLogTableBody">
-                        <tr>
-                            <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
-                                Loading activity logs...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="activityLog">
+                <!-- Activity items will be loaded here -->
             </div>
-            <div id="loadMoreContainerSES" style="text-align: center; margin-top: 20px; display: none;">
-                <button id="loadMoreBtnSES" onclick="loadMoreActivitySES()" 
-                        style="background: #9600FA; color: white; padding: 12px 24px; 
+            <div id="loadMoreContainer" style="text-align: center; margin-top: 20px; display: none;">
+                <button id="loadMoreBtn" onclick="loadMoreActivity()" 
+                        style="background: var(--pf-purple); color: white; padding: 12px 24px; 
                                border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
                     <i class="bi bi-arrow-down-circle"></i> Load More Activity
                 </button>
@@ -889,177 +605,318 @@
         </div>
     </div>
 
-    <!-- Create User Modal -->
-    <div id="createUserModal" class="modal">
+    <!-- Add/Edit User Modal -->
+    <div class="modal" id="userModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Create New User</h2>
-                <p>Add a new user to the SES & PF Resource Hub</p>
+                <h3 class="modal-title" id="modalTitle">Add Staff Member</h3>
             </div>
-            <div class="modal-body">
-                <form id="createUserForm">
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" id="createUserFirstName" placeholder="Enter first name" required>
+            <form id="userForm">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="userEmail2" required>
+                </div>
+                <div class="form-group">
+                    <label>PF Location (Optional)</label>
+                    <input type="text" id="userLocation" placeholder="e.g., Boston Commons, Cambridge, New York, etc.">
+                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">Enter the Planet Fitness location for this user (optional)</small>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                        <input type="text" id="userPassword" value="" readonly style="flex: 1; background: #f5f5f5;">
+                        <button type="button" class="btn btn-secondary" onclick="generatePassword()" style="white-space: nowrap;">
+                            <i class="bi bi-arrow-clockwise"></i> Generate
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" id="createUserLastName" placeholder="Enter last name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="createUserEmail" placeholder="user@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select id="createUserRole" required>
-                            <option value="">Select role...</option>
-                            <option value="ses_admin">SES Admin</option>
-                            <option value="pf_admin">PF Admin</option>
-                            <option value="gm">General Manager</option>
-                            <option value="staff">Staff</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Location (Optional)</label>
-                        <input type="text" id="createUserLocation" placeholder="e.g., Boston Commons, Cambridge, All Locations, etc.">
-                        <small style="color: #888; font-size: 11px; margin-top: 4px; display: block;">Enter location or leave blank (optional)</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
-                            <input type="text" id="createUserPassword" value="" readonly style="flex: 1; background: #f5f5f5;">
-                            <button type="button" class="btn btn-secondary" onclick="generatePasswordSES()" style="white-space: nowrap; padding: 8px 16px;">
-                                <i class="bi bi-arrow-clockwise"></i> Generate
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                        <input type="checkbox" id="customPasswordToggle" onchange="toggleCustomPassword()" style="cursor: pointer;">
+                        <span style="font-size: 13px; color: #666;">I want to set a custom password</span>
+                    </label>
+                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">A secure password will be generated automatically or set your own</small>
+                </div>
+                <div class="form-group">
+                    <label>Role *</label>
+                    <select id="userRole" required>
+                        <option value="staff">Staff</option>
+                        <option value="gm">General Manager (GM)</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveUserBtn">Save & Send Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mock Data - ALL Planet Fitness Locations
+        const mockUsers = [
+            // Boston Commons
+            { id: 1, name: 'John Smith', email: 'john.smith@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 09:30 AM', location: 'Boston Commons' },
+            { id: 2, name: 'Sarah Johnson', email: 'sarah.j@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 08:15 AM', location: 'Boston Commons' },
+            { id: 3, name: 'Mike Davis', email: 'mike.d@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-18 05:45 PM', location: 'Boston Commons' },
+            
+            // Cambridge
+            { id: 4, name: 'Emily Wilson', email: 'emily.w@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 07:20 AM', location: 'Cambridge' },
+            { id: 5, name: 'David Brown', email: 'david.b@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 06:30 AM', location: 'Cambridge' },
+            { id: 6, name: 'Lisa Martinez', email: 'lisa.m@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-18 09:00 AM', location: 'Cambridge' },
+            
+            // Somerville
+            { id: 7, name: 'Tom Anderson', email: 'tom.a@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 08:00 AM', location: 'Somerville' },
+            { id: 8, name: 'Jennifer Lee', email: 'jen.l@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 07:45 AM', location: 'Somerville' },
+            
+            // Brookline
+            { id: 9, name: 'Robert Taylor', email: 'rob.t@planetfitness.com', role: 'Manager', status: 'inactive', lastLogin: '2024-12-10 11:30 AM', location: 'Brookline' },
+            { id: 10, name: 'Amy Chen', email: 'amy.c@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 06:00 AM', location: 'Brookline' },
+            
+            // Newton
+            { id: 11, name: 'Chris Williams', email: 'chris.w@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 08:30 AM', location: 'Newton' },
+            { id: 12, name: 'Maria Garcia', email: 'maria.g@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 07:00 AM', location: 'Newton' },
+            
+            // Quincy
+            { id: 13, name: 'Kevin Brown', email: 'kevin.b@planetfitness.com', role: 'Manager', status: 'active', lastLogin: '2024-12-19 09:00 AM', location: 'Quincy' },
+            { id: 14, name: 'Rachel Kim', email: 'rachel.k@planetfitness.com', role: 'Staff', status: 'active', lastLogin: '2024-12-19 08:20 AM', location: 'Quincy' }
+        ];
+
+        const mockActivity = [
+            { time: '2024-12-19 09:45 AM', text: 'John Smith (Boston Commons) reset password for Sarah Johnson', location: 'Boston Commons' },
+            { time: '2024-12-19 09:30 AM', text: 'Emily Wilson logged in at Cambridge location', location: 'Cambridge' },
+            { time: '2024-12-19 08:15 AM', text: 'Mike Davis (Boston Commons) accessed HVAC documentation', location: 'Boston Commons' },
+            { time: '2024-12-19 08:00 AM', text: 'Tom Anderson (Somerville) added new staff member', location: 'Somerville' },
+            { time: '2024-12-18 06:30 PM', text: 'Sarah Johnson ordered replacement filters' }
+        ];
+
+        // Load user data from session
+        function loadUserData() {
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userData = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    const email = user.email || user.username || 'User';
+                    document.getElementById('userEmail').textContent = email;
+                    
+                    const initial = email.charAt(0).toUpperCase();
+                    document.getElementById('userAvatar').textContent = initial;
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+        }
+
+        // Load users table
+        function loadUsers() {
+            const tbody = document.querySelector('#usersTable tbody');
+            tbody.innerHTML = '';
+
+            mockUsers.forEach(user => {
+                const row = `
+                    <tr>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td><span class="location-badge" style="background: var(--pf-light-bg); color: var(--pf-dark-purple); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${user.location}</span></td>
+                        <td>${user.role}</td>
+                        <td><span class="status-badge ${user.status}">${user.status}</span></td>
+                        <td>${user.lastLogin}</td>
+                        <td>
+                            <button class="action-btn" onclick="resetPassword(${user.id})">
+                                <i class="bi bi-key-fill"></i> Reset
                             </button>
+                            <button class="action-btn" onclick="editUser(${user.id})">
+                                <i class="bi bi-pencil-fill"></i> Edit
+                            </button>
+                            <button class="action-btn danger" onclick="deleteUser(${user.id})">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // Update stats
+            document.getElementById('totalUsers').textContent = mockUsers.length;
+            document.getElementById('activeUsers').textContent = mockUsers.filter(u => u.status === 'active').length;
+        }
+
+        // Activity log pagination state
+        let activityPage = 1;
+        let activityTotal = 0;
+        let activityHasMore = false;
+
+        // Load activity log from API
+        async function loadActivity(append = false) {
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/activity-logs?page=${activityPage}&per_page=25`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load activity logs');
+                
+                const data = await response.json();
+                const activityLog = document.getElementById('activityLog');
+                
+                // Clear or append
+                if (!append) {
+                    activityLog.innerHTML = '';
+                }
+                
+                // Add activity items
+                data.logs.forEach(activity => {
+                    const item = `
+                        <div class="activity-item">
+                            <div class="activity-time">${formatActivityTime(activity.created_at)}</div>
+                            <div class="activity-text">
+                                <strong>${activity.user?.username || 'Unknown'}</strong> - 
+                                ${activity.description || activity.action}
+                            </div>
                         </div>
-                        <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" id="customPasswordToggleSES" onchange="toggleCustomPasswordSES()" style="cursor: pointer;">
-                            <span style="font-size: 13px; color: #888;">I want to set a custom password</span>
-                        </label>
-                        <small style="color: #888; font-size: 11px; margin-top: 4px; display: block;">A secure password will be generated automatically or set your own</small>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('createUser')">Cancel</button>
-                <button class="btn btn-primary" id="createUserBtn" onclick="createUser()">
-                    <i class="bi bi-plus-circle"></i>
-                    Create User
-                </button>
-            </div>
-        </div>
-    </div>
+                    `;
+                    activityLog.innerHTML += item;
+                });
+                
+                // Update counts
+                const displayedCount = document.querySelectorAll('.activity-item').length;
+                activityTotal = data.pagination.total;
+                activityHasMore = data.pagination.has_next;
+                
+                document.getElementById('displayedCount').textContent = displayedCount;
+                document.getElementById('totalCount').textContent = activityTotal;
+                document.getElementById('recentActivity').textContent = activityTotal;
+                
+                // Show/hide "Load More" button
+                const loadMoreContainer = document.getElementById('loadMoreContainer');
+                loadMoreContainer.style.display = activityHasMore ? 'block' : 'none';
+                
+            } catch (error) {
+                console.error('Error loading activity:', error);
+                const activityLog = document.getElementById('activityLog');
+                activityLog.innerHTML = '<div style="color: #999; text-align: center; padding: 20px;">Unable to load activity logs. Using mock data.</div>';
+                
+                // Fallback to mock data
+                mockActivity.forEach(activity => {
+                    const item = `
+                        <div class="activity-item">
+                            <div class="activity-time">${activity.time}</div>
+                            <div class="activity-text">${activity.text}</div>
+                        </div>
+                    `;
+                    activityLog.innerHTML += item;
+                });
+                document.getElementById('recentActivity').textContent = mockActivity.length;
+            }
+        }
 
-    <!-- Announcement Modal -->
-    <div id="announcementModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Send System Announcement</h2>
-                <p>Broadcast a message to all users or specific locations</p>
-            </div>
-            <div class="modal-body">
-                <form id="announcementForm">
-                    <div class="form-group">
-                        <label>Recipients</label>
-                        <select required>
-                            <option value="all">All Users</option>
-                            <option value="admins">All Admins</option>
-                            <option value="gms">All General Managers</option>
-                            <option value="location">Specific Location</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Subject</label>
-                        <input type="text" placeholder="Enter announcement subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea rows="5" style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-family: inherit;" placeholder="Enter your message..." required></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('announcement')">Cancel</button>
-                <button class="btn btn-primary" onclick="sendAnnouncement()">
-                    <i class="bi bi-send"></i>
-                    Send Announcement
-                </button>
-            </div>
-        </div>
-    </div>
+        // Load more activity
+        function loadMoreActivity() {
+            activityPage++;
+            loadActivity(true);  // Append = true
+        }
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Tab switching
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
+        // Format activity timestamp
+        function formatActivityTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
             });
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+        }
 
-            // Show selected tab
-            document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.classList.add('active');
+        // Filter users
+        function filterUsers() {
+            const search = document.getElementById('searchUsers').value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTable tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(search) ? '' : 'none';
+            });
         }
 
         // Modal functions
-        function openModal(modalName) {
-            document.getElementById(modalName + 'Modal').classList.add('show');
+        function openAddUserModal() {
+            document.getElementById('modalTitle').textContent = 'Add Staff Member';
+            document.getElementById('userForm').reset();
+            document.getElementById('customPasswordToggle').checked = false;
+            generatePassword(); // Auto-generate password on open
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('active');
+        }
+
+        function editUser(userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user) {
+                document.getElementById('modalTitle').textContent = 'Edit Staff Member';
+                document.getElementById('userName').value = user.name;
+                document.getElementById('userEmail2').value = user.email;
+                document.getElementById('userLocation').value = user.location;
+                document.getElementById('userRole').value = user.role.toLowerCase();
+                document.getElementById('userModal').classList.add('active');
+            }
+        }
+
+        function resetPassword(userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user && confirm(`🔑 RESET PASSWORD\n\nThis will:\n✅ Generate a new secure password\n✅ Send email to: ${user.email}\n\nProceed with password reset?`)) {
+                alert(`✅ SUCCESS!\n\nNew password generated and sent to:\n${user.email}\n\nUser will receive:\n• Temporary password\n• Login instructions\n• Password change prompt`);
+                // TODO: Call backend API: POST /api/admin/reset-password
+                // Backend will generate random password, hash it, and send email
+            }
+        }
+
+        function deleteUser(userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user && confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete:\n${user.name} (${user.email})\n\nThis action CANNOT be undone!`)) {
+                alert(`✅ User ${user.name} has been deleted.`);
+                // TODO: Call backend API: DELETE /api/admin/users/${userId}
+                // Then reload the table
+                loadUsers();
+            }
+        }
+
+        // FORM SUBMISSION - FIXED WITH REAL API CALL
+        document.getElementById('userForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Auto-generate password when opening Create User modal
-            if (modalName === 'createUser') {
-                document.getElementById('customPasswordToggleSES').checked = false;
-                generatePasswordSES();
-            }
-        }
-
-        function closeModal(modalName) {
-            document.getElementById(modalName + 'Modal').classList.remove('show');
-        }
-
-        // User actions
-        function editUser(username) {
-            alert(`Edit user: ${username}\n\nThis will connect to the backend API to update user details.`);
-        }
-
-        function resetPassword(username) {
-            if (confirm(`🔑 RESET PASSWORD\n\nUser: ${username}\n\nThis will:\n✅ Generate a new secure password\n✅ Send email with temporary password\n✅ Require password change on next login\n\nProceed?`)) {
-                alert(`✅ SUCCESS!\n\nNew password sent to: ${username}\n\n📧 Email includes:\n• Temporary password\n• Login link\n• Security instructions\n\nTODO: Call API: POST /api/admin/reset-password`);
-            }
-        }
-
-        function deactivateUser(username) {
-            if (confirm(`⚠️ DEACTIVATE USER\n\nUser: ${username}\n\nThis will:\n❌ Prevent login access\n❌ Revoke all permissions\n✅ Preserve user data\n\nUser can be reactivated later.\n\nProceed?`)) {
-                alert(`✅ User ${username} deactivated\n\nTODO: Call API: POST /api/admin/deactivate/${username}`);
-            }
-        }
-
-        function activateUser(username) {
-            if (confirm(`✅ ACTIVATE USER\n\nUser: ${username}\n\nThis will:\n✅ Restore login access\n✅ Restore all permissions\n✅ Send activation email\n\nProceed?`)) {
-                alert(`✅ User ${username} activated\n\n📧 Activation email sent\n\nTODO: Call API: POST /api/admin/activate/${username}`);
-            }
-        }
-
-        // CREATE USER FUNCTION - FIXED WITH REAL API CALL
-        async function createUser() {
-            const createBtn = document.getElementById('createUserBtn');
+            const saveBtn = document.getElementById('saveUserBtn');
             
             // Get form values
-            const firstName = document.getElementById('createUserFirstName').value.trim();
-            const lastName = document.getElementById('createUserLastName').value.trim();
-            const email = document.getElementById('createUserEmail').value.trim();
-            const role = document.getElementById('createUserRole').value;
-            const location = document.getElementById('createUserLocation').value.trim();
-            const password = document.getElementById('createUserPassword').value;
+            const fullName = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail2').value.trim();
+            const location = document.getElementById('userLocation').value.trim();
+            const role = document.getElementById('userRole').value;
+            const password = document.getElementById('userPassword').value;
             
             // Validate required fields
-            if (!firstName || !lastName || !email || !role || !password) {
-                alert('❌ ERROR\n\nPlease fill in all required fields:\n• First Name\n• Last Name\n• Email\n• Role\n• Password');
+            if (!fullName || !email || !role || !password) {
+                alert('❌ ERROR\n\nPlease fill in all required fields:\n• Full Name\n• Email\n• Role\n• Password');
                 return;
             }
+            
+            // Split full name into first and last name
+            const nameParts = fullName.split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts.slice(1).join(' ') || firstName;
             
             // Derive username from email (part before @)
             const username = email.split('@')[0];
@@ -1074,8 +931,8 @@
             }
             
             // Disable button during request
-            createBtn.disabled = true;
-            createBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating User...';
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating User...';
             
             try {
                 const API_BASE = 'https://pf-resource-hub.onrender.com';
@@ -1099,173 +956,36 @@
                 });
                 
                 // Re-enable button
-                createBtn.disabled = false;
-                createBtn.innerHTML = '<i class="bi bi-plus-circle"></i> Create User';
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save & Send Password';
                 
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to create user');
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    console.error('Backend error response:', errorData);
+                    throw new Error(errorData.error || errorData.message || JSON.stringify(errorData) || 'Failed to create user');
                 }
                 
                 const data = await response.json();
                 
                 // Success message with detailed info
-                alert(`✅ SUCCESS!\n\nUser Created Successfully:\n\n👤 Name: ${firstName} ${lastName}\n📧 Email: ${email}\n🔑 Username: ${username}\n🎭 Role: ${role}\n📍 Location: ${location || 'Not specified'}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link (https://saveenergysystems.com/pf-resource-hub/)\n• Getting started guide\n\nUser ID: ${data.user_id || 'N/A'}`);
+                alert(`✅ SUCCESS!\n\nUser Created Successfully:\n\n👤 Name: ${fullName}\n📧 Email: ${email}\n🔑 Username: ${username}\n🎭 Role: ${role}\n📍 Location: ${location || 'Not specified'}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link (https://saveenergysystems.com/pf-resource-hub/)\n• Getting started guide\n\nUser ID: ${data.user_id || 'N/A'}`);
                 
                 // Close modal and reload page
-                closeModal('createUser');
+                closeUserModal();
                 window.location.reload();
                 
             } catch (error) {
                 // Re-enable button
-                createBtn.disabled = false;
-                createBtn.innerHTML = '<i class="bi bi-plus-circle"></i> Create User';
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save & Send Password';
                 
                 console.error('Error creating user:', error);
                 alert(`❌ ERROR\n\nFailed to create user:\n${error.message}\n\nPlease check the console for details and try again.`);
             }
-        }
-
-        function sendAnnouncement() {
-            alert('Announcement sent successfully!\n\nAll recipients will receive an email notification.');
-            closeModal('announcement');
-        }
-
-        function viewAdmin(username) {
-            alert(`View admin details: ${username}`);
-        }
-
-        function editAdmin(username) {
-            alert(`Edit admin permissions: ${username}`);
-        }
-
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll('tbody tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
         });
 
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('show');
-                }
-            });
-        });
-
-        // Check authentication on load
-        window.addEventListener('load', () => {
-            const userDataStr = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
-            
-            if (userDataStr) {
-                try {
-                    const userData = JSON.parse(userDataStr);
-                    
-                    // Check if user is SES admin
-                    if (userData.role !== 'ses_admin') {
-                        alert('Access Denied: This page is only for SES Super Admins');
-                        window.location.href = 'dashboard.html';
-                    }
-                } catch (e) {
-                    console.error('Error parsing user data:', e);
-                    window.location.href = 'index.html';
-                }
-            } else {
-                // No user data, redirect to login
-                window.location.href = 'index.html';
-            }
-            
-            // Load activity logs
-            loadActivitySES();
-        });
-        
-        // Activity log pagination state
-        let activityPageSES = 1;
-        let activityTotalSES = 0;
-        let activityHasMoreSES = false;
-
-        // Load activity log from API
-        async function loadActivitySES(append = false) {
-            try {
-                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
-                const API_BASE = 'https://pf-resource-hub.onrender.com';
-                
-                const response = await fetch(`${API_BASE}/api/activity-logs?page=${activityPageSES}&per_page=25`, {
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Failed to load activity logs');
-                
-                const data = await response.json();
-                const tbody = document.getElementById('activityLogTableBody');
-                
-                // Clear or append
-                if (!append) {
-                    tbody.innerHTML = '';
-                }
-                
-                // Add activity rows
-                data.logs.forEach(activity => {
-                    const row = `
-                        <tr>
-                            <td>${formatActivityTimeSES(activity.created_at)}</td>
-                            <td>${activity.user?.username || activity.user?.email || 'Unknown'}</td>
-                            <td>${activity.description || activity.action}</td>
-                            <td>${activity.user?.location || 'N/A'}</td>
-                            <td>${activity.ip_address || 'N/A'}</td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                });
-                
-                // Update counts
-                const displayedCount = document.querySelectorAll('#activityLogTableBody tr').length;
-                activityTotalSES = data.pagination.total;
-                activityHasMoreSES = data.pagination.has_next;
-                
-                document.getElementById('displayedCountSES').textContent = displayedCount;
-                document.getElementById('totalCountSES').textContent = activityTotalSES;
-                
-                // Show/hide "Load More" button
-                const loadMoreContainer = document.getElementById('loadMoreContainerSES');
-                loadMoreContainer.style.display = activityHasMoreSES ? 'block' : 'none';
-                
-            } catch (error) {
-                console.error('Error loading activity:', error);
-                document.getElementById('activityLogTableBody').innerHTML = 
-                    '<tr><td colspan="5" style="text-align: center; color: #ff4444; padding: 40px;">Unable to load activity logs</td></tr>';
-            }
-        }
-
-        // Load more activity
-        function loadMoreActivitySES() {
-            activityPageSES++;
-            loadActivitySES(true);  // Append = true
-        }
-
-        // Format activity timestamp
-        function formatActivityTimeSES(timestamp) {
-            const date = new Date(timestamp);
-            return date.toLocaleString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-        }
-        
-        // Password Generation Functions for SES Admin
-        function generatePasswordSES() {
+        // Password Generation Functions
+        function generatePassword() {
             const length = 12;
             const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
             let password = "";
@@ -1284,12 +1004,12 @@
             // Shuffle the password
             password = password.split('').sort(() => Math.random() - 0.5).join('');
             
-            document.getElementById('createUserPassword').value = password;
+            document.getElementById('userPassword').value = password;
         }
         
-        function toggleCustomPasswordSES() {
-            const checkbox = document.getElementById('customPasswordToggleSES');
-            const passwordInput = document.getElementById('createUserPassword');
+        function toggleCustomPassword() {
+            const checkbox = document.getElementById('customPasswordToggle');
+            const passwordInput = document.getElementById('userPassword');
             
             if (checkbox.checked) {
                 // Enable manual password entry
@@ -1304,9 +1024,23 @@
                 passwordInput.type = 'text';
                 passwordInput.style.background = '#f5f5f5';
                 passwordInput.placeholder = '';
-                generatePasswordSES();
+                generatePassword();
             }
         }
+
+        // Logout
+        function logout() {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            loadUserData();
+            loadUsers();
+            loadActivity();
+        };
     </script>
 </body>
 </html>
