@@ -653,9 +653,9 @@
                 <div class="form-group">
                     <label>Role *</label>
                     <select id="userRole" required>
-                        <option value="staff">Staff</option>
                         <option value="gm">General Manager (GM)</option>
                     </select>
+                    <small style="color: #666; font-size: 12px; margin-top: 4px; display: block;">As a PF Admin, you can only create General Manager accounts</small>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button>
@@ -1205,9 +1205,12 @@
             const role = document.getElementById('userRole').value;
             const password = document.getElementById('userPassword').value;
             
+            // Debug log
+            console.log('Form values:', { fullName, email, location, role, password });
+            
             // Validate required fields
             if (!fullName || !email || !role || !password) {
-                alert('❌ ERROR\n\nPlease fill in all required fields:\n• Full Name\n• Email\n• Role\n• Password');
+                alert('❌ ERROR\n\nPlease fill in all required fields:\n• Full Name: ' + (fullName ? '✅' : '❌') + '\n• Email: ' + (email ? '✅' : '❌') + '\n• Role: ' + (role ? '✅' : '❌') + '\n• Password: ' + (password ? '❌ MISSING' : '✅'));
                 return;
             }
             
@@ -1216,8 +1219,16 @@
             const firstName = nameParts[0];
             const lastName = nameParts.slice(1).join(' ') || firstName;
             
+            // Validate first and last name
+            if (!firstName || firstName.length < 1) {
+                alert('❌ ERROR\n\nPlease enter a valid full name (e.g., "John Smith")');
+                return;
+            }
+            
             // Derive username from email (part before @)
             const username = email.split('@')[0];
+            
+            console.log('Parsed data:', { username, firstName, lastName, role, password: '***' });
             
             // Get auth token
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
@@ -1235,6 +1246,20 @@
             try {
                 const API_BASE = 'https://pf-resource-hub.onrender.com';
                 
+                // Prepare request payload
+                const requestPayload = {
+                    username: username,
+                    email: email,
+                    password: password,
+                    first_name: firstName,
+                    last_name: lastName,
+                    role: role,
+                    location: location || null
+                };
+                
+                console.log('Sending request to:', `${API_BASE}/api/users`);
+                console.log('Request payload:', { ...requestPayload, password: '***' });
+                
                 // API Call to create user
                 const response = await fetch(`${API_BASE}/api/users`, {
                     method: 'POST',
@@ -1242,16 +1267,11 @@
                         'Authorization': `Bearer ${authToken}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        username: username,
-                        email: email,
-                        password: password,
-                        first_name: firstName,
-                        last_name: lastName,
-                        role: role,
-                        location: location || null
-                    })
+                    body: JSON.stringify(requestPayload)
                 });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
                 
                 // Re-enable button
                 saveBtn.disabled = false;
