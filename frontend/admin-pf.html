@@ -577,8 +577,12 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Users will be loaded here -->
+                    <tbody id="usersTableBodyPF">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 40px; color: #999;">
+                                Loading users...
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -711,39 +715,74 @@
             }
         }
 
-        // Load users table
-        function loadUsers() {
-            const tbody = document.querySelector('#usersTable tbody');
-            tbody.innerHTML = '';
+        // Load users table from API
+        async function loadUsers() {
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load users');
+                
+                const data = await response.json();
+                const tbody = document.getElementById('usersTableBodyPF');
+                
+                tbody.innerHTML = '';
+                
+                // Add user rows
+                data.users.forEach(user => {
+                    const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username;
+                    
+                    // Role display
+                    let roleDisplay = user.role === 'gm' ? 'Manager' : (user.role || 'Staff');
+                    if (roleDisplay === 'staff') roleDisplay = 'Staff';
+                    
+                    // Status badge
+                    const statusClass = user.is_active ? 'active' : 'inactive';
+                    const statusText = user.is_active ? 'active' : 'inactive';
+                    
+                    // Last login
+                    const lastLogin = user.last_login ? formatActivityTime(user.last_login) : 'Never';
+                    
+                    const row = `
+                        <tr>
+                            <td>${fullName}</td>
+                            <td>${user.email}</td>
+                            <td><span class="location-badge" style="background: var(--pf-light-bg); color: var(--pf-dark-purple); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${user.location || 'N/A'}</span></td>
+                            <td>${roleDisplay}</td>
+                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td>${lastLogin}</td>
+                            <td>
+                                <button class="action-btn" onclick="resetPassword(${user.id})">
+                                    <i class="bi bi-key-fill"></i> Reset
+                                </button>
+                                <button class="action-btn" onclick="editUser(${user.id})">
+                                    <i class="bi bi-pencil-fill"></i> Edit
+                                </button>
+                                <button class="action-btn danger" onclick="deleteUser(${user.id})">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
 
-            mockUsers.forEach(user => {
-                const row = `
-                    <tr>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td><span class="location-badge" style="background: var(--pf-light-bg); color: var(--pf-dark-purple); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${user.location}</span></td>
-                        <td>${user.role}</td>
-                        <td><span class="status-badge ${user.status}">${user.status}</span></td>
-                        <td>${user.lastLogin}</td>
-                        <td>
-                            <button class="action-btn" onclick="resetPassword(${user.id})">
-                                <i class="bi bi-key-fill"></i> Reset
-                            </button>
-                            <button class="action-btn" onclick="editUser(${user.id})">
-                                <i class="bi bi-pencil-fill"></i> Edit
-                            </button>
-                            <button class="action-btn danger" onclick="deleteUser(${user.id})">
-                                <i class="bi bi-trash-fill"></i> Delete
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-
-            // Update stats
-            document.getElementById('totalUsers').textContent = mockUsers.length;
-            document.getElementById('activeUsers').textContent = mockUsers.filter(u => u.status === 'active').length;
+                // Update stats
+                document.getElementById('totalUsers').textContent = data.users.length;
+                document.getElementById('activeUsers').textContent = data.users.filter(u => u.is_active).length;
+                
+            } catch (error) {
+                console.error('Error loading users:', error);
+                document.getElementById('usersTableBodyPF').innerHTML = 
+                    '<tr><td colspan="7" style="text-align: center; color: #ff4444; padding: 40px;">Unable to load users. Please refresh the page.</td></tr>';
+            }
         }
 
         // Activity log pagination state
@@ -970,9 +1009,9 @@
                 // Success message with detailed info
                 alert(`✅ SUCCESS!\n\nUser Created Successfully:\n\n👤 Name: ${fullName}\n📧 Email: ${email}\n🔑 Username: ${username}\n🎭 Role: ${role}\n📍 Location: ${location || 'Not specified'}\n\n✉️ Welcome email sent with:\n• Temporary password\n• Login link (https://saveenergysystems.com/pf-resource-hub/)\n• Getting started guide\n\nUser ID: ${data.user_id || 'N/A'}`);
                 
-                // Close modal and reload page
+                // Close modal and reload users
                 closeUserModal();
-                window.location.reload();
+                loadUsers();
                 
             } catch (error) {
                 // Re-enable button
