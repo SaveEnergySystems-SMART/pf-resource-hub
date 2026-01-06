@@ -388,11 +388,9 @@ def get_users(current_user):
     try:
         query = User.query
         
-        # PF admins can only see GMs and Staff from their location
+        # PF admins can see ALL GMs and Staff (location is just for tracking)
         if current_user.role == 'pf_admin':
             query = query.filter(User.role.in_(['gm', 'staff']))
-            if current_user.location:
-                query = query.filter_by(location=current_user.location)
         
         users = query.order_by(User.created_at.desc()).all()
         
@@ -592,12 +590,10 @@ def get_activity_logs(current_user):
         
         query = ActivityLog.query
         
-        # PF admins can only see logs from their users (GMs and Staff)
+        # PF admins can see logs from ALL GMs and Staff (location is just for tracking)
         if current_user.role == 'pf_admin':
-            user_ids = [u.id for u in User.query.filter(
-                User.role.in_(['gm', 'staff']),
-                User.location == current_user.location
-            ).all()]
+            users = User.query.filter(User.role.in_(['gm', 'staff'])).all()
+            user_ids = [u.id for u in users]
             query = query.filter(ActivityLog.user_id.in_(user_ids))
         
         # Apply pagination
@@ -635,11 +631,8 @@ def get_user_journeys(current_user):
         
         # Base query for users
         if current_user.role == 'pf_admin':
-            # PF admin: only see GMs and staff from their locations
-            users = User.query.filter(
-                User.role.in_(['gm', 'staff']),
-                User.location == current_user.location
-            ).all()
+            # PF admin: see ALL GMs and Staff (location is just for tracking)
+            users = User.query.filter(User.role.in_(['gm', 'staff'])).all()
         else:
             # SES admin: see all users
             users = User.query.all()
