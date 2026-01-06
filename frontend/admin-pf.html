@@ -599,12 +599,19 @@
             <div id="activityLog">
                 <!-- Activity items will be loaded here -->
             </div>
-            <div id="loadMoreContainer" style="text-align: center; margin-top: 20px; display: none;">
-                <button id="loadMoreBtn" onclick="loadMoreActivity()" 
-                        style="background: var(--pf-purple); color: white; padding: 12px 24px; 
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                <button onclick="downloadActivityReport()" 
+                        style="background: #10B981; color: white; padding: 12px 24px; 
                                border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
-                    <i class="bi bi-arrow-down-circle"></i> Load More Activity
+                    <i class="bi bi-download"></i> Download Report
                 </button>
+                <div id="loadMoreContainer" style="display: none;">
+                    <button id="loadMoreBtn" onclick="loadMoreActivity()" 
+                            style="background: var(--pf-purple); color: white; padding: 12px 24px; 
+                                   border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
+                        <i class="bi bi-arrow-down-circle"></i> Load More Activity
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -735,8 +742,12 @@
                 
                 tbody.innerHTML = '';
                 
-                // Add user rows
+                // Add user rows - PF Admin can only manage GM and Staff, NOT other admins
                 data.users.forEach(user => {
+                    // PF Admin should NOT see or manage SES Admins or other PF Admins
+                    if (user.role === 'ses_admin' || user.role === 'pf_admin') {
+                        return; // Skip admin users
+                    }
                     const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username;
                     
                     // Role display
@@ -759,13 +770,13 @@
                             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                             <td>${lastLogin}</td>
                             <td>
-                                <button class="action-btn" onclick="resetPassword(${user.id})">
+                                <button class="action-btn" onclick="resetPassword(${user.id})" title="Reset Password">
                                     <i class="bi bi-key-fill"></i> Reset
                                 </button>
-                                <button class="action-btn" onclick="editUser(${user.id})">
+                                <button class="action-btn" onclick="editUser(${user.id})" title="Edit User">
                                     <i class="bi bi-pencil-fill"></i> Edit
                                 </button>
-                                <button class="action-btn danger" onclick="deleteUser(${user.id})">
+                                <button class="action-btn danger" onclick="deleteUser(${user.id})" title="Delete User">
                                     <i class="bi bi-trash-fill"></i> Delete
                                 </button>
                             </td>
@@ -815,11 +826,23 @@
                 
                 // Add activity items
                 data.logs.forEach(activity => {
+                    // Better user display - check multiple fields
+                    let userDisplay = 'System';
+                    if (activity.user) {
+                        if (activity.user.first_name && activity.user.last_name) {
+                            userDisplay = `${activity.user.first_name} ${activity.user.last_name}`;
+                        } else if (activity.user.username) {
+                            userDisplay = activity.user.username;
+                        } else if (activity.user.email) {
+                            userDisplay = activity.user.email;
+                        }
+                    }
+                    
                     const item = `
                         <div class="activity-item">
                             <div class="activity-time">${formatActivityTime(activity.created_at)}</div>
                             <div class="activity-text">
-                                <strong>${activity.user?.username || 'Unknown'}</strong> - 
+                                <strong>${userDisplay}</strong> - 
                                 ${activity.description || activity.action}
                             </div>
                         </div>
@@ -864,6 +887,86 @@
             activityPage++;
             loadActivity(true);  // Append = true
         }
+        
+        // Download Activity Report
+        async function downloadActivityReport() {
+            const startDate = prompt('Enter start date (YYYY-MM-DD):', '2024-01-01');
+            if (!startDate) return;
+            
+            const endDate = prompt('Enter end date (YYYY-MM-DD):', new Date().toISOString().split('T')[0]);
+            if (!endDate) return;
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                // Fetch all activity logs within date range
+                let allLogs = [];
+                let page = 1;
+                let hasMore = true;
+                
+                while (hasMore) {
+                    const response = await fetch(`${API_BASE}/api/activity-logs?page=${page}&per_page=100`, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to load activity logs');
+                    
+                    const data = await response.json();
+                    
+                    // Filter by date range
+                    const filtered = data.logs.filter(log => {
+                        const logDate = new Date(log.created_at).toISOString().split('T')[0];
+                        return logDate >= startDate && logDate <= endDate;
+                    });
+                    
+                    allLogs = allLogs.concat(filtered);
+                    hasMore = data.pagination.has_next;
+                    page++;
+                    
+                    // Safety limit
+                    if (page > 50) break;
+                }
+                
+                // Create CSV content
+                let csv = 'Timestamp,User,Action,Location,IP Address\\n';
+                
+                allLogs.forEach(log => {
+                    let userDisplay = 'System';
+                    if (log.user) {
+                        if (log.user.first_name && log.user.last_name) {
+                            userDisplay = `${log.user.first_name} ${log.user.last_name}`;
+                        } else if (log.user.username) {
+                            userDisplay = log.user.username;
+                        } else if (log.user.email) {
+                            userDisplay = log.user.email;
+                        }
+                    }
+                    
+                    csv += `\"${formatActivityTime(log.created_at)}\",\"${userDisplay}\",\"${log.description || log.action}\",\"${log.user?.location || 'N/A'}\",\"${log.ip_address || 'N/A'}\"\\n`;
+                });
+                
+                // Download CSV
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `activity-report-${startDate}-to-${endDate}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                alert(`✅ SUCCESS!\\n\\nDownloaded ${allLogs.length} activity logs from ${startDate} to ${endDate}`);
+                
+            } catch (error) {
+                console.error('Error downloading report:', error);
+                alert(`❌ ERROR\\n\\nFailed to download report:\\n${error.message}`);
+            }
+        }
 
         // Format activity timestamp
         function formatActivityTime(timestamp) {
@@ -902,34 +1005,130 @@
             document.getElementById('userModal').classList.remove('active');
         }
 
-        function editUser(userId) {
-            const user = mockUsers.find(u => u.id === userId);
-            if (user) {
-                document.getElementById('modalTitle').textContent = 'Edit Staff Member';
-                document.getElementById('userName').value = user.name;
-                document.getElementById('userEmail2').value = user.email;
-                document.getElementById('userLocation').value = user.location;
-                document.getElementById('userRole').value = user.role.toLowerCase();
-                document.getElementById('userModal').classList.add('active');
+        async function editUser(userId) {
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                // Fetch user data
+                const response = await fetch(`${API_BASE}/api/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load user data');
+                
+                const data = await response.json();
+                const user = data.users.find(u => u.id === userId);
+                
+                if (!user) {
+                    alert('❌ ERROR\n\nUser not found.');
+                    return;
+                }
+                
+                // Simple edit prompt (you can create a proper modal later)
+                const newFirstName = prompt('First Name:', user.first_name || '');
+                const newLastName = prompt('Last Name:', user.last_name || '');
+                const newEmail = prompt('Email:', user.email || '');
+                const newLocation = prompt('Location:', user.location || '');
+                
+                if (newFirstName === null || newLastName === null || newEmail === null) {
+                    return; // User cancelled
+                }
+                
+                // Update user
+                const updateResponse = await fetch(`${API_BASE}/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name: newFirstName,
+                        last_name: newLastName,
+                        email: newEmail,
+                        location: newLocation
+                    })
+                });
+                
+                if (!updateResponse.ok) {
+                    const errorData = await updateResponse.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to update user');
+                }
+                
+                alert(`✅ SUCCESS!\n\nUser updated successfully!`);
+                loadUsers(); // Reload users table
+                
+            } catch (error) {
+                console.error('Error editing user:', error);
+                alert(`❌ ERROR\n\nFailed to update user:\n${error.message}`);
             }
         }
 
-        function resetPassword(userId) {
-            const user = mockUsers.find(u => u.id === userId);
-            if (user && confirm(`🔑 RESET PASSWORD\n\nThis will:\n✅ Generate a new secure password\n✅ Send email to: ${user.email}\n\nProceed with password reset?`)) {
-                alert(`✅ SUCCESS!\n\nNew password generated and sent to:\n${user.email}\n\nUser will receive:\n• Temporary password\n• Login instructions\n• Password change prompt`);
-                // TODO: Call backend API: POST /api/admin/reset-password
-                // Backend will generate random password, hash it, and send email
+        async function resetPassword(userId) {
+            if (!confirm(`🔑 RESET PASSWORD\n\nThis will:\n✅ Generate a new secure password\n✅ Send email to the user\n✅ Require password change on next login\n\nProceed with password reset?`)) {
+                return;
+            }
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users/${userId}/reset-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to reset password');
+                }
+                
+                const data = await response.json();
+                
+                alert(`✅ SUCCESS!\n\nPassword has been reset!\n\n📧 User will receive:\n• Temporary password\n• Login instructions\n• Password change prompt`);
+                
+            } catch (error) {
+                console.error('Error resetting password:', error);
+                alert(`❌ ERROR\n\nFailed to reset password:\n${error.message}`);
             }
         }
 
-        function deleteUser(userId) {
-            const user = mockUsers.find(u => u.id === userId);
-            if (user && confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete:\n${user.name} (${user.email})\n\nThis action CANNOT be undone!`)) {
-                alert(`✅ User ${user.name} has been deleted.`);
-                // TODO: Call backend API: DELETE /api/admin/users/${userId}
-                // Then reload the table
+        async function deleteUser(userId) {
+            if (!confirm(`⚠️ DELETE USER\n\nAre you sure you want to delete this user?\n\n⚠️ THIS ACTION CANNOT BE UNDONE!\n\nThe user will be permanently removed from the system.`)) {
+                return;
+            }
+            
+            try {
+                const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+                const API_BASE = 'https://pf-resource-hub.onrender.com';
+                
+                const response = await fetch(`${API_BASE}/api/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || 'Failed to delete user');
+                }
+                
+                alert(`✅ SUCCESS!\n\nUser has been deleted.`);
+                
+                // Reload users table
                 loadUsers();
+                
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                alert(`❌ ERROR\n\nFailed to delete user:\n${error.message}`);
             }
         }
 
