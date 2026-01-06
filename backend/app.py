@@ -388,9 +388,9 @@ def get_users(current_user):
     try:
         query = User.query
         
-        # PF admins can only see GMs from their location
+        # PF admins can only see GMs and Staff from their location
         if current_user.role == 'pf_admin':
-            query = query.filter_by(role='gm')
+            query = query.filter(User.role.in_(['gm', 'staff']))
             if current_user.location:
                 query = query.filter_by(location=current_user.location)
         
@@ -419,8 +419,8 @@ def create_user(current_user):
                 return jsonify({'error': f'{field} is required'}), 400
         
         # Validate role permissions
-        if current_user.role == 'pf_admin' and data['role'] != 'gm':
-            return jsonify({'error': 'PF admins can only create GM accounts'}), 403
+        if current_user.role == 'pf_admin' and data['role'] not in ['gm', 'staff']:
+            return jsonify({'error': 'PF admins can only create GM and Staff accounts'}), 403
         
         # Check if username or email already exists
         if User.query.filter_by(username=data['username']).first():
@@ -471,8 +471,8 @@ def update_user(current_user, user_id):
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        # PF admins can only update GMs
-        if current_user.role == 'pf_admin' and user.role != 'gm':
+        # PF admins can only update GMs and Staff
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff']:
             return jsonify({'error': 'Permission denied'}), 403
         
         data = request.get_json()
@@ -518,8 +518,8 @@ def admin_reset_password(current_user, user_id):
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        # PF admins can only reset GM passwords
-        if current_user.role == 'pf_admin' and user.role != 'gm':
+        # PF admins can only reset GM and Staff passwords
+        if current_user.role == 'pf_admin' and user.role not in ['gm', 'staff']:
             return jsonify({'error': 'Permission denied'}), 403
         
         # Generate temporary password
@@ -592,9 +592,12 @@ def get_activity_logs(current_user):
         
         query = ActivityLog.query
         
-        # PF admins can only see logs from their users
+        # PF admins can only see logs from their users (GMs and Staff)
         if current_user.role == 'pf_admin':
-            user_ids = [u.id for u in User.query.filter_by(role='gm', location=current_user.location).all()]
+            user_ids = [u.id for u in User.query.filter(
+                User.role.in_(['gm', 'staff']),
+                User.location == current_user.location
+            ).all()]
             query = query.filter(ActivityLog.user_id.in_(user_ids))
         
         # Apply pagination
