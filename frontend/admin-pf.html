@@ -703,6 +703,36 @@
             { time: '2024-12-18 06:30 PM', text: 'Sarah Johnson ordered replacement filters' }
         ];
 
+        // Check authentication and authorization
+        function checkAuth() {
+            const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+            const userData = sessionStorage.getItem('user_data') || localStorage.getItem('user_data');
+
+            // Redirect if not logged in
+            if (!authToken || !userData) {
+                alert('Please log in to access this page');
+                window.location.href = 'index.html';
+                return false;
+            }
+
+            try {
+                const user = JSON.parse(userData);
+                
+                // Allow both PF Admins and SES Admins to access this dashboard
+                if (user.role !== 'pf_admin' && user.role !== 'ses_admin') {
+                    alert('Access denied. Only PF Admins and SES Admins can access this dashboard.');
+                    window.location.href = 'index.html';
+                    return false;
+                }
+                
+                return true;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                window.location.href = 'index.html';
+                return false;
+            }
+        }
+
         // Load user data from session
         function loadUserData() {
             const authToken = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
@@ -1275,6 +1305,11 @@
 
         // Initialize on page load
         window.onload = function() {
+            // Check authentication first
+            if (!checkAuth()) {
+                return; // Stop execution if auth fails
+            }
+            
             loadUserData();
             loadUsers();
             loadActivity();
