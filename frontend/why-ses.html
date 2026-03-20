@@ -897,7 +897,7 @@
             const userData = JSON.parse(sessionStorage.getItem('user_data') || localStorage.getItem('user_data') || '{}');
             
             if (!token || !userData.email) {
-                window.location.href = 'login-final.html';
+                window.location.href = 'index.html';
                 return;
             }
 
@@ -940,7 +940,7 @@
             sessionStorage.removeItem('user_data');
             localStorage.removeItem('auth_token');
             localStorage.removeItem('user_data');
-            window.location.href = 'login-final.html';
+            window.location.href = 'index.html';
         }
     </script>
 </body>
